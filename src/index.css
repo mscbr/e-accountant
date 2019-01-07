@@ -99,3 +99,21 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   transition: opacity 0.3s ease-out;
   opacity: 0;
 }
+
+.inup-intro {
+  width: 30%;
+  padding: 60px;
+  margin: 0 auto;
+  margin-top: 11%;
+  display: flex;
+  flex-direction: column;
+}
+.inup-intro-title {
+  letter-spacing: 4px;
+}
+.inup-intro .btn:hover {
+  opacity: 0.9;
+}
+.inup-intro .btn {
+  margin-top: 4px;
+}

@@ -15,7 +15,7 @@ export class CreateProject extends Component {
   
 
     handleChange = (e) => {
-        //console.log(e.target);
+        console.log(this.props);
         this.setState({
             [e.target.id]: e.target.value
         });
