@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { ModalContainer, ModalRoute } from 'react-router-modal';
+import './index.css';
+
 
 import Navbar from './components/layout/Navbar';
 import Dashboard from './components/dashboard/Dashboard';
@@ -14,13 +17,28 @@ class App extends Component {
       <BrowserRouter>
         <div className="App">
           <Navbar />
-          <Switch>
-            <Route exact path='/' component={Dashboard} />
+          
+            <Route path='/' component={Dashboard} />
             <Route path='/project/:id' component={ProjectDetails} />
-            <Route path='/signin' component={SignIn} />
+            {/* <Route path='/signin' component={SignIn} /> */}
             <Route path='/signup' component={SignUp} />
             <Route path='/newinvoice' component={CreateProject} />
-          </Switch>
+            {/*MODAL ROUTES*/}
+            <ModalRoute
+              path='/signin'
+              component={SignIn}
+              parentPath='/'
+              className='example-modal'
+              inClassName='example-modal-in'
+              outClassName='example-modal-out'
+              backdropClassName='example-backdrop'
+              backdropInClassName='example-backdrop-in'
+              backdropOutClassName='example-backdrop-out'
+              outDelay={300}
+            />
+              
+            <ModalContainer />
+          
         </div>
       </BrowserRouter>
     ); 
