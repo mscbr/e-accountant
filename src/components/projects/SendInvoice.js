@@ -4,18 +4,22 @@ import 'filepond/dist/filepond.min.css';
 
 
 
-export class CreateProject extends Component {
-    state = {
-        title: '',
-        date: '',
-        comment: '',
-        file: null
-
+export class SendInvoice extends Component {
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+            title: '',
+            date: '',
+            comment: '',
+            file: null
+        }
     }
-  
+   
+   
 
     handleChange = (e) => {
-        console.log(this.props);
+        
         this.setState({
             [e.target.id]: e.target.value
         });
@@ -34,7 +38,7 @@ export class CreateProject extends Component {
       <div>
         <div className="container">
             <form onSubmit={this.handleSubmit} className="white">
-                <h5 className="grey-text text-darken-3">Send new invoice</h5>
+                <h5 className="grey-text text-darken-3">Send New Invoice</h5>
                 <div className="input-field">
                     <label htmlFor="title">Title</label>
                     <input type="text" id="title" onChange={this.handleChange} /> 
@@ -42,6 +46,8 @@ export class CreateProject extends Component {
                 <div className="input-field">
                     <label htmlFor="datepicker">Date of issue</label>
                     <input type='date' id='date' onChange={this.handleChange} />
+                    
+
                 </div>
                 <div className="input-field">
                     <label htmlFor="" id="upload" className="active">Upload</label>
@@ -62,4 +68,4 @@ export class CreateProject extends Component {
   }
 }
 
-export default CreateProject
+export default SendInvoice

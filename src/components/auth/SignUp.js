@@ -8,6 +8,9 @@ export class SignUp extends Component {
         lastName: ''
 
     }
+    componentDidMount(props) {
+        console.log(this.props);
+    }
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
@@ -18,9 +21,10 @@ export class SignUp extends Component {
         console.log(this.state);
     }
   render() {
+      
     return (
       <div>
-        <div className="container">
+        
             <form onSubmit={this.handleSubmit} className="white">
                 <h5 className="grey-text text-darken-3">Sign Up</h5>
                 <div className="input-field">
@@ -43,7 +47,7 @@ export class SignUp extends Component {
                     <button className="btn red lighten-1 z-depth-0">Sign Up</button>
                 </div>
             </form>
-        </div>
+        
       </div>
     )
   }

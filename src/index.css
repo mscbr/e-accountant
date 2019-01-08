@@ -53,52 +53,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   color: #f44336 !important;
 }
 
-/* MODAL STUFF */
 
-.example-modal {
-  position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate3d(-50%, -50%, 0);
-  background-color: white;
-  border-radius: 5px;
-  border: 1px solid #777;
-  padding: 2rem;
-  min-width: 20rem;
-  max-width: 60rem;
-  width: 90%;
-  opacity: 0;
-}
-
-.example-modal-in  {
-  transition: opacity 0.2s ease-in;
-  opacity: 1 
-}
-
-.example-modal-out {
-  transition: opacity 0.3s ease-out;
-  opacity: 0
-}
-
-.example-backdrop {
-  background-color: black;
-  opacity: 0;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.example-backdrop-in  {
-  transition: opacity 0.3s ease-in;
-  opacity: 0.5;
-}
-
-.example-backdrop-out  {
-  transition: opacity 0.3s ease-out;
-  opacity: 0;
-}
 
 .inup-intro {
   width: 30%;
@@ -115,5 +70,23 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   opacity: 0.9;
 }
 .inup-intro .btn {
+  margin-top: 4px;
+}
+
+.newinvoice {
+  width: 100%;
+  /*padding: 60px; */
+  margin: 0 auto;
+  /* margin-top: 11%; */
+  display: flex;
+  flex-direction: column;
+}
+.newinvoice-title {
+  letter-spacing: 4px;
+}
+.newinvoice .btn:hover {
+  opacity: 0.9;
+}
+.newinvoice .btn {
   margin-top: 4px;
 }

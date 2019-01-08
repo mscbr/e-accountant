@@ -2,7 +2,7 @@ import React from 'react';
 import { NavLink } from 'react-router-dom';
 
 
-const Index = () => {
+const Entry = () => {
     return (
         <div className="card white inup-intro">
             <span className="card-title teal-text text-darken-4 center inup-intro-title">E-Accountant</span>
@@ -16,4 +16,4 @@ const Index = () => {
     );
 }
 
-export default Index;
+export default Entry;

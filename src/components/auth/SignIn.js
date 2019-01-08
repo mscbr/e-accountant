@@ -18,7 +18,7 @@ export class SignIn extends Component {
   render() {
     return (
       <div>
-        <div className="container">
+        
             <form onSubmit={this.handleSubmit} className="white">
                 <h5 className="grey-text text-darken-3">Sign In</h5>
                 <div className="input-field">
@@ -33,7 +33,7 @@ export class SignIn extends Component {
                     <button className="btn red lighten-1 z-depth-0">Login</button>
                 </div>
             </form>
-        </div>
+       
       </div>
     )
   }

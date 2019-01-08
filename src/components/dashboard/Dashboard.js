@@ -4,10 +4,12 @@ import Notifications from './Notifications';
 import ProjectList from '../projects/ProjectList';
 
 class Dashboard extends Component {
+    
     render() {
-
+        console.log(this.props.match.url);
         return (
             <div className="dashboard container">
+            
                 <div className="row">
                     <div className="col s12 m6">
                         <ProjectList />
