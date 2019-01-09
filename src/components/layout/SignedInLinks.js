@@ -9,7 +9,7 @@ const SignedInLinks = () => {
         <ul className="right">
             
             {/* <li><NavLink to='/newinvoice'>New Invoice</NavLink></li> */}
-            <li><NewInvoiceMenu /></li>
+            <NewInvoiceMenu />
             <li><NavLink to='/'>Log Out</NavLink></li>
             <li><NavLink to='/' className='btn btn-floating red lighten-2'>NN</NavLink></li>
           
