@@ -6,7 +6,7 @@ import ProjectList from '../projects/ProjectList';
 class Dashboard extends Component {
     
     render() {
-        console.log(this.props.match.url);
+        
         return (
             <div className="dashboard container">
             

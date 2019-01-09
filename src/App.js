@@ -15,10 +15,7 @@ import Entry from './components/auth/Entry';
 
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-   
-  }
+  
  
   render() {
   

@@ -20,7 +20,7 @@ const styles = theme => ({
     
   });
 
-export class SignInDialog extends Component {
+export class SignInDialogNav extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -58,8 +58,8 @@ export class SignInDialog extends Component {
   }
 }
 
-SignInDialog.propTypes = {
+SignInDialogNav.propTypes = {
     classes: PropTypes.object.isRequired,
   };
-export default withStyles(styles)(SignInDialog);
+export default withStyles(styles)(SignInDialogNav);
 
