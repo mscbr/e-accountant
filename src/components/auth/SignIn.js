@@ -1,11 +1,16 @@
 import React, { Component } from 'react'
 
 export class SignIn extends Component {
-    state = {
-        email: '',
-        password: ''
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: ''
+    
+        }
 
     }
+    
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
@@ -19,7 +24,7 @@ export class SignIn extends Component {
     return (
       <div>
         
-            <form onSubmit={this.handleSubmit} className="white">
+            <form onSubmit={this.handleSubmit} className="white form-sign">
                 <h5 className="grey-text text-darken-3">Sign In</h5>
                 <div className="input-field">
                     <label htmlFor="email">Email</label>
@@ -30,7 +35,7 @@ export class SignIn extends Component {
                     <input type="password" id="password" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
-                    <button className="btn red lighten-1 z-depth-0">Login</button>
+                    <button className="btn red lighten-1 z-depth-0" onClick={this.props.closeDialog}>Login</button>
                 </div>
             </form>
        

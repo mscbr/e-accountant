@@ -90,3 +90,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 .newinvoice .btn {
   margin-top: 4px;
 }
+.form-sign {
+  width: 35vw;
+  
+}

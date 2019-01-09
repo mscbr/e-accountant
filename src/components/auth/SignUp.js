@@ -1,15 +1,19 @@
 import React, { Component } from 'react'
 
 export class SignUp extends Component {
-    state = {
-        email: '',
-        password: '',
-        firstName: '',
-        lastName: ''
-
+    constructor(props) {
+        super(props);
+        this.state = {
+            email: '',
+            password: '',
+            firstName: '',
+            lastName: ''
+        }
     }
-    componentDidMount(props) {
-        console.log(this.props);
+    
+    componentDidMount() {
+        //console.log(this.props.closeDialog);
+        
     }
     handleChange = (e) => {
         this.setState({
@@ -19,13 +23,13 @@ export class SignUp extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         console.log(this.state);
+        
     }
   render() {
-      
+    
     return (
       <div>
-        
-            <form onSubmit={this.handleSubmit} className="white">
+            <form onSubmit={this.handleSubmit} className="white form-sign">
                 <h5 className="grey-text text-darken-3">Sign Up</h5>
                 <div className="input-field">
                     <label htmlFor="email">Email</label>
@@ -44,7 +48,7 @@ export class SignUp extends Component {
                     <input type="text" id="lastName" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
-                    <button className="btn red lighten-1 z-depth-0">Sign Up</button>
+                    <button type='submit' className="btn red lighten-1 z-depth-0" onClick={this.props.closeDialog}>Sign Up</button>
                 </div>
             </form>
         
