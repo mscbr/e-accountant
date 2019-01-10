@@ -10,7 +10,7 @@ import ProjectDetails from './components/projects/ProjectDetails';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import SendInvoice from './components/projects/SendInvoice';
-import CreateInvoice from './components/projects/CreateInvoice';
+import CreateInvoice from './components/projects/create-invoice/CreateInvoice';
 import Entry from './components/auth/Entry';
 
 

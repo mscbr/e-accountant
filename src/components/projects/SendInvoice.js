@@ -44,10 +44,8 @@ export class SendInvoice extends Component {
                     <input type="text" id="title" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
-                    <label htmlFor="datepicker">Date of issue</label>
+                    <label htmlFor="date">Date of issue</label>
                     <input type='date' id='date' onChange={this.handleChange} />
-                    
-
                 </div>
                 <div className="input-field">
                     <label htmlFor="" id="upload" className="active">Upload</label>
