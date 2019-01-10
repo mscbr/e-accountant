@@ -1,6 +1,6 @@
 import React from 'react'
 
-const BuyerSellerData = (props) => {
+const BuyerSellerDataForm = (props) => {
     const { handleChange } = props;
   return (
     <div>       
@@ -21,4 +21,4 @@ const BuyerSellerData = (props) => {
   )
 }
 
-export default BuyerSellerData
+export default BuyerSellerDataForm

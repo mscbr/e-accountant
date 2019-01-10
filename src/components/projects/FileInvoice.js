@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import { FilePond } from 'react-filepond';
+import { FilePond, File } from 'react-filepond';
 import 'filepond/dist/filepond.min.css';
 
 
 
-export class SendInvoice extends Component {
+export class FileInvoice extends Component {
     
     constructor(props) {
         super(props);
@@ -12,11 +12,13 @@ export class SendInvoice extends Component {
             title: '',
             date: '',
             comment: '',
-            file: null
+            files: []
         }
     }
    
-   
+    handleInit() {
+        console.log('FilePond instance has initialised', this.pond);
+    }
 
     handleChange = (e) => {
         
@@ -24,9 +26,9 @@ export class SendInvoice extends Component {
             [e.target.id]: e.target.value
         });
     }
-    handleFile = (file) => {
+    handleFile = (fileItems) => {
         this.setState({
-            file
+            files: fileItems.map(fileItem => fileItem.file)
         });
     }
     handleSubmit = (e) => {
@@ -50,7 +52,18 @@ export class SendInvoice extends Component {
                 <div className="input-field">
                     <label htmlFor="" id="upload" className="active">Upload</label>
                     <FilePond className='filepond' labelIdle="Drag & Drop your invoice or <span class='filepond--label-action'> Browse </span>"
-                        onupdatefiles={this.handleFile} />
+                        maxFiles={3}
+                        allowMultiple={true}
+                        onupdatefiles={this.handleFile} 
+                        server="/"
+                        oninit={() => this.handleInit() }
+                        
+                        >
+                    {this.state.files.map(file => (
+                    <File key={file} src={file} origin="local" />
+                        ))}
+                    </FilePond>
+                        
                 </div>
                 <div className="input-field">
                     <label htmlFor="comment">Comment</label>
@@ -66,4 +79,4 @@ export class SendInvoice extends Component {
   }
 }
 
-export default SendInvoice
+export default FileInvoice

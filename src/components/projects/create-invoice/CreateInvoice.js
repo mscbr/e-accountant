@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import BuyerSellerData from './BuyerSellerData';
+
+import BuyerSellerDataForm from './BuyerSellerDataForm';
 
 
 
@@ -72,7 +73,7 @@ export class CreateInvoice extends Component {
                     </div>
                 </div>
             </div>
-                <BuyerSellerData handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
+                <BuyerSellerDataForm handleChange={this.handleChange} handleSubmit={this.handleSubmit} />
             <div className="input-field">
                     <button className="btn red lighten-1 z-depth-0">Create</button>
             </div>
