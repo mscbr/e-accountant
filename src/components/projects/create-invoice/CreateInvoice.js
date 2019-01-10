@@ -58,7 +58,7 @@ export class CreateInvoice extends Component {
                     </div>
                 </div>
                 <div className='row'>
-                    <div className='col s4'>for further developement</div>
+                    <div className='red-text col s4'>for further developement</div>
                     <div className='input-field col s4'>
                         <label htmlFor='issueLocation'>Issue Location</label>
                         <input id='issueLocation' type="text" onChange={this.handleChange} />   
