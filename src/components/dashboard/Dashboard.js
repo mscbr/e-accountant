@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 
 import Notifications from './Notifications';
 import ProjectList from '../projects/ProjectList';
@@ -23,4 +24,10 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+const mapStateToProps = (state) => {
+    return {
+        invoices: state.invoice.invoices
+    }
+}
+
+export default connect(mapStateToProps)(Dashboard);

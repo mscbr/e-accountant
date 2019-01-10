@@ -59,7 +59,7 @@ export class FileInvoice extends Component {
                         server="/"
                         oninit={() => this.handleInit() }
                         allowFileTypeValidation={true}
-                        acceptedFileTypes={['image/*', '.pdf']}
+                        acceptedFileTypes={['image/*', 'application/pdf']}
                         labelFileTypeNotAllowed='File of invalid type'
                         >
                     {this.state.files.map(file => (
