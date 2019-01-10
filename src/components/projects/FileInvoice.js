@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import { FilePond, File } from 'react-filepond';
+import { FilePond, File, registerPlugin } from 'react-filepond';
+import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond/dist/filepond.min.css';
 
-
+registerPlugin(FilePondPluginFileValidateType);
 
 export class FileInvoice extends Component {
     
@@ -57,7 +58,9 @@ export class FileInvoice extends Component {
                         onupdatefiles={this.handleFile} 
                         server="/"
                         oninit={() => this.handleInit() }
-                        
+                        allowFileTypeValidation={true}
+                        acceptedFileTypes={['image/*', '.pdf']}
+                        labelFileTypeNotAllowed='File of invalid type'
                         >
                     {this.state.files.map(file => (
                     <File key={file} src={file} origin="local" />

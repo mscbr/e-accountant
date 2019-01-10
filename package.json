@@ -5,6 +5,7 @@
   "dependencies": {
     "@material-ui/core": "^3.8.2",
     "filepond": "^3.7.4",
+    "filepond-plugin-file-validate-type": "^1.2.1",
     "jquery": "^3.3.1",
     "materialize-css": "^1.0.0-rc.2",
     "prop-types": "^15.6.2",
