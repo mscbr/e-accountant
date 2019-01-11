@@ -8,6 +8,12 @@ const initState = {
 };
 
 const invoiceReducer = (state = initState, action) => {
+    switch(action.type) {
+        case 'CREATE_INVOICE':
+            console.log('created invoice', action.invoice)
+    }
+
+
     return state;
 };
 

@@ -3,6 +3,9 @@ import { FilePond, File, registerPlugin } from 'react-filepond';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond/dist/filepond.min.css';
 
+import { connect } from 'react-redux';
+import { createInvoice } from '../../store/actions/invoiceActions';
+
 registerPlugin(FilePondPluginFileValidateType);
 
 export class FileInvoice extends Component {
@@ -34,7 +37,7 @@ export class FileInvoice extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
+        this.props.createInvoice(this.state)
     }
   render() {
     return (
@@ -82,4 +85,10 @@ export class FileInvoice extends Component {
   }
 }
 
-export default FileInvoice
+const mapDispatchToProps = (dispatch) => {
+    return {
+        createInvoice: (invoice) => dispatch(createInvoice(invoice))
+    }
+}
+
+export default connect(null, mapDispatchToProps)(FileInvoice);

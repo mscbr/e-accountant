@@ -1,5 +1,5 @@
 import React from 'react';
-import invoiceReducer from '../../store/reducers/invoiceReducer';
+
 
 const ProjectSummary = ({invoice}) => {
     return (
