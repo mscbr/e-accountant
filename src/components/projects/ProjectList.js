@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 import ProjectSummary from './ProjectSummary'
 
@@ -8,7 +9,9 @@ const ProjectList = ({invoices}) => {
 
             { invoices && invoices.map(invoice => {
                 return (
-                    <ProjectSummary invoice={invoice} key={invoice.id} />
+                    <Link to={'/project/' + invoice.id} key={'link/'+invoice.id}>
+                        <ProjectSummary invoice={invoice} key={invoice.id} />
+                    </Link>
                 )
             })}
 
