@@ -1,4 +1,5 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { ButtonBase, Dialog } from '@material-ui/core'
 import { withStyles } from '@material-ui/core/styles';
@@ -31,11 +32,15 @@ export class SignInDialogNav extends Component {
         this.setState({open: true});
     };
     handleClose = () => {
-        this.setState({open: false});
+      if(this.props.isLogged) {
+        this.setState({open: false}); 
+      } 
     }
 
   render() {
     const { classes } = this.props;
+    const { isLogged } = this.props
+    
     return (
       <li>
         <ButtonBase
@@ -61,5 +66,13 @@ export class SignInDialogNav extends Component {
 SignInDialogNav.propTypes = {
     classes: PropTypes.object.isRequired,
   };
-export default withStyles(styles)(SignInDialogNav);
+
+const mapStateToProps = (state) => {
+  console.log(state);
+  return {
+    isLogged: !state.firebase.auth.isEmpty
+  }
+}
+
+export default connect(mapStateToProps)(withStyles(styles)(SignInDialogNav));
 

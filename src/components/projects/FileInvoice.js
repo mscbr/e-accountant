@@ -59,7 +59,7 @@ export class FileInvoice extends Component {
                         maxFiles={3}
                         allowMultiple={true}
                         onupdatefiles={this.handleFile} 
-                        server="/"
+                        server="gs://e-accountant-b98af.appspot.com"
                         oninit={() => this.handleInit() }
                         allowFileTypeValidation={true}
                         acceptedFileTypes={['image/*', 'application/pdf']}

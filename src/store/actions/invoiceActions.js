@@ -15,8 +15,5 @@ export const createInvoice = (invoice) => {
         }).catch((err) => {
             dispatch({ type: 'CREATE_INVOICE_ERROR', err });
         });
-
-
-       
     }
 }; 
