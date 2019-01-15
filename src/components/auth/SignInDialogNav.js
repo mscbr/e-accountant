@@ -39,8 +39,6 @@ export class SignInDialogNav extends Component {
 
   render() {
     const { classes } = this.props;
-    const { isLogged } = this.props
-    
     return (
       <li>
         <ButtonBase
@@ -70,7 +68,8 @@ SignInDialogNav.propTypes = {
 const mapStateToProps = (state) => {
   console.log(state);
   return {
-    isLogged: !state.firebase.auth.isEmpty
+    //isLogged: !state.firebase.auth.isEmpty
+    
   }
 }
 

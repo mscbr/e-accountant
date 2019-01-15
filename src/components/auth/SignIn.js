@@ -18,8 +18,10 @@ export class SignIn extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
+        
         this.props.signIn(this.state);
+        this.props.closeDialog();
+        
     }
   render() {
       const { authError } = this.props;
@@ -36,7 +38,7 @@ export class SignIn extends Component {
                     <input type="password" id="password" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
-                    <button className="btn red lighten-1 z-depth-0" onClick={this.props.closeDialog}>Login</button>
+                    <button className="btn red lighten-1 z-depth-0" >Login</button>
                     <div className="red-text center">
                     { authError ? <p>{authError}</p> : null }
                     </div>
@@ -48,6 +50,7 @@ export class SignIn extends Component {
 }
 
 const mapStateToProps = (state) => {
+    console.log(state);
     return {
         authError: state.auth.authError
     }
