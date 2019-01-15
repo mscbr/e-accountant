@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { FilePond, File, registerPlugin } from 'react-filepond';
+import { Redirect } from 'react-router-dom';
 import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
 import 'filepond/dist/filepond.min.css';
 
@@ -40,6 +41,8 @@ export class FileInvoice extends Component {
         this.props.createInvoice(this.state)
     }
   render() {
+    const { auth } = this.props;
+    if (!auth.uid) return <Redirect to='/' />
     return (
       <div>
         <div className="container">
@@ -85,10 +88,16 @@ export class FileInvoice extends Component {
   }
 }
 
+const mapStateToProps = (state) => {
+    return {
+        auth: state.firebase.auth
+    }
+}
+
 const mapDispatchToProps = (dispatch) => {
     return {
         createInvoice: (invoice) => dispatch(createInvoice(invoice))
     }
 }
 
-export default connect(null, mapDispatchToProps)(FileInvoice);
+export default connect(mapStateToProps, mapDispatchToProps)(FileInvoice);

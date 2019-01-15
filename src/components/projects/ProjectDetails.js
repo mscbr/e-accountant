@@ -1,10 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase'; 
+import { Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 
 const ProjectDetails = (props) => {
-    
+    const { auth } = props;
+    if (!auth.uid) return <Redirect to='/' />
     const { invoice } = props;
     if (invoice) {
         return (
@@ -36,7 +38,8 @@ const mapStateToProps = (state, ownProps) => {
     const invoices = state.firestore.data.invoices;
     const invoice = invoices ? invoices[id] : null;
     return {
-        invoice: invoice
+        invoice: invoice,
+        auth: state.firebase.auth
     }
 }
 

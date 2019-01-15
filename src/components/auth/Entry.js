@@ -1,10 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 
 import { SignInDialogEntry } from './SignInDialogEntry';
 import SignUpDialogEntry from './SignUpDialogEntry';
 
 
-const Entry = () => {
+const Entry = (props) => {
+    const { auth } = props;
+    if (auth.uid) return <Redirect to='/dashboard' />
     return (
         <div className="card white inup-intro">
             <span className="card-title teal-text text-darken-4 center inup-intro-title">E-Accountant</span>
@@ -18,4 +22,10 @@ const Entry = () => {
     );
 }
 
-export default Entry;
+const mapStateToProps = (state) => {
+    return {
+        auth: state.firebase.auth
+    }
+}
+
+export default connect(mapStateToProps)(Entry);
