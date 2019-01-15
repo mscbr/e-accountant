@@ -32,9 +32,9 @@ export class SignInDialogNav extends Component {
         this.setState({open: true});
     };
     handleClose = () => {
-      if(this.props.isLogged) {
-        this.setState({open: false}); 
-      } 
+      
+      this.setState({open: false}); 
+      
     }
 
   render() {
@@ -66,7 +66,7 @@ SignInDialogNav.propTypes = {
   };
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  //console.log(state);
   return {
     //isLogged: !state.firebase.auth.isEmpty
     

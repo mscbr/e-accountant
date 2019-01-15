@@ -18,10 +18,7 @@ export class SignIn extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        
-        this.props.signIn(this.state);
-        this.props.closeDialog();
-        
+        this.props.signIn(this.state);  
     }
   render() {
       const { authError } = this.props;
@@ -50,7 +47,7 @@ export class SignIn extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
+    //console.log(state);
     return {
         authError: state.auth.authError
     }
