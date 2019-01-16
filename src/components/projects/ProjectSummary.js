@@ -1,4 +1,5 @@
 import React from 'react';
+import moment from 'moment';
 
 
 const ProjectSummary = ({invoice}) => {
@@ -7,10 +8,10 @@ const ProjectSummary = ({invoice}) => {
             <div className="card-content grey-text text-darken-3">
                 <span className="card-title">{invoice.title}</span>
                 <p>Posted by the {invoice.firstName} {invoice.lastName}</p>
-                <p className="grey-text">{invoice.date}</p>
+                <p className="grey-text">{moment(invoice.createdAt.toDate()).calendar()}</p>
             </div>
         </div>
     );
 }
 
-export default ProjectSummary;
+export default ProjectSummary; 

@@ -38,7 +38,8 @@ export class FileInvoice extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.createInvoice(this.state)
+        this.props.createInvoice(this.state);
+        this.props.history.push('/dashboard');
     }
   render() {
     const { auth } = this.props;
