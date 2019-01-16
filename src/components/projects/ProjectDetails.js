@@ -17,7 +17,7 @@ const ProjectDetails = (props) => {
                         <p>Comments: {invoice.comment}</p>
                     </div>
                     <div className="card-action grey lighten-4 grey-text">
-                        <div>Posted by the {invoice.userName}</div>
+                        <div>Posted by the {invoice.firstName} {invoice.lastName}</div>
                         <div>{invoice.date}</div>
                     </div>
                 </div>

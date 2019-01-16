@@ -7,7 +7,8 @@ export const createInvoice = (invoice) => {
         const firestore = getFirestore();
         firestore.collection('invoices').add({
             ...invoice,
-            userName: 'Maciej Waclaw',
+            firstName: 'Maciej',
+            lastName: 'Waclaw',
             userId: 123,
             createdAt: new Date()
         }).then(() => {
