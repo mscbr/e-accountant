@@ -24,4 +24,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # API protection
-/src/config/fbConfig.js
+
+src/config/fbConfig.js
