@@ -94,3 +94,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   width: 35vw;
   
 }
+
+.zindex66 {
+  z-index: 66;
+}

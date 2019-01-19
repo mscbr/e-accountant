@@ -64,7 +64,7 @@ export class NewInvoiceMenu extends Component {
         >
           New Invoice
         </ButtonBase>
-        <Popper open={open} anchorEl={this.anchorEl} transition disablePortal>
+        <Popper open={open} anchorEl={this.anchorEl} transition disablePortal className="zindex66">
             {({ TransitionProps, placement}) => (
               <Grow
                 {...TransitionProps}
