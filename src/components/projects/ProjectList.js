@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import ProjectSummary from './ProjectSummary'
 
 const ProjectList = ({invoices}) => {
+    // const profile = getState().firebase.profile;
+    // console.log(profile);
     return (
         <div className="project-list section">
 

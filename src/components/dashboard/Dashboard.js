@@ -38,7 +38,7 @@ const mapStateToProps = (state) => {
 
 export default compose(
     connect(mapStateToProps),
-    firestoreConnect([{ collection: 'invoices' }])
+    firestoreConnect([{ collection: 'invoices' /*ADD USERS COLLECTION & PASS UID AS A PROPS TO PROJECT LIST*/}])
 )(Dashboard);
 
 
