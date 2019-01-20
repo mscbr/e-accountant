@@ -3,6 +3,8 @@ import { Redirect } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { signUp } from '../../store/actions/authActions';
 
+
+
 export class SignUp extends Component {
     constructor(props) {
         super(props);
@@ -10,11 +12,12 @@ export class SignUp extends Component {
             email: '',
             password: '',
             firstName: '',
-            lastName: ''
+            lastName: '',
+            accountant: "false"
         }
     }
     
-  
+   
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
@@ -23,12 +26,14 @@ export class SignUp extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.signUp(this.state);
+        //console.log(this.state);
         
     }
   render() {
-      const { auth, authError } = this.props;
-      if(auth.uid) return <Redirect to='/dashboard' />
-    
+    const { auth, authError } = this.props;
+    if(auth.uid) return <Redirect to='/dashboard' />
+        
+
     return (
       <div>
             <form onSubmit={this.handleSubmit} className="white form-sign">
@@ -50,7 +55,14 @@ export class SignUp extends Component {
                     <input type="text" id="lastName" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
-                    <button type='submit' className="btn red lighten-1 z-depth-0" onClick={this.props.closeDialog}>Sign Up</button>
+                    <select className="browser-default" name="accountant" id="accountant" onChange={this.handleChange} value={this.state.accountant} >
+                        <option value="false" defaultValue >Client</option>
+                        <option value="true" disabled>Accountant</option>  
+                    </select>
+               
+                </div>
+                <div className="input-field">
+                    <button type='submit' className="btn red lighten-1 z-depth-0" >Sign Up</button>
                     <div className="red-text center">
                         { authError ? <p>{ authError } </p> : null }
                     </div>

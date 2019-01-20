@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import moment from 'moment';
 
 import BuyerSellerDataForm from './BuyerSellerDataForm';
 
@@ -14,7 +15,7 @@ export class CreateInvoice extends Component {
         super(props);
         this.state = {
             title: '',
-            date: '',
+            dateIssue: '',
             comment: ''
         }
     }
@@ -25,6 +26,7 @@ export class CreateInvoice extends Component {
         this.setState({
             [e.target.id]: e.target.value
         });
+        console.log(this.state);
     }
    
     handleSubmit = (e) => {
@@ -56,10 +58,10 @@ export class CreateInvoice extends Component {
                         <label htmlFor='invoiceNumber'>Invoice Number</label>
                         <input id='invoiceNumber' type="text" onChange={this.handleChange} />   
                     </div>
-                    <div className='input-field col s4'>
+                    <div className='col s4'>``
                         <label htmlFor="dateIssue"><i className='material-icons'>calendar_today</i>  Date of Issue   </label>
                         
-                        <input type='date' id='dateIssue' onChange={this.handleChange} />
+                        <input type='date' id='dateIssue' onChange={this.handleChange} value={moment(this.state.dateIssue).format('YYYY-MM-DD')} />
                     </div>
                 </div>
                 <div className='row'>
