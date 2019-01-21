@@ -5,7 +5,7 @@ import { Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import moment from 'moment';
 
-const ProjectDetails = (props) => {
+const InvoiceDetails = (props) => {
     const { auth } = props;
     if (!auth.uid) return <Redirect to='/' />
     const { invoice } = props;
@@ -47,4 +47,4 @@ const mapStateToProps = (state, ownProps) => {
 export default compose(
     connect(mapStateToProps),
     firestoreConnect([{ collection: 'invoices' }])
-)(ProjectDetails);
+)(InvoiceDetails);

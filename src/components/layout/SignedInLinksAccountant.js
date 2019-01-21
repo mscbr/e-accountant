@@ -1,16 +1,16 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import NewInvoiceMenu from '../projects/NewInvoiceMenu';
 import { connect } from 'react-redux';
 import { signOut } from '../../store/actions/authActions';
 
 
-const SignedInLinks = (props) => {
+const SignedInLinksAccountant = (props) => {
 
     return (
         <ul className="right">
-            <NewInvoiceMenu /> {/* DO WYJEBANIA TYLKO CREATE */}
-            {/* connect to firestore if user id / user isAcc == true to jedno jak nie to drugie */}
+            <li><NavLink to='/'>Dashboard</NavLink></li>
+            <li><NavLink to='/'>Clients</NavLink></li>
+            <li><NavLink to='/newdocument'>New Tax Deduction</NavLink></li>
             <li><a onClick={props.signOut}>Log Out</a></li>
             <li><NavLink to='/' className='btn btn-floating red lighten-2'>
                 {props.profile.initials}
@@ -25,4 +25,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(null, mapDispatchToProps)(SignedInLinks);
+export default connect(null, mapDispatchToProps)(SignedInLinksAccountant);

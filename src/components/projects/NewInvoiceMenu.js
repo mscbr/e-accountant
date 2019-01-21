@@ -77,8 +77,8 @@ export class NewInvoiceMenu extends Component {
               <Paper>
                 <ClickAwayListener onClickAway={this.handleClose}>
                   <MenuList className={classes.menuList}>
-                    <MenuItem onClick={this.handleClose}><NavLink to='/newinvoice/create'>Create New</NavLink></MenuItem>
-                    <MenuItem onClick={this.handleClose}><NavLink to='/newinvoice/send'>Send Existing</NavLink></MenuItem>
+                    <MenuItem onClick={this.handleClose}><NavLink to='/newinvoice/send'>Create New</NavLink></MenuItem>
+                    {/* <MenuItem onClick={this.handleClose}><NavLink to='/newinvoice/send'>Send Existing</NavLink></MenuItem> */}
                   </MenuList>
                 </ClickAwayListener>
               </Paper>

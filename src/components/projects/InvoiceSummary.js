@@ -2,7 +2,7 @@ import React from 'react';
 import moment from 'moment';
 
 
-const ProjectSummary = ({invoice}) => {
+const InvoiceSummary = ({invoice}) => {
     return (
         <div className="card z-depth-1 project-summary">
             <div className="card-content grey-text text-darken-3">
@@ -14,4 +14,4 @@ const ProjectSummary = ({invoice}) => {
     );
 }
 
-export default ProjectSummary; 
+export default InvoiceSummary; 

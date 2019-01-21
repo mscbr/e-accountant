@@ -1,18 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-import ProjectSummary from './ProjectSummary'
+import InvoiceSummary from './InvoiceSummary'
 
-const ProjectList = ({invoices}) => {
-    // const profile = getState().firebase.profile;
-    // console.log(profile);
+const InvoiceList = ({invoices}) => {
+    //grab invoices and sort it in desired manner 
     return (
         <div className="project-list section">
 
             { invoices && invoices.map(invoice => {
                 return (
                     <Link to={'/project/' + invoice.id} key={invoice.id}>
-                        <ProjectSummary invoice={invoice}  />
+                        <InvoiceSummary invoice={invoice}  />
                     </Link>
                 )
             })}
@@ -21,4 +20,4 @@ const ProjectList = ({invoices}) => {
     );
 }
 
-export default ProjectList;
+export default InvoiceList;

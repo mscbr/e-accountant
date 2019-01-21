@@ -9,7 +9,7 @@ import { createInvoice } from '../../store/actions/invoiceActions';
 
 registerPlugin(FilePondPluginFileValidateType);
 
-export class FileInvoice extends Component {
+export class NewDocument extends Component {
     
     constructor(props) {
         super(props);
@@ -101,4 +101,4 @@ const mapDispatchToProps = (dispatch) => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(FileInvoice);
+export default connect(mapStateToProps, mapDispatchToProps)(NewDocument);

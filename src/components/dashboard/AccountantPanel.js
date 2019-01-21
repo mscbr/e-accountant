@@ -4,10 +4,10 @@ import { firestoreConnect } from 'react-redux-firebase';
 import { compose } from 'redux';
 
 import Notifications from './Notifications';
-import ProjectList from '../projects/InvoiceList';
+import InvoiceList from '../projects/InvoiceDetails';
 import { Redirect } from 'react-router-dom';
 
-class Dashboard extends Component {
+class AccountantPanel extends Component {
     
     render() {
         //console.log(this.props);
@@ -16,10 +16,13 @@ class Dashboard extends Component {
         return (
             <div className="dashboard container">
                 <div className="row">
-                    <div className="col s12 m6">
-                        <ProjectList invoices={invoices} />
+                    <div className="col s12 m5">
+                        <InvoiceList invoices={invoices} />
                     </div>
-                    <div className="col s12 m5 offset-m1">
+                    <div className="col s12 m5">
+                        <DeductionList deductions={deductions} />
+                    </div>
+                    <div className="col s12 m2 offset-m1">
                         <Notifications notifications={notifications} />
                     </div>
                 </div>
@@ -42,7 +45,7 @@ export default compose(
     firestoreConnect([{ collection: 'invoices', orderBy: ['createdAt', 'desc'] /*ADD USERS COLLECTION & PASS UID AS A PROPS TO PROJECT LIST*/},
         { collection: 'notifications', limit: 3, orderBy: ['time', 'desc'] }
     ])
-)(Dashboard);
+)(AccountantPanel);
 
 
 

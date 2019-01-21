@@ -6,11 +6,11 @@ import './index.css';
 
 import Navbar from './components/layout/Navbar';
 import Dashboard from './components/dashboard/Dashboard';
-import ProjectDetails from './components/projects/ProjectDetails';
+import InvoiceDetails from './components/projects/InvoiceDetails';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
-import FileInvoice from './components/projects/FileInvoice';
-import CreateInvoice from './components/projects/create-invoice/CreateInvoice';
+import NewDocument from './components/projects/NewDocument';
+
 import Entry from './components/auth/Entry';
 
 
@@ -25,10 +25,10 @@ class App extends Component {
         <div className="App">
           <Navbar />
             <Switch>
-              <Route path='/newinvoice/send' component={FileInvoice} />
-              <Route path='/newinvoice/create' component={CreateInvoice} />
+              <Route path='/newdocument' component={NewDocument} />
+              
               <Route path='/dashboard' component={Dashboard} />
-              <Route path='/project/:id' component={ProjectDetails} />
+              <Route path='/project/:id' component={InvoiceDetails} />
             
               
               <Route path='/signin' component={SignIn} />
