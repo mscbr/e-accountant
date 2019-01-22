@@ -9,9 +9,7 @@ const Navbar = (props) => {
     const { auth, profile } = props;
     //console.log(auth);
     const links = auth.uid ? (
-        profile.isAcc ? <SignedInLinksAccountant profile={profile} /> : <SignedInLinksClient profile={profile} />
-        
-        // <SignedInLinks profile={profile} />
+            profile.isAcc ? <SignedInLinksAccountant profile={profile} /> : <SignedInLinksClient profile={profile} />
         ) : <SignedOutLinks />;
     return (
         <nav className="nav-wrapper teal darken-3">

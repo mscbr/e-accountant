@@ -14,8 +14,9 @@ export class NewDocument extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            docType: 'invalid',
             title: '',
-            date: '',
+            issueDate: '',
             comment: '',
             files: []
         }
@@ -38,6 +39,8 @@ export class NewDocument extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
+        //different actons x doc type
+        
         this.props.createInvoice(this.state);
         this.props.history.push('/dashboard');
     }
@@ -50,12 +53,20 @@ export class NewDocument extends Component {
             <form onSubmit={this.handleSubmit} className="white">
                 <h5 className="grey-text text-darken-3">Send New Invoice</h5>
                 <div className="input-field">
+                    <select className="browser-default" name="docType" id="docType" onChange={this.handleChange} value={this.state.docType} >
+                        <option value="invalid" defaultValue disabled>Type of Document</option>
+                        <option value="sale">Sale Invoice</option>
+                        <option value="expence">Expence Invoice</option>
+                        <option value="other">Other Document</option>    
+                    </select>
+                </div>
+                <div className="input-field">
                     <label htmlFor="title">Title</label>
                     <input type="text" id="title" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
-                    <label htmlFor="date">Date of issue</label>
-                    <input type='date' id='date' onChange={this.handleChange} />
+                    <label htmlFor="issueDate">Date of issue</label>
+                    <input type='date' id='issueDate' onChange={this.handleChange} />
                 </div>
                 <div className="input-field">
                     <label htmlFor="" id="upload" className="active">Upload</label>

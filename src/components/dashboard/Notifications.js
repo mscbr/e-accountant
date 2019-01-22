@@ -3,7 +3,7 @@ import moment from 'moment';
 
 const Notifications = (props) => {
     const {notifications} = props;
-    console.log(props)
+    //console.log(props)
     return (
        <div className="section notifications">
            <div className="card z-depth-0">
