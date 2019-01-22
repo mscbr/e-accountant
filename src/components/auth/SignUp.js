@@ -33,7 +33,7 @@ export class SignUp extends Component {
         console.log(this.state);   
     }
     disableSubmit = () => {
-        //FIX THIS SHIT - check out hooks and mount it to const/let
+        //FIX THIS - check out hooks and mount it to const/let
         let values = Object.values(this.state);
         for (let i = 0; i < values.length; i++) {
             if (values[i]) {
