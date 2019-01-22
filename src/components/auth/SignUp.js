@@ -11,8 +11,12 @@ export class SignUp extends Component {
         this.state = {
             email: '',
             password: '',
-            firstName: '',
-            lastName: '',
+            clientName: '',
+            adress: '',
+            legalForm: '',
+            nip: '',
+            regon: '',
+            phoneNumber: '',
             accountant: "false"
         }
     }
@@ -25,17 +29,28 @@ export class SignUp extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        this.props.signUp(this.state);
-        //console.log(this.state);
-        
+        //this.props.signUp(this.state);
+        console.log(this.state);   
+    }
+    disableSubmit = () => {
+        //FIX THIS SHIT - check out hooks and mount it to const/let
+        let values = Object.values(this.state);
+        for (let i = 0; i < values.length; i++) {
+            if (values[i]) {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        //return false; //false ~ not disabled - true ~ disabled
     }
   render() {
     const { auth, authError } = this.props;
     if(auth.uid) return <Redirect to='/dashboard' />
-        
-
+   
     return (
-      <div>
+      
+      <div id="signup-form">
             <form onSubmit={this.handleSubmit} className="white form-sign">
                 <h5 className="grey-text text-darken-3">Sign Up</h5>
                 <div className="input-field">
@@ -47,12 +62,28 @@ export class SignUp extends Component {
                     <input type="password" id="password" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
-                    <label htmlFor="firstName">First Name</label>
-                    <input type="text" id="firstName" onChange={this.handleChange} /> 
+                    <label htmlFor="clientName">Name</label>
+                    <input type="text" id="clientName" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
-                    <label htmlFor="lastName">Last Name</label>
-                    <input type="text" id="lastName" onChange={this.handleChange} /> 
+                    <label htmlFor="adress">Adress</label>
+                    <textarea id="adress" className='materialize-textarea' onChange={this.handleChange} />
+                </div>
+                <div className="input-field">
+                    <label htmlFor="legalForm">Legal Form (sp. z.o.o., sp. jawna...)</label>
+                    <input type="text" id="legalForm" onChange={this.handleChange} /> 
+                </div>
+                <div className="input-field">
+                    <label htmlFor="nip">NIP</label>
+                    <input type="number" id="nip" onChange={this.handleChange} /> 
+                </div>
+                <div className="input-field">
+                    <label htmlFor="regon">REGON</label>
+                    <input type="number" id="regon" onChange={this.handleChange} /> 
+                </div>
+                <div className="input-field">
+                    <label htmlFor="phoneNumber">Phone no.</label>
+                    <input type="text" id="phoneNumber" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
                     <select className="browser-default" name="accountant" id="accountant" onChange={this.handleChange} value={this.state.accountant} >
@@ -62,7 +93,7 @@ export class SignUp extends Component {
                
                 </div>
                 <div className="input-field">
-                    <button type='submit' className="btn red lighten-1 z-depth-0" >Sign Up</button>
+                    <button type='submit' disabled={this.disableSubmit()} className="btn red lighten-1 z-depth-0" >Sign Up</button>
                     <div className="red-text center">
                         { authError ? <p>{ authError } </p> : null }
                     </div>

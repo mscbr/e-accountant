@@ -16,6 +16,9 @@ const styles = theme => ({
       '&:focus' : {
         backgroundColor: '#00695c'
       }
+    },
+    dialog: {
+      width: 'auto'
     }
   });
 
@@ -48,7 +51,7 @@ export class SignUpDialogNav extends Component {
         open={this.state.open}
         onClose={this.handleClose}
         aria-labelledby="form-dialog-title"
-        
+        className={classes.dialog}
         maxWidth='xl'
         >
             <SignUp closeDialog={this.handleClose} />

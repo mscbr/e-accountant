@@ -91,7 +91,8 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   margin-top: 4px;
 }
 .form-sign {
-  width: 35vw;
+  width: 45vw;
+  overflow: auto;
   
 }
 .zindex66 {
