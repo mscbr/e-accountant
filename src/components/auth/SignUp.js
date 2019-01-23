@@ -29,8 +29,8 @@ export class SignUp extends Component {
     }
     handleSubmit = (e) => {
         e.preventDefault();
-        //this.props.signUp(this.state);
-        console.log(this.state);   
+        this.props.signUp(this.state);
+        //console.log(this.state);   
     }
     disableSubmit = () => {
         //check if any value in this.state is 'empty'
