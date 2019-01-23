@@ -33,16 +33,10 @@ export class SignUp extends Component {
         console.log(this.state);   
     }
     disableSubmit = () => {
-        //FIX THIS - check out hooks and mount it to const/let
+        //check if any value in this.state is 'empty'
         let values = Object.values(this.state);
-        for (let i = 0; i < values.length; i++) {
-            if (values[i]) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-        //return false; //false ~ not disabled - true ~ disabled
+        return values.some(value => value.length < 1);
+      
     }
   render() {
     const { auth, authError } = this.props;
