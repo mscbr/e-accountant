@@ -40,7 +40,7 @@ export const signUp = (newUser) => {
 
             return firestore.collection('users').doc(resp.user.uid).set({
                 clientName: newUser.clientName,
-                initials: newUser.accountant === "true" ? 'acc' : 'cli',
+                initials: newUser.clientName.slice(0,3),
                 adress: newUser.adress,
                 legalForm: newUser.legalForm,
                 nip: newUser.nip,

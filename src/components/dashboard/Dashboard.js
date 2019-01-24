@@ -18,7 +18,7 @@ class Dashboard extends Component {
         if (!auth.uid) return <Redirect to='/' />
         
         if (isLoaded) {
-            const invoices1 = Object.assign( invoices, expenceInvoices);
+            const invoices1 = Object.values(Object.assign({}, invoices, expenceInvoices));
             console.log(invoices1);
               return (
                     <div className="dashboard container">
