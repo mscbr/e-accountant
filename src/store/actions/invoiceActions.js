@@ -7,25 +7,10 @@ export const createInvoice = (invoice) => {
         const firestore = getFirestore();
         const profile = getState().firebase.profile;
         const authorId = getState().firebase.auth.uid;
-        let collectionType = null;
-        //setting up collection due to the invoice type
-        switch(invoice.docType) {
-            case 'sale':
-                collectionType = 'saleInvoices';
-                break;
-            case 'expence':
-                collectionType = 'expenceInvoices';
-                break;
-            case 'other':
-                collectionType = 'otherDocuments';
-                break;
-            default:
-                collectionType = null;
-                
-        }
-        console.log('collection: '+ collectionType);
+        
+        console.log('docType: '+ invoice.docType);
 
-        firestore.collection(collectionType).add({
+        firestore.collection('invoices').add({
             ...invoice,
             firstName: profile.firstName,
             lastName: profile.lastName,

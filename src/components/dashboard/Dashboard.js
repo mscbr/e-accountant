@@ -11,32 +11,28 @@ class Dashboard extends Component {
     
     render() {
         
-        const { saleInvoices, expenceInvoices, otherDocuments ,auth} = this.props;
-        const isLoaded = saleInvoices && expenceInvoices && otherDocuments ? true : false;
-        //console.log('isLoaded: '+ isLoaded);
-        
+        const { invoices, auth} = this.props;
+        const isLoaded = invoices ? true : false;
         if (!auth.uid) return <Redirect to='/' />
         
         if (isLoaded) {
-            const invoices =[...saleInvoices, ...expenceInvoices, ...otherDocuments];
-            
-              return (
-                    <div className="dashboard container">
-                        <div className="row">
-                            <div className="col s12 m6">
-                                <div className="card z-depth-0 teal darken-3">
-                                    <span className="card-title white-text">INVOICES</span>
-                                </div>
-
-                                <InvoiceList invoices={invoices} />
+            return (
+                <div className="dashboard container">
+                    <div className="row">
+                        <div className="col s12 m6">
+                            <div className="card z-depth-0 teal darken-3">
+                                <span className="card-title white-text">INVOICES</span>
                             </div>
-                            <div className="col s12 m6">
-                                <div className="card z-depth-0 teal darken-3">
-                                    <span className="card-title white-text">SETTLEMENTS</span>
-                                </div>
+
+                            <InvoiceList invoices={invoices} />
+                        </div>
+                        <div className="col s12 m6">
+                            <div className="card z-depth-0 teal darken-3">
+                                <span className="card-title white-text">SETTLEMENTS</span>
                             </div>
                         </div>
                     </div>
+                </div>
                 );
         } else {
             return ( 
@@ -50,21 +46,16 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-    //console.log(state);
+    console.log(state);
     return {
-        saleInvoices: state.firestore.ordered.saleInvoices,
-        expenceInvoices: state.firestore.ordered.expenceInvoices,
-        otherDocuments: state.firestore.ordered.otherDocuments,
-        auth: state.firebase.auth,
-        //notifications: state.firestore.ordered.notifications
+        invoices: state.firestore.ordered.invoices,
+        auth: state.firebase.auth   
     }
 }
 
 export default compose(
     connect(mapStateToProps),
-    firestoreConnect([{ collection: 'saleInvoices', orderBy: ['createdAt', 'desc'] },
-        { collection: 'otherDocuments', orderBy: ['createdAt', 'desc'] },
-        { collection: 'expenceInvoices', orderBy: ['createdAt', 'desc'] }
+    firestoreConnect([{ collection: 'invoices', orderBy: ['createdAt', 'desc'] }
     ])
 )(Dashboard);
 
