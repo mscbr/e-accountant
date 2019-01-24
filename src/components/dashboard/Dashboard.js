@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
+import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { compose } from 'redux';
 
 
@@ -12,16 +12,15 @@ class Dashboard extends Component {
     render() {
         
         const { invoices, auth} = this.props;
-        const isLoaded = invoices ? true : false;
-        if (!auth.uid) return <Redirect to='/' />
-        
-        if (isLoaded) {
+        if (!auth.uid) {
+            return <Redirect to='/' />;
+        } else if (isLoaded) {
             return (
                 <div className="dashboard container">
                     <div className="row">
                         <div className="col s12 m6">
                             <div className="card z-depth-0 teal darken-3">
-                                <span className="card-title white-text">INVOICES</span>
+                                <span className="card-title white-text bold">INVOICES</span>
                             </div>
 
                             <InvoiceList invoices={invoices} />
@@ -41,7 +40,6 @@ class Dashboard extends Component {
                 </div>
             );
         }
-        
     }
 }
 
@@ -55,7 +53,10 @@ const mapStateToProps = (state) => {
 
 export default compose(
     connect(mapStateToProps),
-    firestoreConnect([{ collection: 'invoices', orderBy: ['createdAt', 'desc'] }
+    firestoreConnect((props) => [
+        { collection: 'invoices', where: [
+            'userId', '==', props.auth.uid ? props.auth.uid : null
+        ], orderBy: ['createdAt', 'desc'] }
     ])
 )(Dashboard);
 
