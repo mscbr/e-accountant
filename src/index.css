@@ -105,3 +105,11 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 .dashboard-icon:hover {
   transform: scale(1.7);
 }
+.project-summary {
+  padding: 0px;
+  margin: 5px;
+  line-height: 1.2;
+}
+.project-summary .card-content {
+  padding: 5px;
+}
