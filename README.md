@@ -70,3 +70,4 @@ This section has moved here: https://facebook.github.io/create-react-app/docs/tr
 
 GENERAL ISSUES OF e-accounting app:
     -keyboard bindings (enter x signup...)
+    -send invoice validation (at the end #file)
