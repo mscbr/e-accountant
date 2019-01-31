@@ -44,7 +44,7 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-    console.log(state);
+    //console.log(state);
     return {
         invoices: state.firestore.ordered.invoices,
         auth: state.firebase.auth   
@@ -55,7 +55,7 @@ export default compose(
     connect(mapStateToProps),
     firestoreConnect((props) => [
         { collection: 'invoices', where: [
-            'userId', '==', props.auth.uid ? props.auth.uid : null
+            'userId', '==', props.auth.uid
         ], orderBy: ['createdAt', 'desc'] }
     ])
 )(Dashboard);
