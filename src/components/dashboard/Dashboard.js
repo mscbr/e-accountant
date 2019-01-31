@@ -14,7 +14,7 @@ class Dashboard extends Component {
         const { invoices, auth} = this.props;
         if (!auth.uid) {
             return <Redirect to='/' />;
-        } else if (isLoaded) {
+        } else if (isLoaded(invoices)) {
             return (
                 <div className="dashboard container">
                     <div className="row">
@@ -55,7 +55,7 @@ export default compose(
     connect(mapStateToProps),
     firestoreConnect((props) => [
         { collection: 'invoices', where: [
-            'userId', '==', props.auth.uid
+            'userId', '==', props.auth.uid ? props.auth.uid : null
         ], orderBy: ['createdAt', 'desc'] }
     ])
 )(Dashboard);
