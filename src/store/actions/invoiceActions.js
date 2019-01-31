@@ -3,7 +3,7 @@
 
 export const createInvoice = (invoice) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
-        //make async call to database  
+        //async call to database  
         const firestore = getFirestore();
         const profile = getState().firebase.profile;
         const authorId = getState().firebase.auth.uid;
@@ -12,8 +12,7 @@ export const createInvoice = (invoice) => {
 
         firestore.collection('invoices').add({
             ...invoice,
-            firstName: profile.firstName,
-            lastName: profile.lastName,
+            clientName: profile.clientName,
             userId: authorId,
             createdAt: new Date(),
             opened: false,
@@ -25,3 +24,9 @@ export const createInvoice = (invoice) => {
         });
     }
 }; 
+
+export const deleteInvoice = () => {
+    return () => {
+
+    }
+};

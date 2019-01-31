@@ -18,7 +18,7 @@ const InvoiceDetails = (props) => {
                         <p>Comments: {invoice.comment}</p>
                     </div>
                     <div className="card-action grey lighten-4 grey-text">
-                        <div>Posted by the {invoice.firstName} {invoice.lastName}</div>
+                        <div>Posted by the {invoice.clientName}</div>
                         <div>{moment(invoice.createdAt.toDate()).calendar()}</div>
                     </div>
                 </div>

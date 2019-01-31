@@ -21,7 +21,7 @@ exports.projectCreated = functions.firestore
         const invoice = doc.data();
         const notification = {
             content: 'New invoice has been created!',
-            user: `${invoice.firstName} ${invoice.lastName}`,
+            user: `${invoice.clientName}`,
             time: admin.firestore.FieldValue.serverTimestamp()
         }
 
@@ -36,7 +36,7 @@ exports.userJoined = functions.firestore
         const newUser = doc.data();
         const notification = {
             content: "New user joined!",
-            user: `${newUser.firstName} ${newUser.lastName}`,
+            user: `${newUser.clientName}`,
             time: admin.firestore.FieldValue.serverTimestamp()
         }
         
