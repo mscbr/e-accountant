@@ -113,3 +113,12 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 .project-summary .card-content {
   padding: 5px;
 }
+
+.invoice-delete-card {
+  padding: 25px;
+  text-align: center;
+}
+.invoice-delete-card span {
+  color: #ef5350;
+  font-weight: 800;
+}

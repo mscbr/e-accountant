@@ -11,6 +11,12 @@ const invoiceReducer = (state = initState, action) => {
         case 'CREATE_INVOICE_ERROR':
             console.log('create project error: ', action.err);
             return state;
+        case 'DELETE_INVOICE':
+            console.log('invoice '+action.invoiceId+' successfully deleted');
+            return state;
+        case 'DELETE_INVOICE_ERROR':
+            console.log('delete invoice error', action.err);
+            return state;
         default:
             return state;    
     }

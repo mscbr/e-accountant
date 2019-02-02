@@ -8,7 +8,7 @@ export const createInvoice = (invoice) => {
         const profile = getState().firebase.profile;
         const authorId = getState().firebase.auth.uid;
         
-        //console.log('docType: '+ invoice.docType);
+        
 
         firestore.collection('invoices').add({
             ...invoice,
@@ -26,7 +26,7 @@ export const createInvoice = (invoice) => {
 }; 
 
 export const deleteInvoice = (invoiceId) => {
-    return (dispatch, {getFirebase, getFirestore}) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
 
         firestore.collection('invoices').doc(invoiceId).delete().then(() => {
