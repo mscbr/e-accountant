@@ -21,7 +21,7 @@ const styles = theme => ({
     
   });
 
-export class SignInDialogNav extends Component {
+class SignInDialogNav extends Component {
     constructor(props) {
         super(props);
         this.state = {
