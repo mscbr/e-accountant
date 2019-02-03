@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
-import { FilePond, File, registerPlugin } from 'react-filepond';
 import { Redirect } from 'react-router-dom';
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import 'filepond/dist/filepond.min.css';
+
 
 import { connect } from 'react-redux';
 import { createInvoice } from '../../store/actions/invoiceActions';
 
-registerPlugin(FilePondPluginFileValidateType);
+
 
 export class NewDocument extends Component {
     
@@ -70,20 +68,7 @@ export class NewDocument extends Component {
                 </div>
                 <div className="input-field">
                     <label htmlFor="" id="upload" className="active">Upload</label>
-                    <FilePond className='filepond' labelIdle="Drag & Drop your invoice or <span class='filepond--label-action'> Browse </span>"
-                        maxFiles={3}
-                        allowMultiple={true}
-                        onupdatefiles={this.handleFile} 
-                        server="gs://e-accountant-b98af.appspot.com"
-                        oninit={() => this.handleInit() }
-                        allowFileTypeValidation={true}
-                        acceptedFileTypes={['image/*', 'application/pdf']}
-                        labelFileTypeNotAllowed='File of invalid type'
-                        >
-                    {this.state.files.map(file => (
-                    <File key={file} src={file} origin="local" />
-                        ))}
-                    </FilePond>
+                    
                         
                 </div>
                 <div className="input-field">
