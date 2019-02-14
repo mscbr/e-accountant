@@ -22,6 +22,7 @@ export class NewDocument extends Component {
             isUploading: false,
             progress: 0
         };
+        
     }
 
     handleChange = (e) => {
@@ -48,13 +49,8 @@ export class NewDocument extends Component {
         console.log(this.state);
     }
     //FILE UPLOAD METHODS
-    onDrop = (acceptedFiles, rejectedFiles) => {
-        console.log('ACCEPTED:');
-        console.log(acceptedFiles);
-        console.log('REJECTED:');
-        console.log(rejectedFiles);
-
-        acceptedFiles.map(file => {
+    handleUpload = (files) => {
+        files.map(file => {
             firebase
                 .storage()
                 .ref('uploaded')
@@ -62,15 +58,48 @@ export class NewDocument extends Component {
                 .put(file);
                 
         })
-        // firebase
-        //     .storage()
-        //     .ref('uploaded')
-        //     .child(acceptedFiles.filename)
-        //     .getDownloadURL()
-        //     .then((url) => {
-        //         console.log('URL: '+url);
-        //         //this.setState({ fileUrl: url });
-        //     });
+    }
+
+    onDrop = (acceptedFiles, rejectedFiles) => {
+        console.log('ACCEPTED:');
+        console.log(acceptedFiles);
+        console.log('REJECTED:');
+        console.log(rejectedFiles);
+
+        acceptedFiles.map(file => {
+            const fileName = new Date().getTime() + '_' +file.name;
+            firebase
+                .storage()
+                .ref('uploaded')
+                .child(fileName)
+                .put(file)
+                .on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
+                    (snapshot) => {
+                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
+                        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                        console.log('Upload is ' + progress + '% done');
+                        switch (snapshot.state) {
+                        case firebase.storage.TaskState.PAUSED: // or 'paused'
+                            console.log('Upload is paused');
+                            break;
+                        case firebase.storage.TaskState.RUNNING: // or 'running'
+                            console.log('Upload is running');
+                            break;
+                        }
+                    }, (error) => {
+                        console.log(error);
+                    }, () => {
+                        firebase
+                            .storage()
+                            .ref('uploaded')
+                            .child(fileName)
+                            .getDownloadURL().then((downloadURL) => {
+                                console.log('File available at', downloadURL);
+                            });
+                        }
+                )
+        })
+       
     }
 
 
