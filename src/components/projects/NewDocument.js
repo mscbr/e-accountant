@@ -1,19 +1,11 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { compose } from 'redux';
-import { firebaseConnect } from 'react-redux-firebase';
-
-import PropTypes from 'prop-types';
+import firebase from "firebase";
+import classNames from 'classnames'
+import Dropzone from 'react-dropzone'
 import { connect } from 'react-redux';
 import { createInvoice } from '../../store/actions/invoiceActions';
-//filePond import
-import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type';
-import { FilePond, File, registerPlugin } from 'react-filepond';
-import 'filepond/dist/filepond.min.css';
 
-
-
-registerPlugin(FilePondPluginFileValidateType);
 
 export class NewDocument extends Component {
     
@@ -24,35 +16,93 @@ export class NewDocument extends Component {
             title: '',
             issueDate: '',
             comment: '',
-            files: []
-        }
-    }
-   
-    handleInit() {
-        console.log('FilePond instance has initialised', this.pond);
+            fileName: '',
+            fileUrl: '',
+            //data that is not passed 
+            isUploading: false,
+            progress: 0
+        };
     }
 
     handleChange = (e) => {
-        
         this.setState({
             [e.target.id]: e.target.value
         });
     }
-    handleFile = (fileItems) => {
-        fileItems.map(file => {
-            console.log(file.file);
-        })
-        this.setState({
-            files: fileItems.map(fileItem => fileItem.file)
-        });
-    }
+    
     handleSubmit = (e) => {
         e.preventDefault();
-        //different actons x doc type
-        
-        this.props.createInvoice(this.state);
-        this.props.history.push('/dashboard');
+        //FILTER OUT PASSED DATA
+        const invoiceData = {
+            docType: this.state.docType,
+            title: this.state.title,
+            issueDate: this.state.issueDate,
+            comment: this.state.comment,
+            fileName: this.state.fileName,
+            fileUrl: this.state.fileUrl
+        }
+        console.log(invoiceData);
+        console.log('====');
+        //this.props.createInvoice(this.state);
+        //this.props.history.push('/dashboard');
+        console.log(this.state);
     }
+    //FILE UPLOAD METHODS
+    onDrop = (acceptedFiles, rejectedFiles) => {
+        console.log('ACCEPTED:');
+        console.log(acceptedFiles);
+        console.log('REJECTED:');
+        console.log(rejectedFiles);
+
+        acceptedFiles.map(file => {
+            firebase
+                .storage()
+                .ref('uploaded')
+                .child(new Date().getTime() + '_'+file.name)
+                .put(file);
+                
+        })
+        // firebase
+        //     .storage()
+        //     .ref('uploaded')
+        //     .child(acceptedFiles.filename)
+        //     .getDownloadURL()
+        //     .then((url) => {
+        //         console.log('URL: '+url);
+        //         //this.setState({ fileUrl: url });
+        //     });
+    }
+
+
+    // handleUploadStart = () => {
+    //     this.setState({
+    //         isUploading: true
+    //     });
+    // }
+    // handleProgress = (progress) => {
+    //     this.setState({ progress });
+    // }
+    // handleUploadError = (error) => {
+    //     this.setState({ isUploading: false });
+    //     console.log(error);
+    // }
+    // handleUploadSucces = (filename) => {
+    //     this.setState({
+    //         fileName: filename,
+    //         progress: 100,
+    //         isUploading: false
+    //     });
+    //     firebase
+    //         .storage()
+    //         .ref('uploaded')
+    //         .child(filename)
+    //         .getDownloadURL()
+    //         .then((url) => {
+    //             console.log('URL: '+url);
+    //             //this.setState({ fileUrl: url });
+    //         });
+    // }
+
     render() {
         const { auth } = this.props;
         if (!auth.uid) return <Redirect to='/' />
@@ -78,22 +128,44 @@ export class NewDocument extends Component {
                         <input type='date' id='issueDate' onChange={this.handleChange} />
                     </div>
                     <div className="input-field">
-                        <label htmlFor="" id="upload" className="active">Upload</label>
-                        <FilePond className='filepond' labelIdle="Drag & Drop your invoice or <span class='filepond--label-action'> Browse </span>"
-                            maxFiles={3}
-                            allowMultiple={true}
-                            onupdatefiles={this.handleFile} 
-                            
-                            
-                            allowFileTypeValidation={true}
-                            acceptedFileTypes={['image/*', 'application/pdf']}
-                            labelFileTypeNotAllowed='File of invalid type'
-                            >
-                        {this.state.files.map(file => (
-                        <File key={file} src={file} origin="local" />
-                            ))}
-                        </FilePond>
-                            
+
+                    <Dropzone accept="image/*,application/pdf"
+                        onDrop={this.onDrop}
+                    >
+                        {({getRootProps, getInputProps, isDragActive}) => {
+                            return (
+                                <div 
+                                    {...getRootProps()}
+                                    className={classNames('dropzone', {'dropzone--isActive': isDragActive})}
+                                >
+                                    <input {...getInputProps()} />
+                                    {
+                                        isDragActive ?
+                                        <p>Drop files here...</p> :
+                                        <p>Drop your invoice files here (image/pdf)</p>
+                                    }
+                                </div>
+                            )
+                        }}
+                    </Dropzone>
+
+
+
+
+
+                        {/* <label htmlFor="" className="active">Upload:</label> */}
+                        {/* {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
+                        {this.state.fileUrl && <img src={this.state.fileUrl} />}
+                        <FileUploader
+                            accept="image/*"
+                            name="avatar"
+                            randomizeFilename
+                            storageRef={firebase.storage().ref("uploaded")}
+                            onUploadStart={this.handleUploadStart}
+                            onUploadError={this.handleUploadError}
+                            onUploadSuccess={this.handleUploadSuccess}
+                            onProgress={this.handleProgress}
+                        />     */}
                     </div>
                     <div className="input-field">
                         <label htmlFor="comment">Comment</label>

@@ -8,7 +8,11 @@ export const createInvoice = (invoice) => {
         const profile = getState().firebase.profile;
         const authorId = getState().firebase.auth.uid;
         
-        
+        //multiple function execution test
+        function test() {
+            console.log('testing multiple funcs');
+        }
+        test();
 
         firestore.collection('invoices').add({
             ...invoice,

@@ -123,3 +123,14 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   font-weight: 800;
 }
 
+.dropzone {
+  border: 1px dashed grey;
+  border-radius: 10px;
+  text-align: center;
+  background: rgba(248, 248, 248, 0.473);
+  transition: 0.3s;
+}
+.dropzone--isActive {
+  background: white;
+  transition: 0.3s;
+}
