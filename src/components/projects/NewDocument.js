@@ -35,16 +35,19 @@ const thumbInner = {
 
 const img = {
     display: 'block',
+    position: 'relative',
     width: 'auto',
-    height: '100%'
-};
-const deleteButton = {
+    height: '100%',
+    zIndex: 0
+}
+const deleteButtonStyle = {
     position: 'absolute',
     width: '25px',
     height: '25px',
-    zIndex: '2',
-    top: 40,
-    left: 80
+    zIndex: 2,
+    marginTop: 0,
+    textAlign: 'center'
+    
 }
 
 
@@ -60,8 +63,7 @@ export class NewDocument extends Component {
             filesName: [],
             filesUrl: {},
             //data that is not passed 
-            uploadProgress: 0,
-            previews: {}
+            uploadProgress: 0
 
         };
         
@@ -90,23 +92,10 @@ export class NewDocument extends Component {
         //this.props.history.push('/dashboard');
         console.log(this.state);
     }
+
     //FILE UPLOAD METHODS
-    handleUpload = (files) => {
-        files.map(file => {
-            firebase
-                .storage()
-                .ref('uploaded')
-                .child(new Date().getTime() + '_'+file.name)
-                .put(file);
-                
-        })
-    }
 
     onDrop = (acceptedFiles, rejectedFiles) => {
-        // console.log('ACCEPTED:');
-        // console.log(acceptedFiles);
-        // console.log('REJECTED:');
-        // console.log(rejectedFiles);
 
         acceptedFiles.map(file => {
             const fileName = new Date().getTime() + '_' +file.name;
@@ -152,17 +141,30 @@ export class NewDocument extends Component {
                 )
         })
     }
-    handleDelete = (filename) => {
-        firebase
-            .storage()
-            .ref('uploaded')
-            .child(filename)
-            .delete()
-            .then(() => {
-                console.log(filename+' deleted successfully!');
-            }).catch((error) => {
-                console.log(error);
-            });
+
+    handleDelete = (e) => {
+        e.preventDefault();
+        //console.log('deleted!');
+        const filesName = this.state.filesName;
+        filesName.map(file => {
+            firebase
+                .storage()
+                .ref('uploaded')
+                .child(file)
+                .delete()
+                .then(() => {
+                    this.setState({
+                        filesName: [],
+                        filesUrl: {},
+                        uploadProgress: 0
+                    })
+
+                    console.log('files deleted successfully!');
+                }).catch((error) => {
+                    console.log(error);
+                });
+        })
+        
     }
 
     render() {
@@ -174,17 +176,26 @@ export class NewDocument extends Component {
             return (
                 <div style={thumb} key={fileName}>
                     <div style={thumbInner}>
-                        <button className="btn-floating red lighten-1" style={deleteButton}>
-                            <i className="small material-icons">delete</i>
-                        </button>
                         <img
                             src={previews[fileName]}
                             style={img}
+                            alt={fileName}
                         />
+                        
                     </div>
                 </div>
             );
         }) : console.log('uploading');
+        const deleteButton = uploadProgress > 0 ? (
+            <button className="btn-floating red lighten-1" style={deleteButtonStyle} onClick={(e) => this.handleDelete(e)}>
+                <i className="small material-icons" style={{marginTop: -7}}>delete</i>
+            </button>
+        ) : console.log('nothing to delete!');
+
+        
+                
+            
+        
 
         const { auth } = this.props;
         if (!auth.uid) return <Redirect to='/' />
@@ -231,7 +242,9 @@ export class NewDocument extends Component {
                             }}
                         </Dropzone>
                         <aside style={thumbsContainer}>
-                            {thumbs}
+                            {thumbs} 
+                            {deleteButton}
+                            
                             <p>{uploadProgress < 100 && uploadProgress > 0 ? `uploading...${uploadProgress}%` : ''}</p>
                             
                         </aside>
