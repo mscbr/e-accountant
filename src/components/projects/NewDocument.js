@@ -7,6 +7,47 @@ import { connect } from 'react-redux';
 import { createInvoice } from '../../store/actions/invoiceActions';
 
 
+//styling variables for dropzone preview box
+const thumbsContainer = {
+    display: 'flex',
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    marginTop: 16
+  };
+  
+const thumb = {
+    display: 'inline-flex',
+    borderRadius: 2,
+    border: '1px solid #eaeaea',
+    marginBottom: 8,
+    marginRight: 8,
+    width: 100,
+    height: 100,
+    padding: 4,
+    boxSizing: 'border-box'
+};
+
+const thumbInner = {
+    display: 'flex',
+    minWidth: 0,
+    overflow: 'hidden'
+};
+
+const img = {
+    display: 'block',
+    width: 'auto',
+    height: '100%'
+};
+const deleteButton = {
+    position: 'absolute',
+    width: '25px',
+    height: '25px',
+    zIndex: '2',
+    top: 40,
+    left: 80
+}
+
+
 export class NewDocument extends Component {
     
     constructor(props) {
@@ -16,11 +57,12 @@ export class NewDocument extends Component {
             title: '',
             issueDate: '',
             comment: '',
-            fileName: '',
-            fileUrl: '',
+            filesName: [],
+            filesUrl: {},
             //data that is not passed 
-            isUploading: false,
-            progress: 0
+            uploadProgress: 0,
+            previews: {}
+
         };
         
     }
@@ -39,8 +81,8 @@ export class NewDocument extends Component {
             title: this.state.title,
             issueDate: this.state.issueDate,
             comment: this.state.comment,
-            fileName: this.state.fileName,
-            fileUrl: this.state.fileUrl
+            filesName: this.state.filesName,
+            filesUrl: this.state.filesUrl
         }
         console.log(invoiceData);
         console.log('====');
@@ -61,10 +103,10 @@ export class NewDocument extends Component {
     }
 
     onDrop = (acceptedFiles, rejectedFiles) => {
-        console.log('ACCEPTED:');
-        console.log(acceptedFiles);
-        console.log('REJECTED:');
-        console.log(rejectedFiles);
+        // console.log('ACCEPTED:');
+        // console.log(acceptedFiles);
+        // console.log('REJECTED:');
+        // console.log(rejectedFiles);
 
         acceptedFiles.map(file => {
             const fileName = new Date().getTime() + '_' +file.name;
@@ -78,13 +120,16 @@ export class NewDocument extends Component {
                         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
                         var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
                         console.log('Upload is ' + progress + '% done');
+                        this.setState({
+                            uploadProgress: progress
+                        });
                         switch (snapshot.state) {
-                        case firebase.storage.TaskState.PAUSED: // or 'paused'
-                            console.log('Upload is paused');
-                            break;
-                        case firebase.storage.TaskState.RUNNING: // or 'running'
-                            console.log('Upload is running');
-                            break;
+                            case firebase.storage.TaskState.PAUSED: // or 'paused'
+                                console.log('Upload is paused');
+                                break;
+                            case firebase.storage.TaskState.RUNNING: // or 'running'
+                                console.log('Upload is running');
+                                break;
                         }
                     }, (error) => {
                         console.log(error);
@@ -95,44 +140,52 @@ export class NewDocument extends Component {
                             .child(fileName)
                             .getDownloadURL().then((downloadURL) => {
                                 console.log('File available at', downloadURL);
+                                this.setState({
+                                    filesName: [...this.state.filesName, fileName],
+                                    filesUrl: Object.assign(this.state.filesUrl, {
+                                        [fileName]: downloadURL
+                                    })
+                                    
+                                })
                             });
                         }
                 )
         })
-       
+    }
+    handleDelete = (filename) => {
+        firebase
+            .storage()
+            .ref('uploaded')
+            .child(filename)
+            .delete()
+            .then(() => {
+                console.log(filename+' deleted successfully!');
+            }).catch((error) => {
+                console.log(error);
+            });
     }
 
-
-    // handleUploadStart = () => {
-    //     this.setState({
-    //         isUploading: true
-    //     });
-    // }
-    // handleProgress = (progress) => {
-    //     this.setState({ progress });
-    // }
-    // handleUploadError = (error) => {
-    //     this.setState({ isUploading: false });
-    //     console.log(error);
-    // }
-    // handleUploadSucces = (filename) => {
-    //     this.setState({
-    //         fileName: filename,
-    //         progress: 100,
-    //         isUploading: false
-    //     });
-    //     firebase
-    //         .storage()
-    //         .ref('uploaded')
-    //         .child(filename)
-    //         .getDownloadURL()
-    //         .then((url) => {
-    //             console.log('URL: '+url);
-    //             //this.setState({ fileUrl: url });
-    //         });
-    // }
-
     render() {
+        const previews = this.state.filesUrl;
+        const {filesName} = this.state;
+        let uploadProgress = Math.floor(this.state.uploadProgress);
+
+        const thumbs = filesName ? filesName.map(fileName => {
+            return (
+                <div style={thumb} key={fileName}>
+                    <div style={thumbInner}>
+                        <button className="btn-floating red lighten-1" style={deleteButton}>
+                            <i className="small material-icons">delete</i>
+                        </button>
+                        <img
+                            src={previews[fileName]}
+                            style={img}
+                        />
+                    </div>
+                </div>
+            );
+        }) : console.log('uploading');
+
         const { auth } = this.props;
         if (!auth.uid) return <Redirect to='/' />
         return (
@@ -158,43 +211,30 @@ export class NewDocument extends Component {
                     </div>
                     <div className="input-field">
 
-                    <Dropzone accept="image/*,application/pdf"
-                        onDrop={this.onDrop}
-                    >
-                        {({getRootProps, getInputProps, isDragActive}) => {
-                            return (
-                                <div 
-                                    {...getRootProps()}
-                                    className={classNames('dropzone', {'dropzone--isActive': isDragActive})}
-                                >
-                                    <input {...getInputProps()} />
-                                    {
-                                        isDragActive ?
-                                        <p>Drop files here...</p> :
-                                        <p>Drop your invoice files here (image/pdf)</p>
-                                    }
-                                </div>
-                            )
-                        }}
-                    </Dropzone>
-
-
-
-
-
-                        {/* <label htmlFor="" className="active">Upload:</label> */}
-                        {/* {this.state.isUploading && <p>Progress: {this.state.progress}</p>}
-                        {this.state.fileUrl && <img src={this.state.fileUrl} />}
-                        <FileUploader
-                            accept="image/*"
-                            name="avatar"
-                            randomizeFilename
-                            storageRef={firebase.storage().ref("uploaded")}
-                            onUploadStart={this.handleUploadStart}
-                            onUploadError={this.handleUploadError}
-                            onUploadSuccess={this.handleUploadSuccess}
-                            onProgress={this.handleProgress}
-                        />     */}
+                        <Dropzone accept="image/*,application/pdf"
+                            onDrop={this.onDrop}
+                        >
+                            {({getRootProps, getInputProps, isDragActive}) => {
+                                return (
+                                    <div 
+                                        {...getRootProps()}
+                                        className={classNames('dropzone', {'dropzone--isActive': isDragActive})}
+                                    >
+                                        <input {...getInputProps()} />
+                                        {
+                                            isDragActive ?
+                                            <p>Drop files here...</p> :
+                                            <p>Drop your invoice files here (image/pdf)</p>
+                                        }
+                                    </div>
+                                )
+                            }}
+                        </Dropzone>
+                        <aside style={thumbsContainer}>
+                            {thumbs}
+                            <p>{uploadProgress < 100 && uploadProgress > 0 ? `uploading...${uploadProgress}%` : ''}</p>
+                            
+                        </aside>
                     </div>
                     <div className="input-field">
                         <label htmlFor="comment">Comment</label>
