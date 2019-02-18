@@ -86,24 +86,37 @@ export class NewDocument extends Component {
             filesName: this.state.filesName,
             filesUrl: this.state.filesUrl
         }
-        console.log(invoiceData);
-        console.log('====');
-        //this.props.createInvoice(this.state);
-        //this.props.history.push('/dashboard');
-        console.log(this.state);
+        // console.log(invoiceData);
+        // console.log('====');
+        this.props.createInvoice(this.state);
+        this.props.history.push('/dashboard');
+        //console.log(this.state);
     }
 
     //FILE UPLOAD METHODS
 
     onDrop = (acceptedFiles, rejectedFiles) => {
-
+        if(rejectedFiles.length) {
+            const rejectedString = rejectedFiles.map(file => {
+                return "File "+file.name+" was not able to be uploaded.";
+            })
+            alert(rejectedString);
+        }
+        
+        const metadata = {
+            customMetadata: {
+                fileOwner: firebase.auth().currentUser.uid
+            }
+            
+        };
+        console.log(metadata);
         acceptedFiles.map(file => {
             const fileName = new Date().getTime() + '_' +file.name;
             firebase
                 .storage()
                 .ref('uploaded')
                 .child(fileName)
-                .put(file)
+                .put(file, metadata)
                 .on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
                     (snapshot) => {
                         // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
@@ -224,6 +237,7 @@ export class NewDocument extends Component {
 
                         <Dropzone accept="image/*,application/pdf"
                             onDrop={this.onDrop}
+                            maxSize={6291456}
                         >
                             {({getRootProps, getInputProps, isDragActive}) => {
                                 return (
