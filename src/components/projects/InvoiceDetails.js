@@ -40,7 +40,17 @@ const img = {
     width: 'auto',
     height: '100%',
     zIndex: 0
-}
+};
+
+const uploadButtonStyle = {
+    position: 'absolute',
+    width: '25px',
+    height: '25px',
+    zIndex: 2,
+    marginTop: 0,
+    textAlign: 'center'
+    
+};
 
 class InvoiceDetails extends Component {
     constructor(props) {
@@ -68,29 +78,53 @@ class InvoiceDetails extends Component {
         this.props.history.push('/dashboard');
     }
 
+    createDownloadButton = (fileURL, id) => {
+       
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', fileURL, true);
+        xhr.responseType = 'blob';
+        xhr.onload = () => {
+            //const blob = xhr.response;
+            const blobURL = URL.createObjectURL(xhr.response);
+            const downloadButton = document.getElementById(id);
+            downloadButton.href = blobURL;
+        };
+        
+        xhr.send();
+
+    }
+
     render() {
         const { auth } = this.props;
         if (!auth.uid) return <Redirect to='/' />
 
         const { invoice } = this.props;
         console.log(invoice);
-        
-
-        
-
+     
         if (invoice) {
             const previews = invoice.filesUrl;
             const thumbs = invoice.filesName.map(fileName => {
                 return (
                     <div style={thumb} key={fileName}>
+                    
                         <div style={thumbInner}>
+                            
                             <img
                                 src={previews[fileName]}
                                 style={img}
                                 alt={fileName}
                             />
-                            
+                            <a 
+                                id={fileName}
+                                download
+                                style={uploadButtonStyle}
+                                className="btn-floating btn-small red lighten-1" 
+                                >
+                                <i style={{marginTop: -7}} className="material-icons">get_app</i>
+                            </a>
+                            {this.createDownloadButton(previews[fileName], fileName)}
                         </div>
+                        
                     </div>
                 );
             });
