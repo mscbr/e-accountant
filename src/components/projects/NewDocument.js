@@ -86,11 +86,10 @@ export class NewDocument extends Component {
             filesName: this.state.filesName,
             filesUrl: this.state.filesUrl
         }
-        // console.log(invoiceData);
-        // console.log('====');
-        this.props.createInvoice(this.state);
+        
+        this.props.createInvoice(invoiceData);
         this.props.history.push('/dashboard');
-        //console.log(this.state);
+        
     }
 
     //FILE UPLOAD METHODS
@@ -157,7 +156,7 @@ export class NewDocument extends Component {
 
     handleDelete = (e) => {
         e.preventDefault();
-        //console.log('deleted!');
+
         const filesName = this.state.filesName;
         filesName.map(file => {
             firebase
