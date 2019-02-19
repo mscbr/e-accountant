@@ -27,3 +27,4 @@ yarn-error.log*
 
 src/config/fbConfig.js
 firebase-debug.log
+cors.json
