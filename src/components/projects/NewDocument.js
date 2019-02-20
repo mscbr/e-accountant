@@ -56,32 +56,52 @@ export class NewDocument extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            docType: 'invalid',
+            docType: '',
             title: '',
-            issuePeriod: '2019-01',
+            issuePeriod: '',
             comment: '',
             filesName: [],
             filesUrl: {},
             //data that is not passed 
+            issueYear: '',
+            issueMonth: '',
             uploadProgress: 0
 
-        };
-        
+        };    
     }
-
+    
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
         });
     }
-    
+    handleMonthFormat = (e) => {
+        if(e.target.value.length === 1) {
+            e.target.value = "0" + e.target.value;
+        }
+        this.setState({
+            [e.target.id]: e.target.value
+        });
+    }
+    handlePeriodSet = (year, month) => {
+        if(year && month) {
+            this.setState({
+                issuePeriod: year+'-'+month
+            });
+        } else {
+            this.setState({
+                issuePeriod: ''
+            })
+        }
+        
+    }
     handleSubmit = (e) => {
         e.preventDefault();
         //FILTER OUT PASSED DATA
         const invoiceData = {
             docType: this.state.docType,
             title: this.state.title,
-            issuePeriod: this.state.issuePeriod,
+            issuePeriod: this.state.issueYear+'-'+this.state.issueMonth,
             comment: this.state.comment,
             filesName: this.state.filesName,
             filesUrl: this.state.filesUrl
@@ -89,11 +109,23 @@ export class NewDocument extends Component {
         
         this.props.createInvoice(invoiceData);
         this.props.history.push('/dashboard');
+        //console.log(invoiceData);
         
     }
-
-    //FILE UPLOAD METHODS
-
+    disableSend = () => {
+        const validationData = {
+            docType: this.state.docType,
+            title: this.state.title,
+            issueYear: this.state.issueYear,
+            issueMonth: this.state.issueMonth,
+            filesName: this.state.filesName,
+            filesUrl: this.state.filesUrl
+        };
+        let values = Object.values(validationData);
+        return values.some(value => value.length < 1)
+        
+    }
+    //FILE UPLOAD METHOD
     onDrop = (acceptedFiles, rejectedFiles) => {
         if(rejectedFiles.length) {
             const rejectedString = rejectedFiles.map(file => {
@@ -108,7 +140,7 @@ export class NewDocument extends Component {
             }
             
         };
-        console.log(metadata);
+        
         acceptedFiles.map(file => {
             const fileName = new Date().getTime() + '_' +file.name;
             firebase
@@ -126,10 +158,10 @@ export class NewDocument extends Component {
                         });
                         switch (snapshot.state) {
                             case firebase.storage.TaskState.PAUSED: // or 'paused'
-                                console.log('Upload is paused');
+                                
                                 break;
                             case firebase.storage.TaskState.RUNNING: // or 'running'
-                                console.log('Upload is running');
+                               
                                 break;
                         }
                     }, (error) => {
@@ -140,7 +172,7 @@ export class NewDocument extends Component {
                             .ref('uploaded')
                             .child(fileName)
                             .getDownloadURL().then((downloadURL) => {
-                                console.log('File available at', downloadURL);
+                                //console.log('File available at', downloadURL);
                                 this.setState({
                                     filesName: [...this.state.filesName, fileName],
                                     filesUrl: Object.assign(this.state.filesUrl, {
@@ -153,10 +185,8 @@ export class NewDocument extends Component {
                 )
         })
     }
-
     handleDelete = (e) => {
         e.preventDefault();
-
         const filesName = this.state.filesName;
         filesName.map(file => {
             firebase
@@ -178,6 +208,7 @@ export class NewDocument extends Component {
         })
         
     }
+   
 
     render() {
         const previews = this.state.filesUrl;
@@ -202,12 +233,8 @@ export class NewDocument extends Component {
             <button className="btn-floating red lighten-1" style={deleteButtonStyle} onClick={(e) => this.handleDelete(e)}>
                 <i className="small material-icons" style={{marginTop: -7}}>delete</i>
             </button>
-        ) : console.log('nothing to delete!');
+        ) : '';
 
-        
-        console.log(this.state);    
-            
-        
 
         const { auth } = this.props;
         if (!auth.uid) return <Redirect to='/' />
@@ -218,7 +245,7 @@ export class NewDocument extends Component {
                     <h5 className="grey-text text-darken-3">Send New Invoice</h5>
                     <div className="input-field">
                         <select className="browser-default" name="docType" id="docType" onChange={this.handleChange} value={this.state.docType} >
-                            <option value="invalid" defaultValue disabled>Type of Document</option>
+                            <option value="" defaultValue disabled>Type of Document</option>
                             <option value="sale">Sale Invoice</option>
                             <option value="expence">Expence Invoice</option>
                             <option value="other">Other Document</option>    
@@ -228,9 +255,29 @@ export class NewDocument extends Component {
                         <label htmlFor="title">Title</label>
                         <input type="text" id="title" onChange={this.handleChange} /> 
                     </div>
-                    <div className="input-field">
-                        <label htmlFor='issuePeriod' style={{marginLeft: '160px', marginTop: '-10px'}}>Month of attached documents issue (YYYY-MM)</label>
-                        <input type='month' id='issuePeriod' name='issuePeriod' min='2019-01' value={this.state.issuePeriod} onChange={this.handleChange} style={{width: 150}}/>
+                    <div className="row">
+                        
+                        <div className="input-field col s3">
+                            <label htmlFor='issueYear'>Year</label>
+                            <input  type='number' id='issueYear' 
+                                name='issueYear' min='2017' max='2022' value={this.state.issueYear} 
+                                onChange={this.handleChange}   style={{width: 100}} required  
+                                />
+                        </div>
+                        <div className="input-field col s3">
+                            <label htmlFor='issueMonth'>Month</label>
+                            <input  type='number' id='issueMonth' 
+                                name='issueMonth' min='1' max='12' value={this.state.issueMonth} 
+                                
+                                onChange={this.handleMonthFormat}   style={{width: 75}} required 
+                                />
+                        </div>
+                        <label 
+                            style={{display: 'inline', position: 'relative', fontSize: '1.1rem', marginTop: 15}}
+                            className="col s5"
+                            >
+                                Period of attached documents issue
+                        </label>
                     </div>
                     <div className="input-field">
 
@@ -267,7 +314,7 @@ export class NewDocument extends Component {
                         <textarea id='comment' className='materialize-textarea' onChange={this.handleChange}></textarea>
                     </div>
                     <div className="input-field">
-                        <button className="btn red lighten-1 z-depth-0">Send</button>
+                        <button className="btn red lighten-1 z-depth-0" disabled={this.disableSend()}>Send</button>
                     </div>
                 </form>
             </div>
