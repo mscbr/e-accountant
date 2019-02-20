@@ -3,8 +3,14 @@ import { Link } from 'react-router-dom';
 
 
 import InvoiceSummary from './InvoiceSummary'
-import InvoiceSortPanel from './InvoiceSortPanel'
 
+
+const selectContainerStyle = {
+    display: 'flex'
+}
+const selectStyle = {
+    display: 'initial'
+}
 
 
 class InvoiceList extends Component {
@@ -15,26 +21,66 @@ class InvoiceList extends Component {
             filterType: null
         }
     }
-    handleSortFilter = (invoices, sortType, filterType) => {
+
+    handleSort = (invoices, sortType, filterType) => {
+        let sortedArr = [];
+        switch(sortType) {
+            case 'newest':
+                sortedArr = invoices.sort((a,b) => {
+                    return new Date(b.createdAt.toDate()) - new Date(a.createdAt.toDate());
+                });
+                break;
+            case 'oldest':
+                sortedArr = invoices.sort((a,b) => {
+                    return new Date(a.createdAt.toDate()) - new Date(b.createdAt.toDate());
+                });
+            default:
+                // sortedArr = invoices.sort((a,b) => {
+                //     return new Date(b.createdAt.toDate()) - new Date(a.createdAt.toDate());
+                // });
+                break;
+                
+        }
+
         //test createdAt sorting ascending
-        const sortedArr = invoices.sort((a,b) => {
-            return new Date(a.createdAt.toDate()) - new Date(b.createdAt.toDate());
-        });
-        console.log(sortedArr);
+        // const sortedArr = invoices.sort((a,b) => {
+        //     return new Date(a.createdAt.toDate()) - new Date(b.createdAt.toDate());
+        // });
+
         return sortedArr;
-        
+    }
+    handleChange = (e) => {
+        this.setState({
+            [e.target.id]: e.target.value
+        });
+
     }
     
     render() {
-        console.log(this.props.invoices);
-        const invoices = this.handleSortFilter(this.props.invoices);
-        //console.log(invoices);
-        invoices.map(item => {
-            console.log(new Date(item.createdAt.toDate()));
-        })
+        
+        const invoices = this.handleSort(this.props.invoices, this.state.sortType);
+        console.log(this.state);
         return (
             <div className="project-list section">
-                <InvoiceSortPanel sortType={this.state.sortType} filterType={this.state.filterType} />
+                <div className="z-depth-1" style={{width: '96%', height: '50px', margin: "0 auto"}}>
+                    <div className="select-container" style={selectContainerStyle}>
+                        <select 
+                            name='sortType'
+                            id='sortType'
+                            value={this.state.sortType} 
+                            style={selectStyle}
+                            onChange={this.handleChange}
+                            >
+                            <option value="newest">NEWEST</option>
+                            <option value="oldest">OLDEST</option>
+                        </select>
+                        {/* <select name='period' value="newest" style={selectStyle}>
+                            <option value="jan">JAN</option>
+                            <option value="feb">FEB</option>
+                        </select>    */}
+                    </div>   
+                </div>
+                {/* <InvoiceSortPanel sortType={this.state.sortType} filterType={this.state.filterType} updateSortType={this.updateSort} /> */}
                 { invoices && invoices.map(invoice => {
                     return (
                         <Link to={'/project/' + invoice.id} key={invoice.id}>
