@@ -62,18 +62,21 @@ class InvoiceDetails extends Component {
         this.props.deleteInvoice(this.props.invoiceId);
         //deleting invoice files from storage
         const filesName = this.props.invoice.filesName;
-        filesName.map(file => {
-            firebase 
-                .storage()
-                .ref('uploaded')
-                .child(file)
-                .delete()
-                .then(() => {
-                    console.log(file+" succesfully deleted")
-                }).catch((err) => {
-                    console.log(err);
-                })
-        });
+        if(filesName) {
+            filesName.map(file => {
+                firebase 
+                    .storage()
+                    .ref('uploaded')
+                    .child(file)
+                    .delete()
+                    .then(() => {
+                        console.log(file+" succesfully deleted")
+                    }).catch((err) => {
+                        console.log(err);
+                    })
+            });
+        }
+        
         //redirecting after delete
         this.props.history.push('/dashboard');
     }
@@ -101,33 +104,34 @@ class InvoiceDetails extends Component {
         const { invoice } = this.props;
         console.log(invoice);
      
-        if (invoice) {
-            const previews = invoice.filesUrl;
+        if (invoice && invoice.filesName) {
+            const previews = invoice.filesUrl; 
             const thumbs = invoice.filesName.map(fileName => {
-                return (
-                    <div style={thumb} key={fileName}>
-                    
-                        <div style={thumbInner}>
-                            
-                            <img
-                                src={previews[fileName]}
-                                style={img}
-                                alt={fileName}
-                            />
-                            <a 
-                                id={fileName}
-                                download
-                                style={uploadButtonStyle}
-                                className="btn-floating btn-small red lighten-1" 
-                                >
-                                <i style={{marginTop: -7}} className="material-icons">get_app</i>
-                            </a>
-                            {this.createDownloadButton(previews[fileName], fileName)}
-                        </div>
+                    return (
+                        <div style={thumb} key={fileName}>
                         
-                    </div>
-                );
-            });
+                            <div style={thumbInner}>
+                                
+                                <img
+                                    src={previews[fileName]}
+                                    style={img}
+                                    alt={fileName}
+                                />
+                                <a 
+                                    id={fileName}
+                                    download
+                                    style={uploadButtonStyle}
+                                    className="btn-floating btn-small red lighten-1" 
+                                    >
+                                    <i style={{marginTop: -7}} className="material-icons">get_app</i>
+                                </a>
+                                {this.createDownloadButton(previews[fileName], fileName)}
+                            </div>
+                            
+                        </div>
+                    );
+                });
+            
             return (
                 <div className="container section project-details">
                     <div className="card z-depth-0">
@@ -137,6 +141,23 @@ class InvoiceDetails extends Component {
                                 {thumbs}
                             </aside>
                             <p></p>
+                            <p>Comments: {invoice.comment}</p>
+                            <DeleteInvoiceDialog handleDelete={this.handleDelete} />
+                        </div>
+                        <div className="card-action grey lighten-4 grey-text">
+                            <div>Posted by the {invoice.clientName}</div>
+                            <div>{moment(invoice.createdAt.toDate()).calendar()}</div>
+                            
+                        </div>
+                    </div>
+                </div>
+            )
+        } else if (invoice) {
+            return (
+                <div className="container section project-details">
+                    <div className="card z-depth-0">
+                        <div className="card-content">
+                            <span className="card-title">{invoice.title}</span>
                             <p>Comments: {invoice.comment}</p>
                             <DeleteInvoiceDialog handleDelete={this.handleDelete} />
                         </div>
