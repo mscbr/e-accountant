@@ -58,7 +58,7 @@ export class NewDocument extends Component {
         this.state = {
             docType: 'invalid',
             title: '',
-            issueDate: '',
+            issuePeriod: '2019-01',
             comment: '',
             filesName: [],
             filesUrl: {},
@@ -81,7 +81,7 @@ export class NewDocument extends Component {
         const invoiceData = {
             docType: this.state.docType,
             title: this.state.title,
-            issueDate: this.state.issueDate,
+            issuePeriod: this.state.issuePeriod,
             comment: this.state.comment,
             filesName: this.state.filesName,
             filesUrl: this.state.filesUrl
@@ -205,7 +205,7 @@ export class NewDocument extends Component {
         ) : console.log('nothing to delete!');
 
         
-                
+        console.log(this.state);    
             
         
 
@@ -229,8 +229,8 @@ export class NewDocument extends Component {
                         <input type="text" id="title" onChange={this.handleChange} /> 
                     </div>
                     <div className="input-field">
-                        <label htmlFor="issueDate">Date of issue</label>
-                        <input type='date' id='issueDate' onChange={this.handleChange} />
+                        <label htmlFor='issuePeriod' style={{marginLeft: '160px', marginTop: '-10px'}}>Month of issue (YYYY-MM)</label>
+                        <input type='month' id='issuePeriod' name='issuePeriod' min='2019-01' value={this.state.issuePeriod} onChange={this.handleChange} style={{width: 150}}/>
                     </div>
                     <div className="input-field">
 
