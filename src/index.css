@@ -134,3 +134,10 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   background: white;
   transition: 0.3s;
 }
+input[type=month] {
+  background: transparent;
+  color: black;
+  outline: none;
+  visibility: visible;
+  content: 'AAA';
+}
