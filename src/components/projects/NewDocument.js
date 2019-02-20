@@ -229,7 +229,7 @@ export class NewDocument extends Component {
                         <input type="text" id="title" onChange={this.handleChange} /> 
                     </div>
                     <div className="input-field">
-                        <label htmlFor='issuePeriod' style={{marginLeft: '160px', marginTop: '-10px'}}>Month of issue (YYYY-MM)</label>
+                        <label htmlFor='issuePeriod' style={{marginLeft: '160px', marginTop: '-10px'}}>Month of attached documents issue (YYYY-MM)</label>
                         <input type='month' id='issuePeriod' name='issuePeriod' min='2019-01' value={this.state.issuePeriod} onChange={this.handleChange} style={{width: 150}}/>
                     </div>
                     <div className="input-field">
