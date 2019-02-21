@@ -9,7 +9,8 @@ const selectContainerStyle = {
     display: 'flex'
 }
 const selectStyle = {
-    display: 'initial'
+    display: 'initial',
+    
 }
 
 
@@ -23,7 +24,7 @@ class InvoiceList extends Component {
         }
     }
 
-    handleSort = (invoices, sortType, filterTarget) => {
+    handleSort = (invoices, sortType) => {
         let sortedArr = [];
         //SORTING
         switch(sortType) {
@@ -36,14 +37,34 @@ class InvoiceList extends Component {
                 sortedArr = invoices.slice().sort((a,b) => {
                     return new Date(a.createdAt.toDate()) - new Date(b.createdAt.toDate());
                 });
-            default:
                 break;
-                
+            default:
+                break;    
         }
-        //FILTERING
-        
-
         return sortedArr;
+    }
+    handleFilter = (invoices, filterTarget) => {
+        let filteredArr = [];
+        //FILTERING
+        switch(filterTarget) {
+            case 'pick':
+                filteredArr = invoices.slice();
+                break;
+            case 'sale':
+            case 'expence':
+            case 'other':
+                filteredArr = invoices.filter(invoice => {
+                    return invoice.docType === filterTarget;
+                });
+                break;
+            default:
+                filteredArr = invoices.filter(invoice => {
+                    return invoice.issuePeriod === filterTarget;
+                });
+                break;
+        }
+
+        return filteredArr
     }
     handleChange = (e) => {
         this.setState({
@@ -52,8 +73,15 @@ class InvoiceList extends Component {
 
     }
     handleFilterType = (filterType, invoices) => {
+        
         switch(filterType) {
             case 'none':
+                //fix for reseting filterTarget when turning of filter
+                if (this.state.filterTarget !== 'pick') {
+                    this.setState({
+                        filterTarget: 'pick'
+                    })
+                }
                 return (
                     <select
                     name='filterTarget'
@@ -62,7 +90,7 @@ class InvoiceList extends Component {
                     style={selectStyle}
                     onChange={this.handleChange}
                     >
-                        <option value='pick'>--</option>
+                        <option value='pick' default>--</option>
                     </select>
                 )
             case 'type':
@@ -74,6 +102,7 @@ class InvoiceList extends Component {
                     style={selectStyle}
                     onChange={this.handleChange}
                     >
+                        <option value='pick'>ALL</option>
                         <option value='sale'>SALE</option>
                         <option value='expence'>EXPENCE</option>
                         <option value='other'>OTHER</option>
@@ -94,6 +123,7 @@ class InvoiceList extends Component {
                     style={selectStyle}
                     onChange={this.handleChange}
                     >
+                        <option value='pick'>ALL</option>
                     {issuePeriods.map(period => {
                         return (
                             <option value={period} key={period}>{period}</option>
@@ -120,6 +150,8 @@ class InvoiceList extends Component {
         
         const invoices = this.handleSort(this.props.invoices, this.state.sortType);
         const filterTarget = this.handleFilterType(this.state.filterType, invoices);
+        const filteredInvoices = this.handleFilter(invoices, this.state.filterTarget);
+        console.log(this.state);
         
 
         return (
@@ -143,25 +175,14 @@ class InvoiceList extends Component {
                             style={selectStyle}
                             onChange={this.handleChange}
                             >
-                            <option value='none'>NONE</option>
-                            <option value='type'>TYPE</option>
-                            <option value='period'>PERIOD</option>
+                            <option value='none'>FILTER (NONE)</option>
+                            <option value='type'>TYPE OF DOC</option>
+                            <option value='period'>PERIOD OF ISSUE</option>
                         </select>
                         {filterTarget}
-                        {/* <select
-                            name='filterTarget'
-                            id='filterTarget'
-                            value={this.state.filterType}
-                            style={selectStyle}
-                            onChange={this.handleChange}
-                            >
-
-                        </select> */}
-                        
                     </div>   
                 </div>
-                {/* <InvoiceSortPanel sortType={this.state.sortType} filterType={this.state.filterType} updateSortType={this.updateSort} /> */}
-                { invoices && invoices.map(invoice => {
+                { invoices && filteredInvoices.map(invoice => {
                     return (
                         <Link to={'/project/' + invoice.id} key={invoice.id}>
                             <InvoiceSummary invoice={invoice}  />
