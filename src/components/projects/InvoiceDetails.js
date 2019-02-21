@@ -51,6 +51,13 @@ const uploadButtonStyle = {
     textAlign: 'center'
     
 };
+const commentsBoxStyle = {
+    width: '99%',
+    minHeight: 100,
+    padding: 10,
+    border: '1px dashed grey',
+    borderRadius: '10px'
+}
 
 class InvoiceDetails extends Component {
     constructor(props) {
@@ -79,6 +86,7 @@ class InvoiceDetails extends Component {
         
         //redirecting after delete
         this.props.history.push('/dashboard');
+        
     }
 
     createDownloadButton = (fileURL, id) => {
@@ -102,7 +110,7 @@ class InvoiceDetails extends Component {
         if (!auth.uid) return <Redirect to='/' />
 
         const { invoice } = this.props;
-        console.log(invoice);
+        //console.log(invoice);
      
         if (invoice && invoice.filesName) {
             const previews = invoice.filesUrl; 
@@ -137,11 +145,14 @@ class InvoiceDetails extends Component {
                     <div className="card z-depth-0">
                         <div className="card-content">
                             <span className="card-title">{invoice.title}</span>
+                            <p className="grey-text">Files for period: {invoice.issuePeriod}</p>
                             <aside style={thumbsContainer}>
                                 {thumbs}
                             </aside>
-                            <p></p>
-                            <p>Comments: {invoice.comment}</p>
+                            <p>Comments:</p>
+                            <div className="comments-box" style={commentsBoxStyle}>
+                                <p>{invoice.comment}</p>
+                            </div>
                             <DeleteInvoiceDialog handleDelete={this.handleDelete} />
                         </div>
                         <div className="card-action grey lighten-4 grey-text">
