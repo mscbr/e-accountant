@@ -21,6 +21,7 @@ class InvoiceList extends Component {
             sortType: 'newest',
             filterType: 'none',
             filterTarget: 'pick',
+            currentPage: 0
         }
     }
 
@@ -68,7 +69,8 @@ class InvoiceList extends Component {
     }
     handleChange = (e) => {
         this.setState({
-            [e.target.id]: e.target.value
+            [e.target.id]: e.target.value,
+            currentPage: 0
         });
 
     }
@@ -145,13 +147,51 @@ class InvoiceList extends Component {
                 )
         }
     }
+    handlePagination = (invoiceList, page) => {
+        
+        let paginatedInvoiceList = [];
+        if (invoiceList.length > 5) {
+            let invoiceListCopy = invoiceList.slice();
+            for (let i = 0; i < invoiceListCopy.length+1; i++) {
+                paginatedInvoiceList.push(invoiceListCopy.splice(0,5));
+            }
+        } else {
+            paginatedInvoiceList = invoiceList.slice();
+            return paginatedInvoiceList;
+        }
+        return paginatedInvoiceList[page];
+        
+        
+    }
+    handlePageButtons = (paginated, invoiceList) => {
+        const pagesAmount = Math.ceil(paginated.length/4);
+        //console.log(Math.ceil(paginated.length/5))
+        if (pagesAmount && invoiceList.length>5) {
+            let pagesButtons = [];
+            for (let i = 0; i < pagesAmount; i++) {
+                pagesButtons.push(
+                    <li key={i + 'pageLink'}><a href="#" onClick={(e) => {
+                            e.preventDefault();
+                            this.setState({currentPage: i})}
+                        }
+                        style={ i === this.state.currentPage ? {color: 'red'} : {color: 'black'} } 
+                    >{i+1}</a></li>
+                );
+            }
+            return pagesButtons;
+        } else {
+            return false;
+        }
+        
+    }
     
     render() {
         
         const invoices = this.handleSort(this.props.invoices, this.state.sortType);
         const filterTarget = this.handleFilterType(this.state.filterType, invoices);
         const filteredInvoices = this.handleFilter(invoices, this.state.filterTarget);
-        console.log(this.state);
+        const paginated = this.handlePagination(filteredInvoices, this.state.currentPage);
+        const pageButtons = this.handlePageButtons(paginated, invoices);
         
 
         return (
@@ -182,13 +222,20 @@ class InvoiceList extends Component {
                         {filterTarget}
                     </div>   
                 </div>
-                { invoices && filteredInvoices.map(invoice => {
+                { invoices && paginated.map(invoice => {
                     return (
                         <Link to={'/project/' + invoice.id} key={invoice.id}>
                             <InvoiceSummary invoice={invoice}  />
                         </Link>
                     )
                 })}
+                <div className='page-buttons'>
+                    <ul style={{display: 'flex', justifyContent: 'center'}}>
+                        {pageButtons && pageButtons.map(button => {
+                            return button;
+                        })}
+                    </ul>
+                </div>
             </div>
         )
     }

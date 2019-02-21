@@ -141,3 +141,13 @@ input[type=month] {
   visibility: visible;
   content: 'AAA';
 }
+.page-buttons {
+  width: 90%;
+  margin: 0 auto;
+  text-align: center;
+  font-size: 1.2rem;
+}
+.page-buttons a {
+  color: black;
+  letter-spacing: 3px;
+}
