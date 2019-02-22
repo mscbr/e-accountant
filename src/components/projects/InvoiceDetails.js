@@ -7,6 +7,7 @@ import { compose } from 'redux';
 import moment from 'moment';
 import DeleteInvoiceDialog from './DeleteInvoiceDialog'
 import { deleteInvoice } from '../../store/actions/invoiceActions';
+import { Link } from 'react-router-dom';
 
 //invoice files previews styling variables
 const thumbsContainer = {
@@ -58,7 +59,22 @@ const commentsBoxStyle = {
     border: '1px dashed grey',
     borderRadius: '10px'
 }
-
+const updateButtonStyle = {
+    backgroundColor: '#ef5350',
+    color: 'white',
+    paddingTop: '5px',
+    paddingLeft: '7px',
+    paddingRight: '7px',
+    marginTop: '5px',
+    marginLeft: '5px',
+    transition: 'background-color .1s',
+    '&:hover': {
+        backgroundColor: '#f44336'
+    },
+    '&:focus' : {
+        backgroundColor: '#ef5350'
+      }
+}
 class InvoiceDetails extends Component {
     constructor(props) {
         super(props);
@@ -110,7 +126,8 @@ class InvoiceDetails extends Component {
         if (!auth.uid) return <Redirect to='/' />
 
         const { invoice } = this.props;
-        //console.log(invoice);
+        console.log(invoice);
+        console.log(this.props);
      
         if (invoice && invoice.filesName) {
             const previews = invoice.filesUrl; 
@@ -153,7 +170,12 @@ class InvoiceDetails extends Component {
                             <div className="comments-box" style={commentsBoxStyle}>
                                 <p>{invoice.comment}</p>
                             </div>
-                            <DeleteInvoiceDialog handleDelete={this.handleDelete} />
+                            <div className="bottom-btn-container" style={{display: 'flex'}}>
+                                <DeleteInvoiceDialog handleDelete={this.handleDelete} />
+                                <Link to={'/project/update/'+this.props.match.params.id} key={invoice.id}
+                                    style={updateButtonStyle}
+                                >Update</Link>
+                            </div>
                         </div>
                         <div className="card-action grey lighten-4 grey-text">
                             <div>Posted by the {invoice.clientName}</div>
