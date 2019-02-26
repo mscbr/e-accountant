@@ -12,7 +12,7 @@ import SignUp from './components/auth/SignUp';
 import NewDocument from './components/projects/NewDocument';
 
 import Entry from './components/auth/Entry';
-import { UpdateDocument } from './components/projects/UpdateDocument';
+import UpdateDocument from './components/projects/UpdateDocument';
 
 
 class App extends Component {
@@ -34,7 +34,7 @@ class App extends Component {
               
               <Route path='/signin' component={SignIn} />
               <Route path='/signup' component={SignUp} />
-              {/* <Route path='/newinvoice'  component={NewInvoice}/> */}
+              
               <Route exact path='/' component={Entry} />
             </Switch>
             
