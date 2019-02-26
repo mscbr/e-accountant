@@ -151,3 +151,7 @@ input[type=month] {
   color: black;
   letter-spacing: 3px;
 }
+.update-form label {
+  display: block;
+  position: relative;
+}
