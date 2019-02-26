@@ -126,8 +126,6 @@ class InvoiceDetails extends Component {
         if (!auth.uid) return <Redirect to='/' />
 
         const { invoice } = this.props;
-        // console.log(invoice);
-        // console.log(this.props);
      
         if (invoice && invoice.filesName) {
             const previews = invoice.filesUrl; 
@@ -172,8 +170,10 @@ class InvoiceDetails extends Component {
                             </div>
                             <div className="bottom-btn-container" style={{display: 'flex'}}>
                                 <DeleteInvoiceDialog handleDelete={this.handleDelete} />
-                                <Link to={'/project/update/'+this.props.match.params.id} key={invoice.id}
-                                    style={updateButtonStyle}
+                                <Link 
+                                    to={'/project/update/'+this.props.match.params.id} 
+                                    key={invoice.id}
+                                    invoiceData={invoice} style={updateButtonStyle}
                                 >Update</Link>
                             </div>
                         </div>
