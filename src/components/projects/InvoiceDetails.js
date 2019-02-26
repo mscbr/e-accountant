@@ -173,7 +173,7 @@ class InvoiceDetails extends Component {
                                 <Link 
                                     to={'/project/update/'+this.props.match.params.id} 
                                     key={invoice.id}
-                                    invoiceData={invoice} style={updateButtonStyle}
+                                    style={updateButtonStyle}
                                 >Update</Link>
                             </div>
                         </div>
