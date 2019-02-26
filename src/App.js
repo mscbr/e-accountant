@@ -12,6 +12,7 @@ import SignUp from './components/auth/SignUp';
 import NewDocument from './components/projects/NewDocument';
 
 import Entry from './components/auth/Entry';
+import { UpdateDocument } from './components/projects/UpdateDocument';
 
 
 class App extends Component {
@@ -26,7 +27,7 @@ class App extends Component {
           <Navbar />
             <Switch>
               <Route path='/newdocument' component={NewDocument} />
-              
+              <Route path='/project/update/:id' component={UpdateDocument} />
               <Route path='/dashboard' component={Dashboard} />
               <Route path='/project/:id' component={InvoiceDetails} />
             
