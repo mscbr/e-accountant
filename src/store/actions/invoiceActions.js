@@ -40,3 +40,15 @@ export const deleteInvoice = (invoiceId) => {
         });
     }
 };
+
+export const updateInvoice = (invoiceId) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firestore = getFirestore();
+
+        firestore.collection('invoices').doc(invoiceId).delete().then(() => {
+            dispatch({ type: 'DELETE_INVOICE', invoiceId });
+        }).catch((err) => {
+            dispatch({ type: 'DELETE_INVOICE_ERROR', err});
+        });
+    }
+};

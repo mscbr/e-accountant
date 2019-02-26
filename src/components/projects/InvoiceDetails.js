@@ -126,8 +126,8 @@ class InvoiceDetails extends Component {
         if (!auth.uid) return <Redirect to='/' />
 
         const { invoice } = this.props;
-        console.log(invoice);
-        console.log(this.props);
+        // console.log(invoice);
+        // console.log(this.props);
      
         if (invoice && invoice.filesName) {
             const previews = invoice.filesUrl; 
