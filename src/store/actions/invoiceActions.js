@@ -41,14 +41,17 @@ export const deleteInvoice = (invoiceId) => {
     }
 };
 
-export const updateInvoice = (invoiceId) => {
+export const updateInvoice = (invoiceId, invoice) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firestore = getFirestore();
 
-        firestore.collection('invoices').doc(invoiceId).delete().then(() => {
-            dispatch({ type: 'DELETE_INVOICE', invoiceId });
+        firestore.collection('invoices').doc(invoiceId).update({
+            ...invoice,
+            opened: false
+        }).then(() => {
+            dispatch({ type: 'UPDATE_INVOICE', invoiceId });
         }).catch((err) => {
-            dispatch({ type: 'DELETE_INVOICE_ERROR', err});
+            dispatch({ type: 'UPDATE_INVOICE_ERROR', err});
         });
     }
 };

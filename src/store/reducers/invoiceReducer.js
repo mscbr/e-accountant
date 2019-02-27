@@ -17,6 +17,12 @@ const invoiceReducer = (state = initState, action) => {
         case 'DELETE_INVOICE_ERROR':
             console.log('delete invoice error', action.err);
             return state;
+        case 'UPDATE_INVOICE':
+            console.log('document'+action.invoiceId+' succesfully updated');
+            return state;
+        case 'UPDATE_INVOICE_ERROR':
+            console.log('udate invoice error', action.err);
+            return state;
         default:
             return state;    
     }

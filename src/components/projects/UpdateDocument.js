@@ -223,8 +223,18 @@ class UpdateDocument extends Component {
     
     handleSubmit = (e) => {
         e.preventDefault();
-        console.log(this.state);
+        //FILTER OUT PASSED DATA
+        const invoiceData = {
+            docType: this.state.docType,
+            title: this.state.title,
+            issuePeriod: this.state.issueYear+'-'+this.state.issueMonth,
+            comment: this.state.comment,
+            filesName: this.state.filesName,
+            filesUrl: this.state.filesUrl
+        }
         
+        this.props.updateInvoice(this.props.match.params.id, invoiceData);
+        this.props.history.push('/project/'+this.props.match.params.id);
     }
 
     render() {
@@ -234,9 +244,6 @@ class UpdateDocument extends Component {
         if (!auth.uid) return <Redirect to='/' />
 
         if (this.props.invoice) {
-            
-            console.log(this.props);
-            //console.log(this.state);
             const previews = this.state.filesUrl;
             const {filesName} = this.state;
             let uploadProgress = Math.floor(this.state.uploadProgress);
@@ -382,7 +389,7 @@ const mapStateToProps = (state, ownProps) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        updateInvoice: (invoiceId) => dispatch(updateInvoice(invoiceId))
+        updateInvoice: (invoiceId, invoice) => dispatch(updateInvoice(invoiceId, invoice))
     }
 }
 
