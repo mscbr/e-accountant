@@ -9,7 +9,7 @@ import { deleteUser } from '../../store/actions/authActions'
 class AccountDetails extends Component {
 
     handleDeleteUser = () => {
-        this.props.deleteUser(this.props.auth.uid);
+        this.props.deleteUser();
     }
 
     render() {
@@ -69,7 +69,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteUser: (userId) => dispatch(deleteUser(userId))
+        deleteUser: () => dispatch(deleteUser())
     };
 }
 
