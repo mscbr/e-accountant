@@ -19,7 +19,7 @@ class AccountDetails extends Component {
         
         if (this.props.users && auth) {
             const userInfo = this.props.users[auth.uid];
-            console.log(userInfo);
+            //console.log(userInfo);
             if(userInfo) {
                 return (
                     <div className="container section">

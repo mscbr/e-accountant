@@ -74,7 +74,7 @@ class DeleteUserDialog extends Component {
                     <div className="card z-depth-0 invoice-delete-card">
                         <span className="card-title center">DELETE</span>
                         <p>Are you sure to delete your account?</p>
-                        <p>All associated files are also going to be deleted permanently!</p>
+                        <p className="red-text text-lighten1">You will lose acces to the uploaded files!</p>
                         <div className="deleteYesNo">
                             <ButtonBase
                                 onClick={this.props.handleDeleteUser}
