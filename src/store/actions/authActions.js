@@ -56,3 +56,16 @@ export const signUp = (newUser) => {
         })
     }
 }
+
+export const deleteUser = () => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firebase = getFirebase();
+        const firestore = getFirestore();
+
+        firebase.auth().currentUser.delete().then(() => {
+            console.log('user deleted')
+        }).catch((err) => {
+            console.log(err);
+        })
+    }
+}
