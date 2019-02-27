@@ -11,6 +11,9 @@ const InvoiceSummary = ({invoice}) => {
                 <p className="grey-text text-darken-1">
                     Type: <span className="red-text text-lighten-1">{invoice.docType} invoice </span>
                 </p>
+                <p className="grey-text text-darken-1">
+                    Settled: <span className="black-text text-lighten-1">{invoice.settled ? <i className='tiny material-icons'>check</i> : <i className='tiny material-icons'>clear</i>}</span>
+                </p>
                 <p className="grey-text">{moment(invoice.createdAt.toDate()).calendar()}</p>
             </div>
         </div>
