@@ -3,35 +3,17 @@ import { Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import DeleteUserDialog from './DeleteUserDialog';
 import { deleteUser } from '../../store/actions/authActions'
-import { Link } from 'react-router-dom';
 
-const updateButtonStyle = {
-    backgroundColor: '#ef5350',
-    color: 'white',
-    paddingTop: '5px',
-    paddingLeft: '7px',
-    paddingRight: '7px',
-    marginTop: '5px',
-    marginRight: '5px',
-    transition: 'background-color .1s',
-    '&:hover': {
-        backgroundColor: '#f44336'
-    },
-    '&:focus' : {
-        backgroundColor: '#ef5350'
-      }
-}
 
-class AccountDetails extends Component {
+class AccountUpdate extends Component {
 
     handleDeleteUser = () => {
         this.props.deleteUser();
     }
 
     render() {
-        
+        console.log('UPDATE PROFILE COMPONENT');
         const { auth } = this.props;
         if (!auth.uid) return <Redirect to='/' />
         
@@ -44,20 +26,13 @@ class AccountDetails extends Component {
                         <div className="card z-depth-0" style={{transform: 'scale(1.2)', margin: 100}}>
                             <div className="card-content" >
                                 <span className="card-title">{userInfo.clientName}</span>
+                                <h1>UPDATE</h1>
                                 <p className="grey-text">Email: <span className="grey-text text-darken-2">{auth.email}</span></p>
                                 <p className="grey-text">Adress: <span className="grey-text text-darken-2">{userInfo.adress}</span></p>
                                 <p className="grey-text">Legal form: <span className="grey-text text-darken-2">{userInfo.legalForm}</span></p>
                                 <p className="grey-text">NIP: <span className="grey-text text-darken-2">{userInfo.nip}</span></p>
                                 <p className="grey-text">REGON: <span className="grey-text text-darken-2">{userInfo.regon}</span></p>
                                 <p className="grey-text">Phone: <span className="grey-text text-darken-2">{userInfo.phoneNumber}</span></p>
-                                <div className="bottom-btn-container" style={{display: 'flex'}}>
-                                    <Link 
-                                        to={'/update/accountdetails/'+auth.uid} 
-                                        key={'update'}
-                                        style={updateButtonStyle}
-                                    >Update Info</Link>
-                                    <DeleteUserDialog handleDeleteUser={this.handleDeleteUser} />
-                                </div>
                             </div>
                         </div>      
                     </div>
@@ -104,4 +79,4 @@ export default compose(
             doc: props.auth.uid
         }
     ])
-)(AccountDetails);
+)(AccountUpdate);

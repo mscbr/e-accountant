@@ -14,6 +14,7 @@ import NewDocument from './components/projects/NewDocument';
 import Entry from './components/auth/Entry';
 import UpdateDocument from './components/projects/UpdateDocument';
 import AccountDetails from './components/auth/AccountDetails';
+import AccountUpdate from './components/auth/AccountUpdate';
 
 
 class App extends Component {
@@ -32,6 +33,7 @@ class App extends Component {
               <Route path='/dashboard' component={Dashboard} />
               <Route path='/project/:id' component={InvoiceDetails} />
               <Route path='/accountdetails/:uid' component={AccountDetails} />
+              <Route path='/update/accountdetails/:uid' component={AccountUpdate} />
               
               <Route path='/signin' component={SignIn} />
               <Route path='/signup' component={SignUp} />
