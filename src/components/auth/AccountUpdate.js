@@ -30,7 +30,8 @@ class AccountUpdate extends Component {
     }
     handleUpdate = (e) => {
         e.preventDefault();
-        console.log(this.props);
+        this.props.updateUser(this.props.auth.uid, this.state);
+        this.props.history.push('/accountdetails/'+this.props.auth.uid);
     }
     handleChange = (e) => {
         this.setState({
@@ -117,9 +118,6 @@ class AccountUpdate extends Component {
 }
 
 const mapStateToProps = (state) => {
-    // console.log('state');
-    // console.log(state.firebase.auth);
-    
     return {
         auth: state.firebase.auth,
         users: state.firestore.data.users
