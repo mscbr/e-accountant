@@ -72,3 +72,17 @@ export const deleteUser = () => {
         })
     }
 }
+
+export const updateUser = (uid, userData) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firestore = getFirestore();
+
+        firestore.collection('users').doc(uid).update({
+            ...userData
+        }).then(()=> {
+            dispatch({ type: 'UPDATE_USER', uid });
+        }).catch((err)=> {
+            dispatch({ type: 'UPDATE_USER_ERROR', err });
+        });
+    }
+}

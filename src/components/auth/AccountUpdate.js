@@ -3,7 +3,7 @@ import { Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase';
-import { deleteUser } from '../../store/actions/authActions'
+import { updateUser } from '../../store/actions/authActions'
 
 
 class AccountUpdate extends Component {
@@ -28,13 +28,26 @@ class AccountUpdate extends Component {
             return state;
         }
     }
-    handleUpdate = () => {
+    handleUpdate = (e) => {
+        e.preventDefault();
         console.log(this.props);
     }
     handleChange = (e) => {
         this.setState({
             [e.target.id]: e.target.value
         });
+    }
+    disableSend = () => {
+        const validationData = {
+            clientName: this.state.clientName,
+            adress: this.state.adress,
+            legalForm: this.state.legalForm,
+            nip: this.state.nip,
+            regon: this.state.regon
+        };
+        let values = Object.values(validationData);
+        return values.some(value => value.length < 1)
+        
     }
 
     render() {
@@ -46,10 +59,10 @@ class AccountUpdate extends Component {
             if(userInfo) {
                 return (
                     <div className="container section">
-                        <div className="card z-depth-0" style={{transform: 'scale(1.1)', margin: 100}}>
+                        <div className="card z-depth-0" style={{transform: 'scale(1)', margin: 100}}>
                             <div className="card-content" >
                                 <form onSubmit={this.handleUpdate} className="update-form" >
-                                <h5 className="grey-text text-darken-3">Update Profile Details</h5>
+                                <h5 className="red-text text-lighten-1">Update Profile Details</h5>
                                     <div className="input-field">
                                         <label htmlFor="clientName">Name</label>
                                         <input type="text" id="clientName" onChange={this.handleChange} value={this.state.clientName} /> 
@@ -74,15 +87,12 @@ class AccountUpdate extends Component {
                                         <label htmlFor="phoneNumber">Phone no.</label>
                                         <input type="text" id="phoneNumber" onChange={this.handleChange} value={this.state.phoneNumber}/> 
                                     </div>
+                                    <div className="input-field">
+                                        <button className="btn red lighten-1 z-depth-0" disabled={this.disableSend()}>SAVE</button>
+                                    </div>
                                 </form>
 
-                                {/* <span className="card-title">{userInfo.clientName}</span>
-                                <p className="grey-text">Email: <span className="grey-text text-darken-2">{auth.email}</span></p>
-                                <p className="grey-text">Adress: <span className="grey-text text-darken-2">{userInfo.adress}</span></p>
-                                <p className="grey-text">Legal form: <span className="grey-text text-darken-2">{userInfo.legalForm}</span></p>
-                                <p className="grey-text">NIP: <span className="grey-text text-darken-2">{userInfo.nip}</span></p>
-                                <p className="grey-text">REGON: <span className="grey-text text-darken-2">{userInfo.regon}</span></p>
-                                <p className="grey-text">Phone: <span className="grey-text text-darken-2">{userInfo.phoneNumber}</span></p> */}
+                                
                             </div>
                         </div>      
                     </div>
@@ -117,7 +127,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteUser: () => dispatch(deleteUser())
+        updateUser: (uid, userData) => dispatch(updateUser(uid, userData))
     };
 }
 
