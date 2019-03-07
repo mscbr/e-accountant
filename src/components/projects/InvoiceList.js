@@ -163,9 +163,9 @@ class InvoiceList extends Component {
         
         
     }
-    handlePageButtons = (paginated, invoiceList) => {
-        const pagesAmount = Math.ceil(paginated.length/4);
-        //console.log(Math.ceil(paginated.length/5))
+    handlePageButtons = (invoiceList) => {
+        const pagesAmount = Math.ceil(invoiceList.length/5);
+       
         if (pagesAmount && invoiceList.length>5) {
             let pagesButtons = [];
             for (let i = 0; i < pagesAmount; i++) {
@@ -191,7 +191,7 @@ class InvoiceList extends Component {
         const filterTarget = this.handleFilterType(this.state.filterType, invoices);
         const filteredInvoices = this.handleFilter(invoices, this.state.filterTarget);
         const paginated = this.handlePagination(filteredInvoices, this.state.currentPage);
-        const pageButtons = this.handlePageButtons(paginated, invoices);
+        const pageButtons = this.handlePageButtons(invoices);
         
 
         return (
