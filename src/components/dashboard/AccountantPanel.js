@@ -4,13 +4,13 @@ import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { compose } from 'redux';
 
 
-import InvoiceList from '../projects/InvoiceList';
+import InvoiceListAccountant from '../projects/InvoiceListAccountant';
 import { Redirect } from 'react-router-dom';
 
 class AccountantPanel extends Component {
     
     render() {
-        console.log(this.props);
+        //console.log(this.props);
         const { invoices, auth} = this.props;
         if (!auth.uid) {
             return <Redirect to='/' />;
@@ -25,7 +25,7 @@ class AccountantPanel extends Component {
                                 <span className="card-title white-text bold">INVOICES</span>
                             </div>
 
-                            <InvoiceList invoices={invoices} />
+                            <InvoiceListAccountant invoices={invoices} users={this.props.users} />
                         </div>
                         <div className="col s12 m6">
                             <div className="card z-depth-0 teal darken-3">
