@@ -10,10 +10,15 @@ import { Redirect } from 'react-router-dom';
 class Dashboard extends Component {
     
     render() {
-        
-        const { invoices, auth} = this.props;
+        //console.log(this.props);
+        const { invoices, auth, user} = this.props;
         if (!auth.uid) {
             return <Redirect to='/' />;
+        } else if (user) {
+            if(user[0].isAcc) {
+                return <Redirect to='/accpanel' />;
+            }
+            
         } else if (isLoaded(invoices)) {
             return (
                 <div className="dashboard container">
@@ -44,10 +49,11 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = (state) => {
-    //console.log(state);
+    
     return {
         invoices: state.firestore.ordered.invoices,
-        auth: state.firebase.auth   
+        auth: state.firebase.auth,
+        user: state.firestore.ordered.users  
     }
 }
 
@@ -56,7 +62,8 @@ export default compose(
     firestoreConnect((props) => [
         { collection: 'invoices', where: [
             'userId', '==', props.auth.uid ? props.auth.uid : null
-        ], orderBy: ['createdAt', 'desc'] }
+        ], orderBy: ['createdAt', 'desc'] },
+        { collection: 'users', doc: props.auth.uid }
     ])
 )(Dashboard);
 
