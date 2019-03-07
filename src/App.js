@@ -11,11 +11,13 @@ import InvoiceDetails from './components/projects/InvoiceDetails';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import NewDocument from './components/projects/NewDocument';
+import { NewSettlement } from './components/projects/NewSettlement';
 
 import Entry from './components/auth/Entry';
 import UpdateDocument from './components/projects/UpdateDocument';
 import AccountDetails from './components/auth/AccountDetails';
 import AccountUpdate from './components/auth/AccountUpdate';
+
 
 
 class App extends Component {
@@ -31,6 +33,7 @@ class App extends Component {
             <Switch>
               <Route path='/newdocument' component={NewDocument} />
               <Route path='/project/update/:id' component={UpdateDocument} />
+              <Route path='/newsettlement' component={NewSettlement} />
               <Route path='/dashboard' component={Dashboard} />
               <Route path='/accpanel' component={AccountantPanel} />
               <Route path='/project/:id' component={InvoiceDetails} />
