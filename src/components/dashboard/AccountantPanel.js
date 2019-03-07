@@ -1,48 +1,66 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { firestoreConnect } from 'react-redux-firebase';
+import { firestoreConnect, isLoaded } from 'react-redux-firebase';
 import { compose } from 'redux';
 
-import Notifications from './Notifications';
-import InvoiceList from '../projects/InvoiceDetails';
+
+import InvoiceList from '../projects/InvoiceList';
 import { Redirect } from 'react-router-dom';
 
 class AccountantPanel extends Component {
     
     render() {
-        //console.log(this.props);
-        const { invoices, auth, notifications } = this.props;
-        if (!auth.uid) return <Redirect to='/' />
-        return (
-            <div className="dashboard container">
-                <div className="row">
-                    <div className="col s12 m5">
-                        <h4>AccountantPanel</h4>
-                        <InvoiceList invoices={invoices} />
+        console.log(this.props);
+        const { invoices, auth} = this.props;
+        if (!auth.uid) {
+            return <Redirect to='/' />;
+        } else if (auth.uid !== "8XfhiRtQuugytCSQO9LrFDQXtNr2") {
+            return <Redirect to='/' />;
+        } else if (isLoaded(invoices)) {
+            return (
+                <div className="dashboard container">
+                    <div className="row">
+                        <div className="col s12 m6">
+                            <div className="card z-depth-0 teal darken-3">
+                                <span className="card-title white-text bold">INVOICES</span>
+                            </div>
+
+                            <InvoiceList invoices={invoices} />
+                        </div>
+                        <div className="col s12 m6">
+                            <div className="card z-depth-0 teal darken-3">
+                                <span className="card-title white-text">SETTLEMENTS</span>
+                            </div>
+                        </div>
                     </div>
-                    <div className="col s12 m5">
-                        {/* <DeductionList deductions={deductions} /> */}
-                    </div>
-                    
                 </div>
-            </div>
-        );
+                );
+        } else {
+            return ( 
+                <div className="container center">
+                    <p>Loading invoice...</p>
+                </div>
+            );
+        }
     }
 }
 
 const mapStateToProps = (state) => {
-    //console.log(state);
+    
     return {
         invoices: state.firestore.ordered.invoices,
         auth: state.firebase.auth,
-        notifications: state.firestore.ordered.notifications
+        users: state.firestore.ordered.users  
     }
 }
 
 export default compose(
     connect(mapStateToProps),
-    firestoreConnect([{ collection: 'invoices', orderBy: ['createdAt', 'desc'] /*ADD USERS COLLECTION & PASS UID AS A PROPS TO PROJECT LIST*/},
-        { collection: 'notifications', limit: 3, orderBy: ['time', 'desc'] }
+    firestoreConnect((props) => [
+        { collection: 'invoices', orderBy: ['createdAt', 'desc'] },
+        { collection: 'users', where: [
+            'isAcc', '==', false
+        ] }
     ])
 )(AccountantPanel);
 
