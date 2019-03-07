@@ -12,13 +12,13 @@ class Dashboard extends Component {
     render() {
         //console.log(this.props);
         const { invoices, auth, user} = this.props;
-        if (!auth.uid) {
-            return <Redirect to='/' />;
-        } else if (user) {
-            if(user[0].isAcc) {
+        if (user) {
+            if (user[0].isAcc) {
                 return <Redirect to='/accpanel' />;
             }
-            
+        }
+        if (!auth.uid) {
+            return <Redirect to='/' />;
         } else if (isLoaded(invoices)) {
             return (
                 <div className="dashboard container">
@@ -46,6 +46,8 @@ class Dashboard extends Component {
             );
         }
     }
+    
+   
 }
 
 const mapStateToProps = (state) => {
