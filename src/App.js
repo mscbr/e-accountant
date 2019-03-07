@@ -6,6 +6,7 @@ import './index.css';
 
 import Navbar from './components/layout/Navbar';
 import Dashboard from './components/dashboard/Dashboard';
+import AccountantPanel from './components/dashboard/AccountantPanel';
 import InvoiceDetails from './components/projects/InvoiceDetails';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
@@ -31,6 +32,7 @@ class App extends Component {
               <Route path='/newdocument' component={NewDocument} />
               <Route path='/project/update/:id' component={UpdateDocument} />
               <Route path='/dashboard' component={Dashboard} />
+              <Route path='/accpanel' component={AccountantPanel} />
               <Route path='/project/:id' component={InvoiceDetails} />
               <Route path='/accountdetails/:uid' component={AccountDetails} />
               <Route path='/update/accountdetails/:uid' component={AccountUpdate} />

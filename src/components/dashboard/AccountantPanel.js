@@ -17,14 +17,13 @@ class AccountantPanel extends Component {
             <div className="dashboard container">
                 <div className="row">
                     <div className="col s12 m5">
+                        <h4>AccountantPanel</h4>
                         <InvoiceList invoices={invoices} />
                     </div>
                     <div className="col s12 m5">
-                        <DeductionList deductions={deductions} />
+                        {/* <DeductionList deductions={deductions} /> */}
                     </div>
-                    <div className="col s12 m2 offset-m1">
-                        <Notifications notifications={notifications} />
-                    </div>
+                    
                 </div>
             </div>
         );
