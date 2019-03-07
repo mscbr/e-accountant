@@ -26,8 +26,8 @@ const updateButtonStyle = {
 
 class AccountDetails extends Component {
 
-    handleDeleteUser = () => {
-        this.props.deleteUser();
+    handleDeleteUser = (uid) => {
+        this.props.deleteUser(uid);
     }
 
     render() {
@@ -37,7 +37,7 @@ class AccountDetails extends Component {
         
         if (this.props.users && auth) {
             const userInfo = this.props.users[auth.uid];
-            //console.log(userInfo);
+            console.log(auth.uid);
             if(userInfo) {
                 return (
                     <div className="container section">
@@ -56,7 +56,7 @@ class AccountDetails extends Component {
                                         key={'update'}
                                         style={updateButtonStyle}
                                     >Update Info</Link>
-                                    <DeleteUserDialog handleDeleteUser={this.handleDeleteUser} />
+                                    <DeleteUserDialog handleDeleteUser={() => this.handleDeleteUser(auth.uid)} />
                                 </div>
                             </div>
                         </div>      
@@ -92,7 +92,7 @@ const mapStateToProps = (state) => {
 }
 const mapDispatchToProps = (dispatch) => {
     return {
-        deleteUser: () => dispatch(deleteUser())
+        deleteUser: (uid) => dispatch(deleteUser(uid))
     };
 }
 

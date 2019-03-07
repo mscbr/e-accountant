@@ -57,19 +57,25 @@ export const signUp = (newUser) => {
     }
 }
 
-export const deleteUser = () => {
+export const deleteUser = (uid) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         const firebase = getFirebase();
-        
+        const firestore = getFirestore();
 
-        firebase.auth().currentUser.delete().then(() => {
-            dispatch({ type: 'DELETE_USER' });
-            
-            console.log('user deleted')
-        }).catch((err) => {
-            dispatch({ type: 'DELETE_USER_ERROR', err });
+        firestore.collection('users').doc(uid).delete().then(() => {
+            console.log('user details deleted...');
+            firebase.auth().currentUser.delete().then(() => {
+                dispatch({ type: 'DELETE_USER' });
+                console.log('user deleted')
+            }).catch((err) => {
+                dispatch({ type: 'DELETE_USER_ERROR', err });
+                console.log(err);
+            })
+        }).catch((err)=> {
             console.log(err);
         })
+
+       
     }
 }
 
