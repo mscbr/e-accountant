@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import firebase from "firebase";
 import { compose } from 'redux';
-
 import { connect } from 'react-redux';
-
 import { firestoreConnect } from 'react-redux-firebase';
+import { createSettlement } from '../../store/actions/settlementActions'
 
 
 
@@ -21,7 +19,8 @@ class NewSettlement extends Component {
            issueYear: '',
            issueMonth: '',
            tax: {},
-           taxRows: 1
+           taxRows: 1,
+           comment: ''
         };    
     }
     
@@ -84,23 +83,25 @@ class NewSettlement extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         //FILTER OUT PASSED DATA
-        const invoiceData = {
-            docType: this.state.docType,
+        const sendData = {
             title: this.state.title,
+            clientId: this.state.clientId,
+            issueYear: this.state.issueYear,
+            issueMonth: this.state.issueMonth,
             issuePeriod: this.state.issueYear+'-'+this.state.issueMonth,
+            tax: this.state.tax,
             comment: this.state.comment,
             
         }
         console.log(this.state);
-        //this.props.createInvoice(invoiceData);
-        //this.props.history.push('/dashboard');
+        this.props.createSettlement(sendData);
+        this.props.history.push('/dashboard');
     }
     disableSend = () => {
         const validationData = {
             title: this.state.title,
             clientId: this.state.clientId,
-            clientName: this.state.clientName
-            
+            tax: this.state.tax
         };
         let values = Object.values(validationData);
         return values.some(value => value.length < 1);
@@ -168,15 +169,14 @@ class NewSettlement extends Component {
                                 />
                                  <label htmlFor='tax1'>TAX type - TAX amount</label>
                             </div>
-                            {/* TAX ROWS */}
                             {taxRows && taxRows.map(taxRow => {
                                 return taxRow;
                             })}
                             <div stle={{display: 'flex'}}>
-                                <button className="btn-floating btn-small red" 
+                                <button type="button" className="btn-floating btn-small red" 
                                 style={{marginRight: 10}} onClick={this.handleAddTaxRow}
                                 ><i className="material-icons">add</i></button>
-                                <button className="btn-floating btn-small red" 
+                                <button type="button" className="btn-floating btn-small red" 
                                 onClick={this.handleRemoveTaxRow} ><i className="material-icons">remove</i></button>
                             </div>
                             <div className="input-field">
@@ -184,7 +184,7 @@ class NewSettlement extends Component {
                                 <textarea id='comment' className='materialize-textarea' onChange={this.handleChange}></textarea>
                             </div>
                             <div className="input-field">
-                                <button className="btn red lighten-1 z-depth-0" disabled={!this.disableSend()}>Send</button>
+                                <button className="btn red lighten-1 z-depth-0" type="submit" disabled={this.disableSend()}>Send</button>
                             </div>
                         </form>
                     </div>
@@ -211,12 +211,12 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
     return {
-       
+       createSettlement: (settlement) => dispatch(createSettlement(settlement))
     }
 }
 
 export default compose(
-    connect(mapStateToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect((props) => [
         { collection: 'users', where: [
             'isAcc', '==', false
