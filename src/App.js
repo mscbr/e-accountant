@@ -17,6 +17,7 @@ import Entry from './components/auth/Entry';
 import UpdateDocument from './components/projects/UpdateDocument';
 import AccountDetails from './components/auth/AccountDetails';
 import AccountUpdate from './components/auth/AccountUpdate';
+import SettlementDetails from './components/projects/SettlementDetails';
 
 
 
@@ -34,6 +35,7 @@ class App extends Component {
               <Route path='/newdocument' component={NewDocument} />
               <Route path='/project/update/:id' component={UpdateDocument} />
               <Route path='/newsettlement' component={NewSettlement} />
+              <Route path='/settlement/:id' component={SettlementDetails} />
               <Route path='/dashboard' component={Dashboard} />
               <Route path='/accpanel' component={AccountantPanel} />
               <Route path='/project/:id' component={InvoiceDetails} />
