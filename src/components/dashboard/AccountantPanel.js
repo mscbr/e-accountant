@@ -46,7 +46,7 @@ class AccountantPanel extends Component {
 }
 
 const mapStateToProps = (state) => {
-    
+    //console.log(state);
     return {
         invoices: state.firestore.ordered.invoices,
         auth: state.firebase.auth,
