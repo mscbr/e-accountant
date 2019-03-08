@@ -1,72 +1,27 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 import firebase from "firebase";
-import classNames from 'classnames'
-import Dropzone from 'react-dropzone'
+import { compose } from 'redux';
+
 import { connect } from 'react-redux';
-import { createInvoice } from '../../store/actions/invoiceActions';
+
+import { firestoreConnect } from 'react-redux-firebase';
 
 
-//styling variables for dropzone preview box
-const thumbsContainer = {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginTop: 16
-  };
-  
-const thumb = {
-    display: 'inline-flex',
-    borderRadius: 2,
-    border: '1px solid #eaeaea',
-    marginBottom: 8,
-    marginRight: 8,
-    width: 100,
-    height: 100,
-    padding: 4,
-    boxSizing: 'border-box'
-};
-
-const thumbInner = {
-    display: 'flex',
-    minWidth: 0,
-    overflow: 'hidden'
-};
-
-const img = {
-    display: 'block',
-    position: 'relative',
-    width: 'auto',
-    height: '100%',
-    zIndex: 0
-}
-const deleteButtonStyle = {
-    position: 'absolute',
-    width: '25px',
-    height: '25px',
-    zIndex: 2,
-    marginTop: 0,
-    textAlign: 'center'
-    
-}
 
 
-export class NewSettlement extends Component {
+
+class NewSettlement extends Component {
     
     constructor(props) {
         super(props);
         this.state = {
-            docType: '',
-            title: '',
-            issuePeriod: '',
-            comment: '',
-            filesName: [],
-            filesUrl: {},
-            //data that is not passed 
-            issueYear: '',
-            issueMonth: '',
-            uploadProgress: 0
-
+           title: '',
+           clientId: '',
+           issueYear: '',
+           issueMonth: '',
+           tax: {},
+           taxRows: 1
         };    
     }
     
@@ -83,18 +38,49 @@ export class NewSettlement extends Component {
             [e.target.id]: e.target.value
         });
     }
-    handlePeriodSet = (year, month) => {
-        if(year && month) {
+    handleTaxChange = (e) => {
+        this.setState({
+            tax: {
+                ...this.state.tax,
+                [e.target.id]: e.target.value
+            }
+        })
+    }
+    handleTaxRow = () => {
+        const taxRowArr = [];
+        for (let i = 2; i <= this.state.taxRows; i++) {
+            taxRowArr.push(
+                <div className="input-field" key={'taxRow'+i}>
+                    <label htmlFor={'tax'+i}>TAX type - TAX amount</label>
+                    <input  type='text' 
+                        name={'tax'+i} value={this.state.tax['tax'+i]} id={'tax'+i} 
+                        onChange={this.handleTaxChange}   style={{width: "25%", display: 'block'}}  
+                    />
+                </div>
+            )
+        }
+        return taxRowArr;
+    }
+    handleAddTaxRow = () => {
+        this.setState({
+            taxRows: this.state.taxRows+1
+        });
+    }
+    handleRemoveTaxRow = () => {
+
+        if (this.state.taxRows>1) {
+            const newTax = this.state.tax;
+            delete newTax['tax'+this.state.taxRows];
             this.setState({
-                issuePeriod: year+'-'+month
+                tax: newTax,
+                taxRows: this.state.taxRows-1
             });
-        } else {
-            this.setState({
-                issuePeriod: ''
-            })
+
         }
         
     }
+
+
     handleSubmit = (e) => {
         e.preventDefault();
         //FILTER OUT PASSED DATA
@@ -103,238 +89,143 @@ export class NewSettlement extends Component {
             title: this.state.title,
             issuePeriod: this.state.issueYear+'-'+this.state.issueMonth,
             comment: this.state.comment,
-            filesName: this.state.filesName,
-            filesUrl: this.state.filesUrl
+            
         }
-        
-        this.props.createInvoice(invoiceData);
-        this.props.history.push('/dashboard');
-        //console.log(invoiceData);
-        
+        console.log(this.state);
+        //this.props.createInvoice(invoiceData);
+        //this.props.history.push('/dashboard');
     }
     disableSend = () => {
         const validationData = {
-            docType: this.state.docType,
             title: this.state.title,
-            issueYear: this.state.issueYear,
-            issueMonth: this.state.issueMonth,
-            filesName: this.state.filesName,
-            filesUrl: this.state.filesUrl
-        };
-        let values = Object.values(validationData);
-        return values.some(value => value.length < 1)
-        
-    }
-    //FILE UPLOAD METHOD
-    onDrop = (acceptedFiles, rejectedFiles) => {
-        if(rejectedFiles.length) {
-            const rejectedString = rejectedFiles.map(file => {
-                return "File "+file.name+" was not able to be uploaded.";
-            })
-            alert(rejectedString);
-        }
-        
-        const metadata = {
-            customMetadata: {
-                fileOwner: firebase.auth().currentUser.uid
-            }
+            clientId: this.state.clientId,
+            clientName: this.state.clientName
             
         };
-        
-        acceptedFiles.map(file => {
-            const fileName = new Date().getTime() + '_' +file.name;
-            firebase
-                .storage()
-                .ref('uploaded')
-                .child(fileName)
-                .put(file, metadata)
-                .on(firebase.storage.TaskEvent.STATE_CHANGED, // or 'state_changed'
-                    (snapshot) => {
-                        // Get task progress, including the number of bytes uploaded and the total number of bytes to be uploaded
-                        var progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                        console.log('Upload is ' + progress + '% done');
-                        this.setState({
-                            uploadProgress: progress
-                        });
-                        switch (snapshot.state) {
-                            case firebase.storage.TaskState.PAUSED: // or 'paused'
-                                
-                                break;
-                            case firebase.storage.TaskState.RUNNING: // or 'running'
-                               
-                                break;
-                        }
-                    }, (error) => {
-                        console.log(error);
-                    }, () => {
-                        firebase
-                            .storage()
-                            .ref('uploaded')
-                            .child(fileName)
-                            .getDownloadURL().then((downloadURL) => {
-                                //console.log('File available at', downloadURL);
-                                this.setState({
-                                    filesName: [...this.state.filesName, fileName],
-                                    filesUrl: Object.assign(this.state.filesUrl, {
-                                        [fileName]: downloadURL
-                                    })
-                                    
-                                })
-                            });
-                        }
-                )
-        })
-    }
-    handleDelete = (e) => {
-        e.preventDefault();
-        const filesName = this.state.filesName;
-        filesName.map(file => {
-            firebase
-                .storage()
-                .ref('uploaded')
-                .child(file)
-                .delete()
-                .then(() => {
-                    this.setState({
-                        filesName: [],
-                        filesUrl: {},
-                        uploadProgress: 0
-                    })
-
-                    console.log('files deleted successfully!');
-                }).catch((error) => {
-                    console.log(error);
-                });
-        })
+        let values = Object.values(validationData);
+        return values.some(value => value.length < 1);
         
     }
+    
    
 
     render() {
-        const previews = this.state.filesUrl;
-        const {filesName} = this.state;
-        let uploadProgress = Math.floor(this.state.uploadProgress);
-
-        const thumbs = filesName ? filesName.map(fileName => {
+        
+        const { auth } = this.props;
+        const { users } = this.props;
+        const taxRows = this.handleTaxRow();
+        if (!auth.uid) return <Redirect to='/' />
+        if (users) {
             return (
-                <div style={thumb} key={fileName}>
-                    <div style={thumbInner}>
-                        <img
-                            src={previews[fileName]}
-                            style={img}
-                            alt={fileName}
-                        />
-                        
+                <div>
+                    <div className="container">
+                        <form onSubmit={this.handleSubmit} className="white">
+                            <h5 className="grey-text text-darken-3">Send New Settlement</h5>
+                            <div className="input-field">
+                                <label htmlFor="title">Title of settlement</label>
+                                <input type="text" id="title" onChange={this.handleChange} /> 
+                            </div>
+                            <div className="input-field">
+                                <select name="clientId" id="clientId" className="browser-default"
+                                    onChange={this.handleChange} value={this.state.clientId}>
+                                    <option value="" defaultValue disabled>Settlement for client:</option>
+                                    {users.map(user => {
+                                        return (
+                                            <option value={user.id} key={user.id} id="clientId">{user.clientName}</option>
+                                        )
+                                    })}
+                                </select>
+                            </div>
+                            <div className="row">
+                                <div className="input-field col s3">
+                                    <label htmlFor='issueYear'>Year</label>
+                                    <input  type='number' id='issueYear' 
+                                        name='issueYear' min='2017' max='2022' value={this.state.issueYear} 
+                                        onChange={this.handleChange}   style={{width: 100}} required  
+                                        />
+                                </div>
+                                <div className="input-field col s3">
+                                    <label htmlFor='issueMonth'>Month</label>
+                                    <input  type='number' id='issueMonth' 
+                                        name='issueMonth' min='1' max='12' value={this.state.issueMonth} 
+                                        
+                                        onChange={this.handleMonthFormat}   style={{width: 75}} required 
+                                        />
+                                </div>
+                                <label 
+                                    style={{display: 'inline', position: 'relative', fontSize: '1.1rem', marginTop: 15}}
+                                    className="col s5"
+                                    >
+                                        Period covered by the settlement
+                                </label>
+                            </div>
+                            
+                            <div className="input-field">
+                                <label htmlFor='tax1'>TAX type - TAX amount</label>
+                                <input  type='text' 
+                                    name='tax1' value={this.state.tax['tax1']} id='tax1' 
+                                    onChange={this.handleTaxChange}   style={{width: "25%"}}  
+                                />
+                                 <label htmlFor='tax1'>TAX type - TAX amount</label>
+                            </div>
+                            {/* TAX ROWS */}
+                            {taxRows && taxRows.map(taxRow => {
+                                return taxRow;
+                            })}
+                            <div stle={{display: 'flex'}}>
+                                <button className="btn-floating btn-small red" 
+                                style={{marginRight: 10}} onClick={this.handleAddTaxRow}
+                                ><i className="material-icons">add</i></button>
+                                <button className="btn-floating btn-small red" 
+                                onClick={this.handleRemoveTaxRow} ><i className="material-icons">remove</i></button>
+                            </div>
+                            <div className="input-field">
+                                <label htmlFor="comment">Comment</label>
+                                <textarea id='comment' className='materialize-textarea' onChange={this.handleChange}></textarea>
+                            </div>
+                            <div className="input-field">
+                                <button className="btn red lighten-1 z-depth-0" disabled={!this.disableSend()}>Send</button>
+                            </div>
+                        </form>
                     </div>
                 </div>
             );
-        }) : console.log('uploading');
-        const deleteButton = uploadProgress > 0 ? (
-            <button className="btn-floating red lighten-1" style={deleteButtonStyle} onClick={(e) => this.handleDelete(e)}>
-                <i className="small material-icons" style={{marginTop: -7}}>delete</i>
-            </button>
-        ) : '';
-
-
-        const { auth } = this.props;
-        if (auth && !auth.uid) return <Redirect to='/' />
-        return (
-        <div>
-            <div className="container">
-                <form onSubmit={this.handleSubmit} className="white">
-                    <h5 className="grey-text text-darken-3">Send New Invoice</h5>
-                    <div className="input-field">
-                        <select className="browser-default" name="docType" id="docType" onChange={this.handleChange} value={this.state.docType} >
-                            <option value="" defaultValue disabled>Type of Document</option>
-                            <option value="sale">Sale Invoice</option>
-                            <option value="expence">Expence Invoice</option>
-                            <option value="other">Other Document</option>    
-                        </select>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="title">Title</label>
-                        <input type="text" id="title" onChange={this.handleChange} /> 
-                    </div>
-                    <div className="row">
-                        
-                        <div className="input-field col s3">
-                            <label htmlFor='issueYear'>Year</label>
-                            <input  type='number' id='issueYear' 
-                                name='issueYear' min='2017' max='2022' value={this.state.issueYear} 
-                                onChange={this.handleChange}   style={{width: 100}} required  
-                                />
-                        </div>
-                        <div className="input-field col s3">
-                            <label htmlFor='issueMonth'>Month</label>
-                            <input  type='number' id='issueMonth' 
-                                name='issueMonth' min='1' max='12' value={this.state.issueMonth} 
-                                
-                                onChange={this.handleMonthFormat}   style={{width: 75}} required 
-                                />
-                        </div>
-                        <label 
-                            style={{display: 'inline', position: 'relative', fontSize: '1.1rem', marginTop: 15}}
-                            className="col s5"
-                            >
-                                Period of attached documents issue
-                        </label>
-                    </div>
-                    <div className="input-field">
-
-                        <Dropzone accept="image/*,application/pdf"
-                            onDrop={this.onDrop}
-                            maxSize={6291456}
-                        >
-                            {({getRootProps, getInputProps, isDragActive}) => {
-                                return (
-                                    <div 
-                                        {...getRootProps()}
-                                        className={classNames('dropzone', {'dropzone--isActive': isDragActive})}
-                                    >
-                                        <input {...getInputProps()} />
-                                        {
-                                            isDragActive ?
-                                            <p>Drop files here...</p> :
-                                            <p>Drop your invoice files here (image/pdf)</p>
-                                        }
-                                    </div>
-                                )
-                            }}
-                        </Dropzone>
-                        <aside style={thumbsContainer}>
-                            {thumbs} 
-                            {deleteButton}
-                            
-                            <p>{uploadProgress < 100 && uploadProgress > 0 ? `uploading...${uploadProgress}%` : ''}</p>
-                            
-                        </aside>
-                    </div>
-                    <div className="input-field">
-                        <label htmlFor="comment">Comment</label>
-                        <textarea id='comment' className='materialize-textarea' onChange={this.handleChange}></textarea>
-                    </div>
-                    <div className="input-field">
-                        <button className="btn red lighten-1 z-depth-0" disabled={this.disableSend()}>Send</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        )
+        } else {
+            return ( 
+                <div className="container center">
+                    <p>Loading...</p>
+                </div>
+            );
+        }
+        
     }
 }
 
 const mapStateToProps = (state) => {
+    //console.log(state);
     return {
-        auth: state.firebase.auth
+        auth: state.firebase.auth,
+        users: state.firestore.ordered.users
     }
 }
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        createInvoice: (invoice) => dispatch(createInvoice(invoice))
+       
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(NewSettlement);
+export default compose(
+    connect(mapStateToProps),
+    firestoreConnect((props) => [
+        { collection: 'users', where: [
+            'isAcc', '==', false
+        ] }
+    ])
+)(NewSettlement);
+
+
+
+
 
 
