@@ -11,7 +11,7 @@ import InvoiceDetails from './components/projects/InvoiceDetails';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
 import NewDocument from './components/projects/NewDocument';
-import { NewSettlement } from './components/projects/NewSettlement';
+import NewSettlement from './components/projects/NewSettlement';
 
 import Entry from './components/auth/Entry';
 import UpdateDocument from './components/projects/UpdateDocument';
