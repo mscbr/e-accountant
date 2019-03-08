@@ -18,3 +18,15 @@ export const createSettlement = (settlement) => {
         });
     }
 }; 
+
+export const deleteSettlement = (settlementId) => {
+    return (dispatch, getState, {getFirebase, getFirestore}) => {
+        const firestore = getFirestore();
+
+        firestore.collection('settlements').doc(settlementId).delete().then(() => {
+            dispatch({ type: 'DELETE_SETTLEMENT', settlementId });
+        }).catch((err) => {
+            dispatch({ type: 'DELETE_SETTLEMENT_ERROR', err});
+        });
+    }
+};

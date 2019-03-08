@@ -6,7 +6,7 @@ import { Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import moment from 'moment';
 import DeleteInvoiceDialog from './DeleteInvoiceDialog'
-import { deleteInvoice } from '../../store/actions/invoiceActions';
+import { deleteSettlement } from '../../store/actions/settlementActions';
 import { Link } from 'react-router-dom';
 
 const commentsBoxStyle = {
@@ -29,34 +29,19 @@ class SettlementDetails extends Component {
         super(props);
     }
 
-    // handleDelete = () => {
-    //     //deleting invoice from database
-    //     this.props.deleteInvoice(this.props.invoiceId);
-    //     //deleting invoice files from storage
-    //     const filesName = this.props.invoice.filesName;
-    //     if(filesName) {
-    //         filesName.map(file => {
-    //             firebase 
-    //                 .storage()
-    //                 .ref('uploaded')
-    //                 .child(file)
-    //                 .delete()
-    //                 .then(() => {
-    //                     console.log(file+" succesfully deleted")
-    //                 }).catch((err) => {
-    //                     console.log(err);
-    //                 })
-    //         });
-    //     }
+    handleDelete = () => {
+        //deleting invoice from database
+        this.props.deleteSettlement(this.props.settlementId);
         
-    //     //redirecting after delete
-    //     this.props.history.push('/dashboard');
         
-    // }
+        //redirecting after delete
+        this.props.history.push('/dashboard');
+        
+    }
 
 
     render() {
-        //console.log(this.props);
+        console.log(this.props);
         const { auth } = this.props;
         if (!auth.uid) return <Redirect to='/' />
 
@@ -64,6 +49,8 @@ class SettlementDetails extends Component {
         const { users } = this.props
         if (settlement && users) {
             const taxes = Object.values(settlement.tax);
+            const deleteButton = users[auth.uid].isAcc ? <DeleteInvoiceDialog handleDelete={this.handleDelete} /> : null;
+            console.log(deleteButton);
             return (
                 <div className="container section project-details">
                     <div className="card z-depth-0">
@@ -79,9 +66,9 @@ class SettlementDetails extends Component {
                             </div>
                             
                             {/* IF ISACC */}
-                            {/* <div className="bottom-btn-container" style={{display: 'flex'}}>
-                                <DeleteInvoiceDialog handleDelete={this.handleDelete} />
-                            </div> */}
+                            <div className="bottom-btn-container" style={{display: 'flex'}}>
+                                {deleteButton}
+                            </div>
                         </div>
                         <div className="card-action grey lighten-4 grey-text">
                             <div>Created: {moment(settlement.createdAt.toDate()).calendar()}</div>
@@ -108,17 +95,18 @@ const mapStateToProps = (state, ownProps) => {
     return {
         settlement: settlement,
         users: state.firestore.data.users,
+        settlementId: ownProps.match.params.id,
         auth: state.firebase.auth
     }
 }
-// const mapDispatchToProps = (dispatch) => {
-//     return {
-//         deleteInvoice: (invoiceId) => dispatch(deleteInvoice(invoiceId))
-//     }
-// }
+const mapDispatchToProps = (dispatch) => {
+    return {
+        deleteSettlement: (settlementId) => dispatch(deleteSettlement(settlementId))
+    }
+}
 
 export default compose(
-    connect(mapStateToProps),
+    connect(mapStateToProps, mapDispatchToProps),
     firestoreConnect((props) => [
         { collection: 'settlements'},
         { collection: 'users' }
