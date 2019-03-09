@@ -8,7 +8,7 @@ const SignedInLinksAccountant = (props) => {
 
     return (
         <ul className="right">
-            <li><NavLink to='/'>Dashboard</NavLink></li>
+            <li><NavLink to='/accpanel'>Dashboard</NavLink></li>
             <li><NavLink to='/'>Clients</NavLink></li>
             <li><NavLink to='/newsettlement'>New Tax Settlement</NavLink></li>
             <li><a onClick={props.signOut}>Log Out</a></li>

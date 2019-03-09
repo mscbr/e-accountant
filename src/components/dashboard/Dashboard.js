@@ -14,7 +14,7 @@ class Dashboard extends Component {
         //console.log(this.props);
         const { invoices, auth, user, settlements} = this.props;
         if (user) {
-            if (user[0].isAcc) {
+            if (user[0].isAcc === true) {
                 return <Redirect to='/accpanel' />;
             }
         }

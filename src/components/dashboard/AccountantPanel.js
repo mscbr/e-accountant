@@ -16,7 +16,7 @@ class AccountantPanel extends Component {
         if (!auth.uid) {
             return <Redirect to='/' />;
         } else if (auth.uid !== "8XfhiRtQuugytCSQO9LrFDQXtNr2") {
-            return <Redirect to='/' />;
+            return <Redirect to='/dashboard' />;
         } else if (invoices && settlements) {
             return (
                 <div className="dashboard container">
