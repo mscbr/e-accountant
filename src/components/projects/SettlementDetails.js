@@ -41,16 +41,16 @@ class SettlementDetails extends Component {
 
 
     render() {
-        console.log(this.props);
+        
         const { auth } = this.props;
         if (!auth.uid) return <Redirect to='/' />
 
         const { settlement } = this.props;
         const { users } = this.props
-        if (settlement && users) {
+        if (settlement && users && auth) {
             const taxes = Object.values(settlement.tax);
             const deleteButton = users[auth.uid].isAcc ? <DeleteInvoiceDialog handleDelete={this.handleDelete} /> : null;
-            console.log(deleteButton);
+            
             return (
                 <div className="container section project-details">
                     <div className="card z-depth-0">

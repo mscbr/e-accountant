@@ -6,17 +6,18 @@ import { compose } from 'redux';
 
 import InvoiceListAccountant from '../projects/InvoiceListAccountant';
 import { Redirect } from 'react-router-dom';
+import SettlementListAccountant from '../projects/SettlementListAccountant';
 
 class AccountantPanel extends Component {
     
     render() {
         //console.log(this.props);
-        const { invoices, auth} = this.props;
+        const { invoices, auth, settlements} = this.props;
         if (!auth.uid) {
             return <Redirect to='/' />;
         } else if (auth.uid !== "8XfhiRtQuugytCSQO9LrFDQXtNr2") {
             return <Redirect to='/' />;
-        } else if (isLoaded(invoices)) {
+        } else if (invoices && settlements) {
             return (
                 <div className="dashboard container">
                     <div className="row">
@@ -31,6 +32,8 @@ class AccountantPanel extends Component {
                             <div className="card z-depth-0 teal darken-3">
                                 <span className="card-title white-text">SETTLEMENTS</span>
                             </div>
+                            
+                            <SettlementListAccountant invoices={settlements} users={this.props.users} />
                         </div>
                     </div>
                 </div>
@@ -49,6 +52,7 @@ const mapStateToProps = (state) => {
     //console.log(state);
     return {
         invoices: state.firestore.ordered.invoices,
+        settlements: state.firestore.ordered.settlements,
         auth: state.firebase.auth,
         users: state.firestore.ordered.users  
     }
@@ -60,7 +64,8 @@ export default compose(
         { collection: 'invoices', orderBy: ['createdAt', 'desc'] },
         { collection: 'users', where: [
             'isAcc', '==', false
-        ] }
+        ] },
+        { collection: 'settlements', orderBy: ['createdAt', 'desc'] }
     ])
 )(AccountantPanel);
 
