@@ -154,3 +154,6 @@ input[type=month] {
   display: block;
   position: relative;
 }
+.client-list-item:hover {
+  background: rgb(238, 237, 237);
+}
