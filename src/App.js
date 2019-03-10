@@ -18,6 +18,7 @@ import UpdateDocument from './components/projects/UpdateDocument';
 import AccountDetails from './components/auth/AccountDetails';
 import AccountUpdate from './components/auth/AccountUpdate';
 import SettlementDetails from './components/projects/SettlementDetails';
+import Clients from './components/clients/Clients';
 
 
 
@@ -45,6 +46,8 @@ class App extends Component {
               <Route path='/signin' component={SignIn} />
               <Route path='/signup' component={SignUp} />
               
+              <Route path='/clients' component={Clients} />
+
               <Route exact path='/' component={Entry} />
             </Switch>
             
