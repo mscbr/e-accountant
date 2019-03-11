@@ -35,6 +35,7 @@ export class SignUpDialogEntry extends Component {
         onClose={this.handleClose}
         aria-labelledby="form-dialog-title"
         maxWidth='xl'
+        
         >
             <SignUp closeDialog={this.handleClose} />
         </Dialog>

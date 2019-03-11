@@ -9,7 +9,7 @@ const styles = theme => ({
     button: {
       height: '60px',
       marginTop: '-3px',
-      padding: '0 15px',
+      padding: 0,
       transition: 'background-color .3s',
       '&:hover' : {
         backgroundColor: 'rgba(0,0,0,0.1)'
@@ -17,7 +17,10 @@ const styles = theme => ({
       '&:focus' : {
         backgroundColor: '#00695c'
       }
-    }
+    },
+    dialog: {
+      
+    },
     
   });
 
@@ -49,6 +52,7 @@ class SignInDialogNav extends Component {
           Login
         </ButtonBase>
         <Dialog
+        className={classes.dialog}
         open={this.state.open}
         onClose={this.handleClose}
         aria-labelledby="form-dialog-title"
