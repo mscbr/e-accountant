@@ -12,11 +12,11 @@ const Navbar = (props) => {
             profile.isAcc ? <SignedInLinksAccountant profile={profile} /> : <SignedInLinksClient profile={profile} />
         ) : <SignedOutLinks />;
     return (
-        <nav className="nav-wrapper teal darken-3">
+        <nav className="nav-wrapper teal darken-3 nav-bar">
             <div className="container">
                 <Link to='/dashboard' className='brand-logo white-text hide-on-med-and-down'>E-Accountant</Link>
-                <Link to='/dashboard' className='dashboard-icon left white-text hide-on-large-only'>
-                <i className='material-icons'>dashboard</i></Link>
+                {/* <Link to='/dashboard' className='dashboard-icon left white-text hide-on-large-only'>
+                <i className='material-icons'>dashboard</i></Link> */}
                 { links }
             </div>
         </nav>

@@ -55,7 +55,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
 
 
 .inup-intro {
-  width: 30%;
+  width: 50%;
   padding: 60px;
   margin: 0 auto;
   margin-top: 11%;
@@ -156,4 +156,14 @@ input[type=month] {
 }
 .client-list-item:hover {
   background: rgb(238, 237, 237);
+}
+
+@media only screen and (max-width: 600px) {
+  .inup-intro {
+    width: 80%;
+    padding: 10px;
+  }
+  .nav-bar {
+    height: 110px;
+  }
 }
