@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ClientDetails from './ClientDetails'
 
 
 const clientListStyle = {
@@ -9,6 +10,7 @@ class ClientList extends Component {
     constructor(props) {
         super(props);
         this.state = {
+            clientPicked: false,
             adress: '',
             clientName: '',
             id: '',
@@ -21,12 +23,15 @@ class ClientList extends Component {
         }
     }
 
+
+
     handleClientPick = (e, client) => {
         e.preventDefault();
         this.setState({
-            ...client
+            ...client,
+            clientPicked: true
         });
-        console.log(this.state);
+        
     }
 
     render() {
@@ -34,7 +39,7 @@ class ClientList extends Component {
         return (
             <div style={clientListStyle}>
                 <div className="row">
-                    <div className="col s5">
+                    <div className="col s5" style={{marginTop: 15}}>
                         {clients.map(client => {
                             return (
                                 <a key={client.id} href='#' className='black-text' onClick={(e) => this.handleClientPick(e, client)}>
@@ -48,10 +53,8 @@ class ClientList extends Component {
                             )
                         })}
                     </div>
-                    <div className="col s9">
-                        <div className="card client-details">
-                        
-                        </div>
+                    <div className="col s6">
+                        { this.state.clientPicked ? <ClientDetails client={this.state} /> : <p style={{textAlign: 'center', color: 'red'}}>SELECT A CLIENT FOR DETAILS</p> }
                     </div>
                 </div>
             </div>
