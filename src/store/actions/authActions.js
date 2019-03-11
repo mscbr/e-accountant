@@ -46,6 +46,7 @@ export const signUp = (newUser) => {
                 nip: newUser.nip,
                 regon: newUser.regon,
                 phoneNumber: newUser.phoneNumber,
+                email: newUser.email,
                 isAcc: newUser.accountant === "true" ? true : false
                 })
            
