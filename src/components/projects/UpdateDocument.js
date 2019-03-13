@@ -151,6 +151,8 @@ class UpdateDocument extends Component {
                             case firebase.storage.TaskState.RUNNING: // or 'running'
                                
                                 break;
+                            default: 
+                                break;
                         }
                     }, (error) => {
                         console.log(error);

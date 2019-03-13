@@ -4,8 +4,7 @@ export const createSettlement = (settlement) => {
     return (dispatch, getState, {getFirebase, getFirestore}) => {
         //async call to database  
         const firestore = getFirestore();
-        const profile = getState().firebase.profile;
-        const authorId = getState().firebase.auth.uid;
+        
        
         firestore.collection('settlements').add({
             ...settlement,

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { firestoreConnect } from 'react-redux-firebase'; 
-import firebase from "firebase";
+
 import { Redirect } from 'react-router-dom';
 import { compose } from 'redux';
 import moment from 'moment';
 import DeleteInvoiceDialog from './DeleteInvoiceDialog'
 import { deleteSettlement } from '../../store/actions/settlementActions';
-import { Link } from 'react-router-dom';
+
 
 const commentsBoxStyle = {
     width: '99%',
