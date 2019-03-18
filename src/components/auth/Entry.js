@@ -11,7 +11,7 @@ const Entry = (props) => {
     if (auth.uid) return <Redirect to='/dashboard' />
     return (
         <div className="card white inup-intro">
-            <span className="card-title teal-text text-darken-4 center inup-intro-title">E-Accountant</span>
+            <span className="card-title center inup-intro-title">E-Accountant</span>
             
                 <p className="grey-text center">Login to your account or Sign Up!</p>
                 

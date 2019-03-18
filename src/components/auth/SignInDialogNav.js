@@ -15,7 +15,7 @@ const styles = theme => ({
         backgroundColor: 'rgba(0,0,0,0.1)'
       },
       '&:focus' : {
-        backgroundColor: '#00695c'
+        backgroundColor: 'rgba(64, 70, 84, 0.88)'
       }
     },
     dialog: {

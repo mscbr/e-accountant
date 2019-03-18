@@ -25,13 +25,13 @@ class Dashboard extends Component {
                 <div className="dashboard container">
                     <div className="row">
                         <div className="col s12 m6">
-                            <div className="card z-depth-0 teal darken-3">
+                            <div className="card z-depth-0" style={{background: "rgba(64, 70, 84, 0.74)"}}>
                                 <span className="card-title white-text bold">INVOICES</span>
                             </div>
                             <InvoiceList invoices={invoices} />
                         </div>
                         <div className="col s12 m6">
-                            <div className="card z-depth-0 teal darken-3">
+                            <div className="card z-depth-0" style={{background: "rgba(64, 70, 84, 0.74)"}}>
                                 <span className="card-title white-text">SETTLEMENTS</span>
                             </div>
                             <SettlementList invoices={settlements} />

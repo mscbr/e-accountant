@@ -265,7 +265,7 @@ class InvoiceListAccountant extends Component {
                         </Link>
                     )
                 })}
-                <div className='page-buttons'>
+                <div className='page-buttons' style={{background: 'rgba(201, 204, 222, 0.5)'}}>
                     <ul style={{display: 'flex', justifyContent: 'center'}}>
                         {pageButtons && pageButtons.map(button => {
                             return button;

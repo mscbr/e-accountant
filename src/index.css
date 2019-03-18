@@ -11,6 +11,11 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background: rgb(178,223,219);
   background: linear-gradient(90deg, rgba(178,223,219,1) 8%, rgba(200,232,229,1) 81%, rgba(255,255,255,1) 100%);
+  background-image: url("./samson-creative-91091-unsplash.jpg");
+  background-size: cover;
+}
+.nav-bar {
+  background: rgba(64, 70, 84, 0.88);
 }
 form {
   padding: 20px;
@@ -63,6 +68,7 @@ input[type=password]:not(.browser-default):focus:not([readonly]) + label{
   flex-direction: column;
 }
 .inup-intro-title {
+  color: rgba(64, 70, 84, 1);
   letter-spacing: 4px;
 }
 .inup-intro .btn:hover {

@@ -24,8 +24,8 @@ export class SignUpDialogEntry extends Component {
       <div  >
         <ButtonBase
           onClick={this.handleOpen}
-          className="waves-effect waves-light teal darken-4 btn white-text"
-          style={{width: '100%'}}
+          className="waves-effect waves-light btn white-text"
+          style={{width: '100%', background: "rgba(64, 70, 84, 1)"}}
           
         >
           Signup
