@@ -243,30 +243,30 @@ export class NewDocument extends Component {
         <div>
             <div className="container">
                 <form onSubmit={this.handleSubmit} className="white">
-                    <h5 className="grey-text text-darken-3">Send New Invoice</h5>
+                    <h5 className="grey-text text-darken-3">Wyślij Nową Fakturę</h5>
                     <div className="input-field">
                         <select className="browser-default" name="docType" id="docType" onChange={this.handleChange} value={this.state.docType} >
-                            <option value="" defaultValue disabled>Type of Document</option>
-                            <option value="sale">Sale Invoice</option>
-                            <option value="expence">Expence Invoice</option>
-                            <option value="other">Other Document</option>    
+                            <option value="" defaultValue disabled>Typ Dokumentu</option>
+                            <option value="sale">Faktura Sprzedażowa</option>
+                            <option value="expence">Faktura Wydatkowa</option>
+                            <option value="other">Inny Dokument</option>    
                         </select>
                     </div>
                     <div className="input-field">
-                        <label htmlFor="title">Title</label>
+                        <label htmlFor="title">Tytuł</label>
                         <input type="text" id="title" onChange={this.handleChange} /> 
                     </div>
                     <div className="row">
                         
                         <div className="input-field col s3">
-                            <label htmlFor='issueYear'>Year</label>
+                            <label htmlFor='issueYear'>Rok</label>
                             <input  type='number' id='issueYear' 
                                 name='issueYear' min='2017' max='2022' value={this.state.issueYear} 
                                 onChange={this.handleChange}   style={{width: 100}} required  
                                 />
                         </div>
                         <div className="input-field col s3">
-                            <label htmlFor='issueMonth'>Month</label>
+                            <label htmlFor='issueMonth'>Miesiąc</label>
                             <input  type='number' id='issueMonth' 
                                 name='issueMonth' min='1' max='12' value={this.state.issueMonth} 
                                 
@@ -277,7 +277,7 @@ export class NewDocument extends Component {
                             style={{display: 'inline', position: 'relative', fontSize: '1.1rem', marginTop: 15}}
                             className="col s5"
                             >
-                                Period of attached documents issue
+                                Dokumenty za okres
                         </label>
                     </div>
                     <div className="input-field">
@@ -295,8 +295,8 @@ export class NewDocument extends Component {
                                         <input {...getInputProps()} />
                                         {
                                             isDragActive ?
-                                            <p>Drop files here...</p> :
-                                            <p>Drop your invoice files here (image/pdf)</p>
+                                            <p>Upuść pliki tutaj...</p> :
+                                            <p>Upuść pliki tutaj (jpg/pdf)</p>
                                         }
                                     </div>
                                 )
@@ -311,11 +311,11 @@ export class NewDocument extends Component {
                         </aside>
                     </div>
                     <div className="input-field">
-                        <label htmlFor="comment">Comment</label>
+                        <label htmlFor="comment">Komentarze</label>
                         <textarea id='comment' className='materialize-textarea' onChange={this.handleChange}></textarea>
                     </div>
                     <div className="input-field">
-                        <button className="btn red lighten-1 z-depth-0" disabled={this.disableSend()}>Send</button>
+                        <button className="btn red lighten-1 z-depth-0" disabled={this.disableSend()}>Wyślij</button>
                     </div>
                 </form>
             </div>

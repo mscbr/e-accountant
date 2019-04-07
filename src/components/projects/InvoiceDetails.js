@@ -160,11 +160,11 @@ class InvoiceDetails extends Component {
                     <div className="card z-depth-0">
                         <div className="card-content">
                             <span className="card-title">{invoice.title}</span>
-                            <p className="grey-text">Files for period: {invoice.issuePeriod}</p>
+                            <p className="grey-text">Dokumenty za okres: {invoice.issuePeriod}</p>
                             <aside style={thumbsContainer}>
                                 {thumbs}
                             </aside>
-                            <p>Comments:</p>
+                            <p>Komentarze:</p>
                             <div className="comments-box" style={commentsBoxStyle}>
                                 <p>{invoice.comment}</p>
                             </div>
@@ -174,11 +174,11 @@ class InvoiceDetails extends Component {
                                     to={'/project/update/'+this.props.match.params.id} 
                                     key={invoice.id}
                                     style={updateButtonStyle}
-                                >Update</Link>
+                                >Zaktualizuj</Link>
                             </div>
                         </div>
                         <div className="card-action grey lighten-4 grey-text">
-                            <div>Posted by the {invoice.clientName}</div>
+                            <div>Opublikowane przez {invoice.clientName}</div>
                             <div>{moment(invoice.createdAt.toDate()).calendar()}</div>
                             
                         </div>
@@ -191,11 +191,11 @@ class InvoiceDetails extends Component {
                     <div className="card z-depth-0">
                         <div className="card-content">
                             <span className="card-title">{invoice.title}</span>
-                            <p>Comments: {invoice.comment}</p>
+                            <p>Komentarze: {invoice.comment}</p>
                             <DeleteInvoiceDialog handleDelete={this.handleDelete} />
                         </div>
                         <div className="card-action grey lighten-4 grey-text">
-                            <div>Posted by the {invoice.clientName}</div>
+                            <div>Opublikowane przez {invoice.clientName}</div>
                             <div>{moment(invoice.createdAt.toDate()).calendar()}</div>
                             
                         </div>
@@ -205,7 +205,7 @@ class InvoiceDetails extends Component {
         } else {
             return ( 
                 <div className="container center">
-                    <p>Loading invoice...</p>
+                    <p>Ładowanie...</p>
                 </div>
                 );
         }

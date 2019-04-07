@@ -56,11 +56,11 @@ class SettlementDetails extends Component {
                     <div className="card z-depth-0">
                         <div className="card-content">
                             <span className="card-title">{settlement.title}</span>
-                            <p>{users[settlement.clientId].clientName} TAX for period {settlement.issuePeriod}:</p>
+                            <p>{users[settlement.clientId].clientName} Podatek Za Okres {settlement.issuePeriod}:</p>
                             <div className="tax-box" style={taxBoxStyle}>
                                 {taxes.map(tax => <p key={tax[1]}>{tax}</p>)}
                             </div>
-                            <p style={{marginTop: 25}}>Comments:</p>
+                            <p style={{marginTop: 25}}>Komentarze:</p>
                             <div className="comments-box" style={commentsBoxStyle}>
                                 <p>{settlement.comment}</p>
                             </div>
@@ -71,7 +71,7 @@ class SettlementDetails extends Component {
                             </div>
                         </div>
                         <div className="card-action grey lighten-4 grey-text">
-                            <div>Created: {moment(settlement.createdAt.toDate()).calendar()}</div>
+                            <div>Utworzono: {moment(settlement.createdAt.toDate()).calendar()}</div>
                         </div>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ class SettlementDetails extends Component {
         } else {
             return ( 
                 <div className="container center">
-                    <p>Loading invoice...</p>
+                    <p>Ładowanie...</p>
                 </div>
                 );
         }

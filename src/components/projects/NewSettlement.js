@@ -50,7 +50,7 @@ class NewSettlement extends Component {
         for (let i = 2; i <= this.state.taxRows; i++) {
             taxRowArr.push(
                 <div className="input-field" key={'taxRow'+i}>
-                    <label htmlFor={'tax'+i}>TAX type - TAX amount</label>
+                    <label htmlFor={'tax'+i}>Rodzaj Podatku - Wysokość Podatku</label>
                     <input  type='text' 
                         name={'tax'+i} value={this.state.tax['tax'+i]} id={'tax'+i} 
                         onChange={this.handleTaxChange}   style={{width: "25%", display: 'block'}}  
@@ -121,15 +121,15 @@ class NewSettlement extends Component {
                 <div>
                     <div className="container">
                         <form onSubmit={this.handleSubmit} className="white">
-                            <h5 className="grey-text text-darken-3">Send New Settlement</h5>
+                            <h5 className="grey-text text-darken-3">Wyślij Nowe Rozliczenie</h5>
                             <div className="input-field">
-                                <label htmlFor="title">Title of settlement</label>
+                                <label htmlFor="title">Tytuł Rozliczenia</label>
                                 <input type="text" id="title" onChange={this.handleChange} /> 
                             </div>
                             <div className="input-field">
                                 <select name="clientId" id="clientId" className="browser-default"
                                     onChange={this.handleChange} value={this.state.clientId}>
-                                    <option value="" defaultValue disabled>Settlement for client:</option>
+                                    <option value="" defaultValue disabled>Dla klienta:</option>
                                     {users.map(user => {
                                         return (
                                             <option value={user.id} key={user.id} id="clientId">{user.clientName}</option>
@@ -139,14 +139,14 @@ class NewSettlement extends Component {
                             </div>
                             <div className="row">
                                 <div className="input-field col s3">
-                                    <label htmlFor='issueYear'>Year</label>
+                                    <label htmlFor='issueYear'>Rok</label>
                                     <input  type='number' id='issueYear' 
                                         name='issueYear' min='2017' max='2022' value={this.state.issueYear} 
                                         onChange={this.handleChange}   style={{width: 100}} required  
                                         />
                                 </div>
                                 <div className="input-field col s3">
-                                    <label htmlFor='issueMonth'>Month</label>
+                                    <label htmlFor='issueMonth'>Miesiąc</label>
                                     <input  type='number' id='issueMonth' 
                                         name='issueMonth' min='1' max='12' value={this.state.issueMonth} 
                                         
@@ -157,17 +157,17 @@ class NewSettlement extends Component {
                                     style={{display: 'inline', position: 'relative', fontSize: '1.1rem', marginTop: 15}}
                                     className="col s5"
                                     >
-                                        Period covered by the settlement
+                                        Rozliczenie obejmuje okres
                                 </label>
                             </div>
                             
                             <div className="input-field">
-                                <label htmlFor='tax1'>TAX type - TAX amount</label>
+                                <label htmlFor='tax1'>Rodzaj Podatku - Wysokość Podatku</label>
                                 <input  type='text' 
                                     name='tax1' value={this.state.tax['tax1']} id='tax1' 
                                     onChange={this.handleTaxChange}   style={{width: "25%"}}  
                                 />
-                                 <label htmlFor='tax1'>TAX type - TAX amount</label>
+                                 <label htmlFor='tax1'>Rodzaj Podatku - Wysokość Podatku</label>
                             </div>
                             {taxRows && taxRows.map(taxRow => {
                                 return taxRow;
@@ -180,7 +180,7 @@ class NewSettlement extends Component {
                                 onClick={this.handleRemoveTaxRow} ><i className="material-icons">remove</i></button>
                             </div>
                             <div className="input-field">
-                                <label htmlFor="comment">Comment</label>
+                                <label htmlFor="comment">Komentarze</label>
                                 <textarea id='comment' className='materialize-textarea' onChange={this.handleChange}></textarea>
                             </div>
                             <div className="input-field">
@@ -193,7 +193,7 @@ class NewSettlement extends Component {
         } else {
             return ( 
                 <div className="container center">
-                    <p>Loading...</p>
+                    <p>Ładowanie...</p>
                 </div>
             );
         }

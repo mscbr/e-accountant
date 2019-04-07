@@ -275,13 +275,13 @@ class UpdateDocument extends Component {
                 <div>
                     <div className="container update-form">
                         <form onSubmit={this.handleSubmit} className="white">
-                            <h5 className="grey-text text-darken-3">Update Invoice</h5>
+                            <h5 className="grey-text text-darken-3">Zaktualizuj Fakturę</h5>
                             <div className="input-field">
                                 <select className="browser-default" name="docType" id="docType"  onChange={this.handleChange} value={this.state.docType} >
-                                    <option value="" defaultValue disabled>Type of Document</option>
-                                    <option value="sale">Sale Invoice</option>
-                                    <option value="expence">Expence Invoice</option>
-                                    <option value="other">Other Document</option>    
+                                    <option value="" defaultValue disabled>Typ Dokumentu</option>
+                                    <option value="sale">Faktura Sprzedażowa</option>
+                                    <option value="expence">Faktura Wydatkowa</option>
+                                    <option value="other">Inny Dokument</option>     
                                 </select>
                             </div>
                             <div className="input-field">
@@ -291,14 +291,14 @@ class UpdateDocument extends Component {
                             <div className="row">
                                 
                                 <div className="input-field col s3">
-                                    <label htmlFor='issueYear'>Year</label>
+                                    <label htmlFor='issueYear'>Rok</label>
                                     <input  type='number' id='issueYear' 
                                         name='issueYear' min='2017' max='2022' value={this.state.issueYear} 
                                         onChange={this.handleChange}   style={{width: 100}} required  
                                         />
                                 </div>
                                 <div className="input-field col s3">
-                                    <label htmlFor='issueMonth'>Month</label>
+                                    <label htmlFor='issueMonth'>Miesiąc</label>
                                     <input  type='number' id='issueMonth' 
                                         name='issueMonth' min='1' max='12' value={this.state.issueMonth} 
                                         
@@ -309,7 +309,7 @@ class UpdateDocument extends Component {
                                     style={{display: 'inline', position: 'relative', fontSize: '1.1rem', marginTop: 15}}
                                     className="col s5"
                                     >
-                                        Period of attached documents issue
+                                        Dokumenty za okres
                                 </label>
                             </div>
                             <div className="input-field">
@@ -328,8 +328,8 @@ class UpdateDocument extends Component {
                                                     <input {...getInputProps()} />
                                                     {
                                                         isDragActive ?
-                                                        <p>Drop files here...</p> :
-                                                        <p>Drop your invoice files here (image/pdf)</p>
+                                                        <p>Upuść pliki tutaj...</p> :
+                                                        <p>Upuść pliki tutaj (jpg/pdf)</p>
                                                     }
                                                 </div>
                                             )
@@ -344,14 +344,14 @@ class UpdateDocument extends Component {
                                 <aside style={thumbsContainer}>
                                     {thumbs} 
                                     {deleteButton}
-                                    <p className="red-text text-lighten1">* files will be deleted permanently & instantly</p>
+                                    <p className="red-text text-lighten1">dokumenty zostaną usuniętie permanentnie!</p>
                                     
                                     <p>{uploadProgress < 100 && uploadProgress > 0 ? `uploading...${uploadProgress}%` : ''}</p>
                                     
                                 </aside>
                             </div>
                             <div className="input-field">
-                                <label htmlFor="comment">Comment</label>
+                                <label htmlFor="comment">Komentarze</label>
                                 <textarea id='comment' 
                                     className='materialize-textarea' 
                                     onChange={this.handleChange}
@@ -359,7 +359,7 @@ class UpdateDocument extends Component {
                                 ></textarea>
                             </div>
                             <div className="input-field">
-                                <button className="btn red lighten-1 z-depth-0" disabled={this.disableSend()}>SAVE</button>
+                                <button className="btn red lighten-1 z-depth-0" disabled={this.disableSend()}>ZAPISZ</button>
                             </div>
                         </form>
                     </div>
@@ -368,7 +368,7 @@ class UpdateDocument extends Component {
         } else {
             return ( 
                 <div className="container center">
-                    <p>Loading invoice...</p>
+                    <p>Ładowanie...</p>
                 </div>
                 );
         }

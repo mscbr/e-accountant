@@ -62,7 +62,7 @@ class DeleteInvoiceDialog extends Component {
                 focusRipple={false}
                 className={classes.deleteButton}
                 >
-                    Delete Invoice
+                    Usuń Fakturę
                 </ButtonBase>
                 <Dialog
                 open={this.state.open}
@@ -72,8 +72,8 @@ class DeleteInvoiceDialog extends Component {
                
                 >
                     <div className="card z-depth-0 invoice-delete-card">
-                        <span className="card-title center">DELETE</span>
-                        <p>Are you sure to delete this document?</p>
+                        <span className="card-title center">USUŃ</span>
+                        <p>Czy na pewno chcesz usunąć dokument?</p>
                         <div className="deleteYesNo">
                             <ButtonBase
                                 onClick={this.props.handleDelete}
@@ -81,7 +81,7 @@ class DeleteInvoiceDialog extends Component {
                                 focusRipple={false}
                                 className={classes.deleteYesNo}
                                 >
-                                    Yes
+                                    Tak
                                 </ButtonBase>
                                 <ButtonBase
                                 onClick={this.handleClose}
@@ -89,7 +89,7 @@ class DeleteInvoiceDialog extends Component {
                                 focusRipple={false}
                                 className={classes.deleteYesNo}
                                 >
-                                    No
+                                    Nie
                                 </ButtonBase>
                         </div>
                     </div>

@@ -111,7 +111,7 @@ class SettlementList extends Component {
                     style={selectStyle}
                     onChange={this.handleChange}
                     >
-                        <option value='pick'>ALL</option>
+                        <option value='pick'>WSZYSTKIE</option>
                     {issuePeriods.map(period => {
                         return (
                             <option value={period} key={period}>{period}</option>
@@ -190,8 +190,8 @@ class SettlementList extends Component {
                             style={selectStyle}
                             onChange={this.handleChange}
                             >
-                            <option value="newest">NEWEST</option>
-                            <option value="oldest">OLDEST</option>
+                            <option value="newest">NAJNOWSZE</option>
+                            <option value="oldest">NAJSTARSZE</option>
                         </select>
                         <select
                             name='filterType'
@@ -200,9 +200,9 @@ class SettlementList extends Component {
                             style={selectStyle}
                             onChange={this.handleChange}
                             >
-                            <option value='none'>FILTER (NONE)</option>
+                            <option value='none'>FILTER (BEZ)</option>
                             
-                            <option value='period'>PERIOD OF ISSUE</option>
+                            <option value='period'>OKRES</option>
                             
                         </select>
                         {filterTarget}

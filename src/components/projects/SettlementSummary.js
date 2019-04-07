@@ -8,9 +8,9 @@ const SettlementSummary = ({invoice}) => {
             <div className="card-content grey-text text-darken-3">
                 <span className="card-title">{invoice.title}</span>
                 {/* pass the clientName from clientId */}
-                <p>For the: {invoice.clientId}</p>
+                <p>Dla: {invoice.clientId}</p>
                 <p className="grey-text text-darken-1">
-                    Period: <span className="red-text text-lighten-1">{invoice.issuePeriod}</span>
+                    Okres: <span className="red-text text-lighten-1">{invoice.issuePeriod}</span>
                 </p>
                 <p className="grey-text">{moment(invoice.createdAt.toDate()).calendar()}</p>
             </div>

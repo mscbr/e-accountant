@@ -104,10 +104,10 @@ class InvoiceList extends Component {
                     style={selectStyle}
                     onChange={this.handleChange}
                     >
-                        <option value='pick'>ALL</option>
-                        <option value='sale'>SALE</option>
-                        <option value='expence'>EXPENCE</option>
-                        <option value='other'>OTHER</option>
+                        <option value='pick'>WSZYSTKIE</option>
+                        <option value='sale'>SPRZEDAŻ</option>
+                        <option value='expence'>WYDATEK</option>
+                        <option value='other'>INNE</option>
                     </select>
                 )
             case 'period':
@@ -125,7 +125,7 @@ class InvoiceList extends Component {
                     style={selectStyle}
                     onChange={this.handleChange}
                     >
-                        <option value='pick'>ALL</option>
+                        <option value='pick'>WSZYSTKIE</option>
                     {issuePeriods.map(period => {
                         return (
                             <option value={period} key={period}>{period}</option>
@@ -205,8 +205,8 @@ class InvoiceList extends Component {
                             style={selectStyle}
                             onChange={this.handleChange}
                             >
-                            <option value="newest">NEWEST</option>
-                            <option value="oldest">OLDEST</option>
+                            <option value="newest">NAJNOWSZE</option>
+                            <option value="oldest">NAJSTARSZE</option>
                         </select>
                         <select
                             name='filterType'
@@ -215,9 +215,9 @@ class InvoiceList extends Component {
                             style={selectStyle}
                             onChange={this.handleChange}
                             >
-                            <option value='none'>FILTER (NONE)</option>
-                            <option value='type'>TYPE OF DOC</option>
-                            <option value='period'>PERIOD OF ISSUE</option>
+                            <option value='none'>FILTER (BEZ)</option>
+                            <option value='type'>TYP DOKUMENTU</option>
+                            <option value='period'>ZA OKRES</option>
                         </select>
                         {filterTarget}
                     </div>   
