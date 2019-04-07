@@ -28,3 +28,4 @@ yarn-error.log*
 src/config/fbConfig.js
 firebase-debug.log
 cors.json
+.firebase/hosting.YnVpbGQ.cache
