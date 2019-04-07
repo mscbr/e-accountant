@@ -54,7 +54,7 @@ class ClientList extends Component {
                         })}
                     </div>
                     <div className="col s6">
-                        { this.state.clientPicked ? <ClientDetails client={this.state} /> : <p style={{textAlign: 'center', color: 'red'}}>SELECT A CLIENT FOR DETAILS</p> }
+                        { this.state.clientPicked ? <ClientDetails client={this.state} /> : <p style={{textAlign: 'center', color: 'red'}}>WYBIERZ KLIENTA</p> }
                     </div>
                 </div>
             </div>

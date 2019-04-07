@@ -21,7 +21,7 @@ class Clients extends Component {
         } else {
             return (
                 <div className='container'>
-                    <p>Loading...</p>
+                    <p>Ładowanie...</p>
                 </div>
             )
         }
