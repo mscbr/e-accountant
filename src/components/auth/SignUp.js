@@ -30,7 +30,6 @@ export class SignUp extends Component {
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.signUp(this.state);
-        //console.log(this.state);   
     }
     disableSubmit = () => {
         //check if any value in this.state is 'empty'
@@ -46,25 +45,25 @@ export class SignUp extends Component {
       
       <div id="signup-form">
             <form onSubmit={this.handleSubmit} className="white form-sign">
-                <h5 className="grey-text text-darken-3">Sign Up</h5>
+                <h5 className="grey-text text-darken-3">Rejestracja</h5>
                 <div className="input-field">
                     <label htmlFor="email">Email</label>
                     <input type="email" id="email" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
-                    <label htmlFor="password">Password</label>
+                    <label htmlFor="password">Hasło</label>
                     <input type="password" id="password" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
-                    <label htmlFor="clientName">Name</label>
+                    <label htmlFor="clientName">Imię</label>
                     <input type="text" id="clientName" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
-                    <label htmlFor="adress">Adress</label>
+                    <label htmlFor="adress">Adres</label>
                     <textarea id="adress" className='materialize-textarea' onChange={this.handleChange} />
                 </div>
                 <div className="input-field">
-                    <label htmlFor="legalForm">Legal Form (sp. z.o.o., sp. jawna...)</label>
+                    <label htmlFor="legalForm">Forma prawna (sp. z.o.o., sp. jawna...)</label>
                     <input type="text" id="legalForm" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
@@ -76,18 +75,18 @@ export class SignUp extends Component {
                     <input type="number" id="regon" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
-                    <label htmlFor="phoneNumber">Phone no.</label>
+                    <label htmlFor="phoneNumber">Numer telefonu</label>
                     <input type="text" id="phoneNumber" onChange={this.handleChange} /> 
                 </div>
                 <div className="input-field">
                     <select className="browser-default" name="accountant" id="accountant" onChange={this.handleChange} value={this.state.accountant} >
-                        <option value="false" defaultValue >Client</option>
-                        <option value="true" disabled>Accountant</option>  
+                        <option value="false" defaultValue >Klient</option>
+                        <option value="true" disabled>Księgowy</option>  
                     </select>
                
                 </div>
                 <div className="input-field">
-                    <button type='submit' disabled={this.disableSubmit()} className="btn red lighten-1 z-depth-0" >Sign Up</button>
+                    <button type='submit' disabled={this.disableSubmit()} className="btn red lighten-1 z-depth-0" >Zarejestruj</button>
                     <div className="red-text center">
                         { authError ? <p>{ authError } </p> : null }
                     </div>

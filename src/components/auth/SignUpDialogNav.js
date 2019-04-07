@@ -45,7 +45,7 @@ export class SignUpDialogNav extends Component {
           className={classes.button}
           disableRipple={true}
         >
-          SignUp
+          Rejestracja
         </ButtonBase>
         <Dialog
         open={this.state.open}

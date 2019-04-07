@@ -13,7 +13,7 @@ const Entry = (props) => {
         <div className="card white inup-intro">
             <span className="card-title center inup-intro-title">E-Accountant</span>
             
-                <p className="grey-text center">Login to your account or Sign Up!</p>
+                <p className="grey-text center">Zaloguj się do swojego konta, lub zarejestruj!</p>
                 
                 <SignInDialogEntry />
                 <SignUpDialogEntry />

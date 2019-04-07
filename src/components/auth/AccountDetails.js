@@ -45,17 +45,17 @@ class AccountDetails extends Component {
                             <div className="card-content" >
                                 <span className="card-title">{userInfo.clientName}</span>
                                 <p className="grey-text">Email: <span className="grey-text text-darken-2">{auth.email}</span></p>
-                                <p className="grey-text">Adress: <span className="grey-text text-darken-2">{userInfo.adress}</span></p>
-                                <p className="grey-text">Legal form: <span className="grey-text text-darken-2">{userInfo.legalForm}</span></p>
+                                <p className="grey-text">Adres: <span className="grey-text text-darken-2">{userInfo.adress}</span></p>
+                                <p className="grey-text">Forma prawna: <span className="grey-text text-darken-2">{userInfo.legalForm}</span></p>
                                 <p className="grey-text">NIP: <span className="grey-text text-darken-2">{userInfo.nip}</span></p>
                                 <p className="grey-text">REGON: <span className="grey-text text-darken-2">{userInfo.regon}</span></p>
-                                <p className="grey-text">Phone: <span className="grey-text text-darken-2">{userInfo.phoneNumber}</span></p>
+                                <p className="grey-text">Telefon: <span className="grey-text text-darken-2">{userInfo.phoneNumber}</span></p>
                                 <div className="bottom-btn-container" style={{display: 'flex'}}>
                                     <Link 
                                         to={'/update/accountdetails/'+auth.uid} 
                                         key={'update'}
                                         style={updateButtonStyle}
-                                    >Update Info</Link>
+                                    >Aktualizuj Dane</Link>
                                     <DeleteUserDialog handleDeleteUser={() => this.handleDeleteUser(auth.uid)} />
                                 </div>
                             </div>
@@ -65,7 +65,7 @@ class AccountDetails extends Component {
             } else {
                 return (
                     <div className="container center">
-                        <p>Loading...</p>
+                        <p>Ładowanie...</p>
                     </div>
                 );
             }
@@ -73,7 +73,7 @@ class AccountDetails extends Component {
         } else {
             return (
                 <div className="container center">
-                    <p>Loading...</p>
+                    <p>Ładowanie...</p>
                 </div>
             );
         }   

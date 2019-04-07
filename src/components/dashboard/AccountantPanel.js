@@ -11,7 +11,6 @@ import SettlementListAccountant from '../projects/SettlementListAccountant';
 class AccountantPanel extends Component {
     
     render() {
-        //console.log(this.props);
         const { invoices, auth, settlements} = this.props;
         if (!auth.uid) {
             return <Redirect to='/' />;

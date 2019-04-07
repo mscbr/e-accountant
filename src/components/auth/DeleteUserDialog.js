@@ -62,7 +62,7 @@ class DeleteUserDialog extends Component {
                 focusRipple={false}
                 className={classes.deleteButton}
                 >
-                    Delete Account
+                    Usuń Konto
                 </ButtonBase>
                 <Dialog
                 open={this.state.open}
@@ -72,10 +72,10 @@ class DeleteUserDialog extends Component {
                
                 >
                     <div className="card z-depth-0 invoice-delete-card">
-                        <span className="card-title center">DELETE</span>
-                        <p>Are you sure to delete your account?</p>
-                        <p className="red-text ">You will lose acces to the uploaded files!</p>
-                        <p className="grey-text">*if any problem occur, try to re-login and delete the account shortly after</p>
+                        <span className="card-title center">USUŃ</span>
+                        <p>Czy na pewno chcesz usunąć swoje konto?</p>
+                        <p className="red-text ">Stracisz dostęp do swoich plików!</p>
+                        <p className="grey-text">*w razie wystąpienia problemu, spróbuj zalogować się jeszcze raz i wtedy usunąc swoje konto</p>
                         <div className="deleteYesNo">
                             <ButtonBase
                                 onClick={this.props.handleDeleteUser}
@@ -83,7 +83,7 @@ class DeleteUserDialog extends Component {
                                 focusRipple={false}
                                 className={classes.deleteYesNo}
                                 >
-                                    Yes
+                                    Tak
                                 </ButtonBase>
                                 <ButtonBase
                                 onClick={this.handleClose}
@@ -91,7 +91,7 @@ class DeleteUserDialog extends Component {
                                 focusRipple={false}
                                 className={classes.deleteYesNo}
                                 >
-                                    No
+                                    Nie
                                 </ButtonBase>
                         </div>
                     </div>

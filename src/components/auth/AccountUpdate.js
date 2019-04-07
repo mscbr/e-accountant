@@ -63,17 +63,17 @@ class AccountUpdate extends Component {
                         <div className="card z-depth-0" style={{transform: 'scale(1)', margin: 100}}>
                             <div className="card-content" >
                                 <form onSubmit={this.handleUpdate} className="update-form" >
-                                <h5 className="red-text text-lighten-1">Update Profile Details</h5>
+                                <h5 className="red-text text-lighten-1">Zaktualizuj Profil</h5>
                                     <div className="input-field">
-                                        <label htmlFor="clientName">Name</label>
+                                        <label htmlFor="clientName">Imię</label>
                                         <input type="text" id="clientName" onChange={this.handleChange} value={this.state.clientName} /> 
                                     </div>
                                     <div className="input-field">
-                                        <label htmlFor="adress">Adress</label>
+                                        <label htmlFor="adress">Adres</label>
                                         <textarea id="adress" className='materialize-textarea' onChange={this.handleChange} value={this.state.adress} />
                                     </div>
                                     <div className="input-field">
-                                        <label htmlFor="legalForm">Legal Form (sp. z.o.o., sp. jawna...)</label>
+                                        <label htmlFor="legalForm">Forma prawna (sp. z.o.o., sp. jawna...)</label>
                                         <input type="text" id="legalForm" onChange={this.handleChange} value={this.state.legalForm}/> 
                                     </div>
                                     <div className="input-field">
@@ -85,11 +85,11 @@ class AccountUpdate extends Component {
                                         <input type="number" id="regon" onChange={this.handleChange} value={this.state.regon} /> 
                                     </div>
                                     <div className="input-field">
-                                        <label htmlFor="phoneNumber">Phone no.</label>
+                                        <label htmlFor="phoneNumber">Numer telefonu</label>
                                         <input type="text" id="phoneNumber" onChange={this.handleChange} value={this.state.phoneNumber}/> 
                                     </div>
                                     <div className="input-field">
-                                        <button className="btn red lighten-1 z-depth-0" disabled={this.disableSend()}>SAVE</button>
+                                        <button className="btn red lighten-1 z-depth-0" disabled={this.disableSend()}>ZAPISZ</button>
                                     </div>
                                 </form>
 
@@ -101,7 +101,7 @@ class AccountUpdate extends Component {
             } else {
                 return (
                     <div className="container center">
-                        <p>Loading...</p>
+                        <p>Ładowanie...</p>
                     </div>
                 );
             }
@@ -109,7 +109,7 @@ class AccountUpdate extends Component {
         } else {
             return (
                 <div className="container center">
-                    <p>Loading...</p>
+                    <p>Ładowanie...</p>
                 </div>
             );
         }   

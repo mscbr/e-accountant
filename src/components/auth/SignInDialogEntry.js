@@ -28,7 +28,7 @@ export class SignInDialogEntry extends Component {
           style={{width: '100%', background: "rgba(64, 70, 84, 1)"}}
           
         >
-          Login
+          Zaloguj
         </ButtonBase>
         <Dialog
         open={this.state.open}

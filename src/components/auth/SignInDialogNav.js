@@ -49,7 +49,7 @@ class SignInDialogNav extends Component {
           className={classes.button}
           disableRipple={true}
         >
-          Login
+          Zaloguj
         </ButtonBase>
         <Dialog
         className={classes.dialog}
