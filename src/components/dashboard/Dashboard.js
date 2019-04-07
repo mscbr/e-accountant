@@ -26,13 +26,13 @@ class Dashboard extends Component {
                     <div className="row">
                         <div className="col s12 m6">
                             <div className="card z-depth-0" style={{background: "rgba(64, 70, 84, 0.74)"}}>
-                                <span className="card-title white-text bold">INVOICES</span>
+                                <span className="card-title white-text bold">FAKTURY</span>
                             </div>
                             <InvoiceList invoices={invoices} />
                         </div>
                         <div className="col s12 m6">
                             <div className="card z-depth-0" style={{background: "rgba(64, 70, 84, 0.74)"}}>
-                                <span className="card-title white-text">SETTLEMENTS</span>
+                                <span className="card-title white-text">ROZLICZENIA</span>
                             </div>
                             <SettlementList invoices={settlements} />
                         </div>
@@ -42,7 +42,7 @@ class Dashboard extends Component {
         } else {
             return ( 
                 <div className="container center">
-                    <p>Loading invoice...</p>
+                    <p>Ładowanie...</p>
                 </div>
             );
         }
